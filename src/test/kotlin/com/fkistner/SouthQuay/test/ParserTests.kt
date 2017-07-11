@@ -646,4 +646,30 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputSequence() {
+        val parser = parserForString("out {12, 42}")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Seq", listOf(
+                                                L("{"),
+                                                N("Number", listOf(L("12"))),
+                                                L(","),
+                                                N("Number", listOf(L("42"))),
+                                                L("}")
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }

@@ -33,6 +33,7 @@ expression
     | expression  POW           expression  # Pow
     | expression (MUL  | DIV)   expression  # Mul
     | expression (PLUS | MINUS) expression  # Sum
+    | SEQ_LEFT expression COMMA expression SEQ_RIGHT # Seq
     ;
 
 
@@ -51,6 +52,9 @@ POW:   '^';
 
 PAREN_LEFT:  '(';
 PAREN_RIGHT: ')';
+SEQ_LEFT:  '{';
+SEQ_RIGHT: '}';
+COMMA: ',';
 
 // Literals
 String: '"' (~["])* '"';
