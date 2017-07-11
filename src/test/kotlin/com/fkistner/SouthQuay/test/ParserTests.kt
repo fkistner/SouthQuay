@@ -342,4 +342,140 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputMultiplication() {
+        val parser = parserForString("out 1.25*3.123")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Mul", listOf(
+                                                N("Number", listOf(L("1.25"))),
+                                                L("*"),
+                                                N("Number", listOf(L("3.123")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputDivision() {
+        val parser = parserForString("out 42/3.0")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Mul", listOf(
+                                                N("Number", listOf(L("42"))),
+                                                L("/"),
+                                                N("Number", listOf(L("3.0")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputMultiMulDiv() {
+        val parser = parserForString("out 42/12.11*33331/3.0")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Mul", listOf(
+                                                N("Mul", listOf(
+                                                        N("Mul", listOf(
+                                                                N("Number", listOf(L("42"))),
+                                                                L("/"),
+                                                                N("Number", listOf(L("12.11")))
+                                                        )),
+                                                        L("*"),
+                                                        N("Number", listOf(L("33331")))
+                                                )),
+                                                L("/"),
+                                                N("Number", listOf(L("3.0")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputPrecedenceSumMulA() {
+        val parser = parserForString("out 1+2*4")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Sum", listOf(
+                                                N("Number", listOf(L("1"))),
+                                                L("+"),
+                                                N("Mul", listOf(
+                                                        N("Number", listOf(L("2"))),
+                                                        L("*"),
+                                                        N("Number", listOf(L("4")))
+                                                ))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputPrecedenceSumMulB() {
+        val parser = parserForString("out 1*2-4")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Sum", listOf(
+                                                N("Mul", listOf(
+                                                        N("Number", listOf(L("1"))),
+                                                        L("*"),
+                                                        N("Number", listOf(L("2")))
+                                                )),
+                                                L("-"),
+                                                N("Number", listOf(L("4")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }
