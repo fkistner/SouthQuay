@@ -5,7 +5,6 @@ import com.fkistner.SouthQuay.grammar.SQLangParser.*
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.tree.*
 import org.junit.*
-import java.io.StringReader
 
 /** Simplified tree of parsed rules and tokens */
 private sealed class TestTree
@@ -29,13 +28,6 @@ private fun assertNoParserSyntaxErrors(parser: SQLangParser) {
 }
 
 class ParserTests {
-
-    private fun parserForString(testString: String): SQLangParser {
-        val charStream = CharStreams.fromReader(StringReader(testString))
-        val lexer = SQLangLexer(charStream)
-        val parser = SQLangParser(CommonTokenStream(lexer))
-        return parser
-    }
 
     private fun toTestTree(program: ProgramContext) : TestTree {
         return program.accept(object : SQLangBaseVisitor<TestTree>() {
