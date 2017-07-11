@@ -584,6 +584,15 @@ class ParserTests {
     }
 
     @Test
+    fun outputUnbalancedParen() {
+        val parser = parserForString("out (1+2*4")
+
+        parser.program()
+
+        assertParserSyntaxErrors(parser)
+    }
+
+    @Test
     fun outputPrecedenceParenA() {
         val parser = parserForString("out (1+2)*4")
 
@@ -671,5 +680,48 @@ class ParserTests {
                 )),
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputSequenceNestedExpression() {
+        val parser = parserForString("out {12-4, 42^3}")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Seq", listOf(
+                                                L("{"),
+                                                N("Sum", listOf(
+                                                        N("Number", listOf(L("12"))),
+                                                        L("-"),
+                                                        N("Number", listOf(L("4")))
+                                                )),
+                                                L(","),
+                                                N("Pow", listOf(
+                                                        N("Number", listOf(L("42"))),
+                                                        L("^"),
+                                                        N("Number", listOf(L("3")))
+                                                )),
+                                                L("}")
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputUnbalancedSequence() {
+        val parser = parserForString("out {12+23, 42 print \"a\"")
+
+        parser.program()
+
+        assertParserSyntaxErrors(parser)
     }
 }
