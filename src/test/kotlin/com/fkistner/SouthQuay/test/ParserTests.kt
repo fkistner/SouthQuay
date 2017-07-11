@@ -724,4 +724,30 @@ class ParserTests {
 
         assertParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputIdentifierAsExpression() {
+        val parser = parserForString("out 0*myVal^1.11")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Number", listOf(L("0"))),
+                                        L("*"),
+                                        N("Pow", listOf(
+                                                N("Ref", listOf(L("myVal"))),
+                                                L("^"),
+                                                N("Number", listOf(L("1.11")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }

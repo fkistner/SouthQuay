@@ -21,12 +21,13 @@ statement
 // Expressions
 
 expression
-    : MINUS?  (Integer | Decimal)           # Number
-    | PAREN_LEFT expression PAREN_RIGHT     # Paren
-    | expression  POW           expression  # Pow
-    | expression (MUL  | DIV)   expression  # Mul
-    | expression (PLUS | MINUS) expression  # Sum
-    | SEQ_LEFT expression COMMA expression SEQ_RIGHT # Seq
+    : MINUS?  (Integer | Decimal)                       # Number
+    | PAREN_LEFT expression PAREN_RIGHT                 # Paren
+    | expression  POW           expression              # Pow
+    | expression (MUL  | DIV)   expression              # Mul
+    | expression (PLUS | MINUS) expression              # Sum
+    | SEQ_LEFT expression COMMA expression SEQ_RIGHT    # Seq
+    | Identifier                                        # Ref
     ;
 
 
