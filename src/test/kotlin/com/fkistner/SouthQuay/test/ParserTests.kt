@@ -141,4 +141,25 @@ class ParserTests {
         assertParserSyntaxErrors(parser)
     }
 
+    @Test
+    fun outputInteger() {
+        val parser = parserForString("out 10")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N(RULE_program, listOf(
+                        N(RULE_statement, listOf(
+                                N(RULE_out, listOf(
+                                        L("out"),
+                                        N(RULE_expression, listOf(
+                                                N(RULE_number, listOf(L("10")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+    }
+
 }
