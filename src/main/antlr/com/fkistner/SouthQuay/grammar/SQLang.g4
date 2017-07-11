@@ -29,6 +29,7 @@ out
 
 expression
     : MINUS?  (Integer | Decimal)           # Number
+    | PAREN_LEFT expression PAREN_RIGHT     # Paren
     | expression  POW           expression  # Pow
     | expression (MUL  | DIV)   expression  # Mul
     | expression (PLUS | MINUS) expression  # Sum
@@ -47,6 +48,9 @@ MINUS: '-';
 MUL:   '*';
 DIV:   '/';
 POW:   '^';
+
+PAREN_LEFT:  '(';
+PAREN_RIGHT: ')';
 
 // Literals
 String: '"' (~["])* '"';
