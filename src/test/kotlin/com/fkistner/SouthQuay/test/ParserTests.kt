@@ -211,6 +211,15 @@ class ParserTests {
     }
 
     @Test
+    fun outputBadDecimal() {
+        val parser = parserForString("out 10.25.123")
+
+        parser.program()
+
+        assertParserSyntaxErrors(parser)
+    }
+
+    @Test
     fun outputNegativeDecimal() {
         val parser = parserForString("out -4321423.43245321459")
 
