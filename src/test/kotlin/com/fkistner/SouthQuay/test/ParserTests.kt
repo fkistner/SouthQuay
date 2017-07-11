@@ -253,4 +253,32 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputMultiAddition() {
+        val parser = parserForString("out 4+7.0+2")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Sum", listOf(
+                                                N("Sum", listOf(
+                                                        N("Number", listOf(L("4"))),
+                                                        L("+"),
+                                                        N("Number", listOf(L("7.0")))
+                                                )),
+                                                L("+"),
+                                                N("Number", listOf(L("2")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }
