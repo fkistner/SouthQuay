@@ -478,4 +478,84 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputPower() {
+        val parser = parserForString("out 25^3")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Pow", listOf(
+                                                N("Number", listOf(L("25"))),
+                                                L("^"),
+                                                N("Number", listOf(L("3")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputPrecedencePowerA() {
+        val parser = parserForString("out 0*2^1.11")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Mul", listOf(
+                                                N("Number", listOf(L("0"))),
+                                                L("*"),
+                                                N("Pow", listOf(
+                                                        N("Number", listOf(L("2"))),
+                                                        L("^"),
+                                                        N("Number", listOf(L("1.11")))
+                                                ))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputPrecedencePowerB() {
+        val parser = parserForString("out 0^2*1.11")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Mul", listOf(
+                                                N("Pow", listOf(
+                                                        N("Number", listOf(L("0"))),
+                                                        L("^"),
+                                                        N("Number", listOf(L("2")))
+                                                )),
+                                                L("*"),
+                                                N("Number", listOf(L("1.11")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }
