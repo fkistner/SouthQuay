@@ -29,6 +29,7 @@ out
 
 expression
     : (Integer | Decimal)       # Number
+    | expression '+' expression # Sum
     ;
 
 // Lexer
