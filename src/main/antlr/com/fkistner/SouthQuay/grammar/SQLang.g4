@@ -13,8 +13,9 @@ program
 // Statements
 
 statement
-    : PRINT String      # Print
-    | OUT expression    # Out
+    : PRINT String                  # Print
+    | OUT expression                # Out
+    | VAR identifier EQ expression  # Var
     ;
 
 // Expressions
@@ -28,12 +29,18 @@ expression
     | SEQ_LEFT expression COMMA expression SEQ_RIGHT # Seq
     ;
 
+// Identifier
+
+identifier
+    : Identifier
+    ;
 
 // Lexer
 
 // Keywords
 PRINT: 'print';
 OUT:   'out';
+VAR:   'var';
 
 // Operators
 PLUS:  '+';
@@ -41,6 +48,8 @@ MINUS: '-';
 MUL:   '*';
 DIV:   '/';
 POW:   '^';
+
+EQ:    '=';
 
 PAREN_LEFT:  '(';
 PAREN_RIGHT: ')';
@@ -53,8 +62,16 @@ String: '"' (~["])* '"';
 Integer: Digit+;
 Decimal: Digit+ '.' Digit+;
 
+Identifier: (Letter | Special) (Digit | Letter | Special)*;
+
 fragment
 Digit: [0-9];
+
+fragment
+Letter: [a-zA-Z];
+
+fragment
+Special: '_';
 
 // Special
 Whitespace: [ \t\r\n]+ -> skip;

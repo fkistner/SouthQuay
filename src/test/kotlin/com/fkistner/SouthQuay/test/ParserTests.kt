@@ -14,7 +14,7 @@ private data class N(val context: String, var children: List<TestTree> = listOf(
 /** Leaf Node */
 private data class L(val text: String) : TestTree()
 /** Error Node */
-private object Error : TestTree()
+private data class Error(val text: String) : TestTree()
 /** EOF Node */
 private object EOF : TestTree()
 
@@ -47,7 +47,7 @@ class ParserTests {
             }
 
             override fun visitErrorNode(node: ErrorNode): TestTree {
-                return Error
+                return Error(node.text)
             }
 
             override fun visitChildren(node: RuleNode): TestTree {
@@ -671,6 +671,54 @@ class ParserTests {
     @Test
     fun outputUnbalancedSequence() {
         val parser = parserForString("out {12+23, 42 print \"a\"")
+
+        parser.program()
+
+        assertParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun newVariable() {
+        val parser = parserForString("var _mySequence1 = {2, 12^3}")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Var", listOf(
+                                L("var"),
+                                N("Identifier", listOf(L("_mySequence1"))),
+                                L("="),
+                                N("Seq", listOf(
+                                        L("{"),
+                                        N("Number", listOf(L("2"))),
+                                        L(","),
+                                        N("Pow", listOf(
+                                                N("Number", listOf(L("12"))),
+                                                L("^"),
+                                                N("Number", listOf(L("3")))
+                                        )),
+                                        L("}")
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun newVariableInvalidIdentifierA() {
+        val parser = parserForString("var 1mySequence = {2, 12^3}")
+
+        parser.program()
+
+        assertParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun newVariableInvalidIdentifierB() {
+        val parser = parserForString("var my-Sequence = {2, 12^3}")
 
         parser.program()
 
