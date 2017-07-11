@@ -281,4 +281,56 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputSubtraction() {
+        val parser = parserForString("out 542-1342")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Sum", listOf(
+                                                N("Number", listOf(L("542"))),
+                                                L("-"),
+                                                N("Number", listOf(L("1342")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputMultiSubtraction() {
+        val parser = parserForString("out 533+42-1342")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
+                                        L("out"),
+                                        N("Sum", listOf(
+                                                N("Sum", listOf(
+                                                        N("Number", listOf(L("533"))),
+                                                        L("+"),
+                                                        N("Number", listOf(L("42")))
+                                                )),
+                                                L("-"),
+                                                N("Number", listOf(L("1342")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }

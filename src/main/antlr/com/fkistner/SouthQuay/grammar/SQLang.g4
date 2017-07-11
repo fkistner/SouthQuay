@@ -28,8 +28,8 @@ out
 // Expressions
 
 expression
-    : MINUS? (Integer | Decimal)   # Number
-    | expression '+' expression    # Sum
+    : MINUS? (Integer | Decimal)            # Number
+    | expression (PLUS | MINUS) expression  # Sum
     ;
 
 
@@ -37,7 +37,11 @@ expression
 
 // Keywords
 PRINT: 'print';
-OUT: 'out';
+OUT:   'out';
+
+// Operators
+PLUS:  '+';
+MINUS: '-';
 
 // Literals
 String: '"' (~["])* '"';
