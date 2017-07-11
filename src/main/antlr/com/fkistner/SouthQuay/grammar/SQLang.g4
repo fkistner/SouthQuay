@@ -29,7 +29,7 @@ expression
     | expression (MUL  | DIV)   expression              # Mul
     | expression (PLUS | MINUS) expression              # Sum
     | SEQ_LEFT expression COMMA expression SEQ_RIGHT    # Seq
-    | Identifier+ LAM expression                         # Lam
+    | Identifier+ LAM expression                        # Lam
     | Identifier                                        # Ref
     ;
 
