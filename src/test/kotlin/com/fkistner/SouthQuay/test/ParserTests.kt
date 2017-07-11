@@ -811,4 +811,44 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputReduce() {
+        val parser = parserForString("out 4 * reduce(sequence, 0, x y -> x + y)")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Number", listOf(L("4"))),
+                                        L("*"),
+                                        N("Fun", listOf(
+                                                L("reduce"),
+                                                L("("),
+                                                N("Ref", listOf(L("sequence"))),
+                                                L(","),
+                                                N("Number", listOf(L("0"))),
+                                                L(","),
+                                                N("Lam", listOf(
+                                                        L("x"),
+                                                        L("y"),
+                                                        L("->"),
+                                                        N("Sum", listOf(
+                                                                N("Ref", listOf(L("x"))),
+                                                                L("+"),
+                                                                N("Ref", listOf(L("y")))
+                                                        ))
+                                                )),
+                                                L(")")
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }
