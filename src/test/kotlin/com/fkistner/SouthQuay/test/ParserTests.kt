@@ -750,4 +750,65 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun newVariableFromMap() {
+        val parser = parserForString("var sequence = map({0, n}, i -> (-1)^i / (2 * i + 1))")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N("Program", listOf(
+                        N("Var", listOf(
+                                L("var"),
+                                L("sequence"),
+                                L("="),
+                                N("Fun", listOf(
+                                        L("map"),
+                                        L("("),
+                                        N("Seq", listOf(
+                                                L("{"),
+                                                N("Number", listOf(L("0"))),
+                                                L(","),
+                                                N("Ref", listOf(L("n"))),
+                                                L("}")
+                                        )),
+                                        L(","),
+                                        N("Lam", listOf(
+                                                L("i"),
+                                                L("->"),
+                                                N("Mul", listOf(
+                                                        N("Pow", listOf(
+                                                                N("Paren", listOf(
+                                                                        L("("),
+                                                                        N("Number", listOf(L("-"), L("1"))),
+                                                                        L(")")
+                                                                )),
+                                                                L("^"),
+                                                                N("Ref", listOf(L("i")))
+                                                        )),
+                                                        L("/"),
+                                                        N("Paren", listOf(
+                                                                L("("),
+                                                                N("Sum", listOf(
+                                                                        N("Mul", listOf(
+                                                                                N("Number", listOf(L("2"))),
+                                                                                L("*"),
+                                                                                N("Ref", listOf(L("i")))
+                                                                        )),
+                                                                        L("+"),
+                                                                        N("Number", listOf(L("1")))
+                                                                )),
+                                                                L(")")
+                                                        ))
+                                                ))
+                                        )),
+                                        L(")")
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }

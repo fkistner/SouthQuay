@@ -22,14 +22,16 @@ statement
 
 expression
     : MINUS?  (Integer | Decimal)                       # Number
+    | Identifier PAREN_LEFT
+        expression (COMMA expression)* PAREN_RIGHT      # Fun
     | PAREN_LEFT expression PAREN_RIGHT                 # Paren
     | expression  POW           expression              # Pow
     | expression (MUL  | DIV)   expression              # Mul
     | expression (PLUS | MINUS) expression              # Sum
     | SEQ_LEFT expression COMMA expression SEQ_RIGHT    # Seq
+    | Identifier LAM expression                         # Lam
     | Identifier                                        # Ref
     ;
-
 
 // Lexer
 
@@ -46,6 +48,7 @@ DIV:   '/';
 POW:   '^';
 
 EQ:    '=';
+LAM:   '->';
 
 PAREN_LEFT:  '(';
 PAREN_RIGHT: ')';
