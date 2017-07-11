@@ -181,7 +181,7 @@ class ParserTests {
                         N("Statement", listOf(
                                 N("Out", listOf(
                                         L("out"),
-                                        N("Number", listOf(L("-42")))
+                                        N("Number", listOf(L("-"), L("42")))
                                 ))
                         )),
                         EOF
@@ -221,7 +221,7 @@ class ParserTests {
                         N("Statement", listOf(
                                 N("Out", listOf(
                                         L("out"),
-                                        N("Number", listOf(L("-4321423.43245321459")))
+                                        N("Number", listOf(L("-"), L("4321423.43245321459")))
                                 ))
                         )),
                         EOF

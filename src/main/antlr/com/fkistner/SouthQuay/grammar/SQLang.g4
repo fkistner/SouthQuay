@@ -28,9 +28,10 @@ out
 // Expressions
 
 expression
-    : (Integer | Decimal)       # Number
-    | expression '+' expression # Sum
+    : MINUS? (Integer | Decimal)   # Number
+    | expression '+' expression    # Sum
     ;
+
 
 // Lexer
 
@@ -40,14 +41,11 @@ OUT: 'out';
 
 // Literals
 String: '"' (~["])* '"';
-Integer: Sign? Digit+;
-Decimal: Sign? Digit+ '.' Digit+;
+Integer: Digit+;
+Decimal: Digit+ '.' Digit+;
 
 fragment
 Digit: [0-9];
-
-fragment
-Sign: '-';
 
 // Special
 Whitespace: [ \t\r\n]+ -> skip;
