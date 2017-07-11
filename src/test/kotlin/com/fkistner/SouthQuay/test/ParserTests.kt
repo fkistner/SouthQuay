@@ -103,4 +103,23 @@ class ParserTests {
                 toTestTree(program))
     }
 
+    @Test
+    fun printStatements() {
+        val parser = bailingParserForString("print \"hello\" print \"xyz\"")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N(RULE_program, listOf(
+                        N(RULE_statement, listOf(
+                                N(RULE_print, listOf(L("print"), L("\"hello\"")))
+                        )),
+                        N(RULE_statement, listOf(
+                                N(RULE_print, listOf(L("print"), L("\"xyz\"")))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+    }
+
 }

@@ -7,7 +7,7 @@ package com.fkistner.SouthQuay.grammar;
 // Parser
 
 program
-    : statement? EOF
+    : statement* EOF
     ;
 
 statement
