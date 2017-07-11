@@ -20,23 +20,10 @@ private object EOF : TestTree()
 
 class ParserTests {
 
-    object BailErrorListener: BaseErrorListener() {
-        override fun syntaxError(recognizer: Recognizer<*, *>?, offendingSymbol: Any?, line: Int, charPositionInLine: Int, msg: String?, e: RecognitionException?) {
-            throw e ?: AssertionError("Recovered mismatched token error")
-        }
-    }
-
-    private fun parserForString(testString: String): Pair<SQLangLexer, SQLangParser> {
+    private fun parserForString(testString: String): SQLangParser {
         val charStream = CharStreams.fromReader(StringReader(testString))
         val lexer = SQLangLexer(charStream)
         val parser = SQLangParser(CommonTokenStream(lexer))
-        return Pair(lexer, parser)
-    }
-
-    private fun bailingParserForString(testString: String): SQLangParser {
-        val (lexer, parser) = parserForString(testString)
-        lexer.addErrorListener(BailErrorListener)
-        parser.addErrorListener(BailErrorListener)
         return parser
     }
 
@@ -62,7 +49,7 @@ class ParserTests {
 
     @Test
     fun emptyInput() {
-        val parser = bailingParserForString("")
+        val parser = parserForString("")
 
         val program = parser.program()
 
@@ -71,25 +58,25 @@ class ParserTests {
 
     @Test
     fun whitespaceInput() {
-        val parser = bailingParserForString("  \n  ")
+        val parser = parserForString("  \n  ")
 
         val program = parser.program()
 
         Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
     }
 
-    @Test(expected = RecognitionException::class)
+    @Test
     fun triviallyIllegalInput() {
-        val parser = bailingParserForString("xyz")
+        val parser = parserForString("xyz")
 
         parser.program()
 
-        // Assert = RecognitionException
+        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
     }
 
     @Test
     fun printStatement() {
-        val parser = bailingParserForString("print \"hello\"")
+        val parser = parserForString("print \"hello\"")
 
         val program = parser.program()
 
@@ -105,7 +92,7 @@ class ParserTests {
 
     @Test
     fun printStatements() {
-        val parser = bailingParserForString("print \"hello\" print \"xyz\"")
+        val parser = parserForString("print \"hello\" print \"xyz\"")
 
         val program = parser.program()
 
@@ -120,6 +107,33 @@ class ParserTests {
                         EOF
                 )),
                 toTestTree(program))
+    }
+
+    @Test
+    fun printUnbalancedQuotesA() {
+        val parser = parserForString("print \"hello print \"xyz\"")
+
+        parser.program()
+
+        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+    }
+
+    @Test
+    fun printUnbalancedQuotesB() {
+        val parser = parserForString("print \"hello\" print \"xyz")
+
+        parser.program()
+
+        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+    }
+
+    @Test
+    fun printUnbalancedQuotesC() {
+        val parser = parserForString("print \"hello\" print xyz\"")
+
+        parser.program()
+
+        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
     }
 
 }

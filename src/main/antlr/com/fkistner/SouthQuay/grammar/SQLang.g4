@@ -26,3 +26,4 @@ PRINT: 'print';
 String: '"' (~["])* '"';
 
 Whitespace: [ \t\r\n]+ -> skip;
+Error: .;
