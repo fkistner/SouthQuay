@@ -172,4 +172,25 @@ class ParserTests {
         assertNoParserSyntaxErrors(parser)
     }
 
+    @Test
+    fun outputNegativeInteger() {
+        val parser = parserForString("out -42")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N(RULE_program, listOf(
+                        N(RULE_statement, listOf(
+                                N(RULE_out, listOf(
+                                        L("out"),
+                                        N(RULE_expression, listOf(
+                                                N(RULE_number, listOf(L("-42")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }

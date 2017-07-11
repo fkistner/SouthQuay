@@ -43,7 +43,13 @@ OUT: 'out';
 
 // Literals
 String: '"' (~["])* '"';
-Integer: [0-9]+;
+Integer: Sign? Digit+;
+
+fragment
+Digit: [0-9];
+
+fragment
+Sign: '-';
 
 // Special
 Whitespace: [ \t\r\n]+ -> skip;
