@@ -94,9 +94,7 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Print", listOf(L("print"), L("\"hello\"")))
-                        )),
+                        N("Print", listOf(L("print"), L("\"hello\""))),
                         EOF
                 )),
                 toTestTree(program))
@@ -111,12 +109,8 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Print", listOf(L("print"), L("\"hello\"")))
-                        )),
-                        N("Statement", listOf(
-                                N("Print", listOf(L("print"), L("\"xyz\"")))
-                        )),
+                        N("Print", listOf(L("print"), L("\"hello\""))),
+                        N("Print", listOf(L("print"), L("\"xyz\""))),
                         EOF
                 )),
                 toTestTree(program))
@@ -158,11 +152,9 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Number", listOf(L("10")))
-                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Number", listOf(L("10")))
                         )),
                         EOF
                 )),
@@ -178,11 +170,9 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Number", listOf(L("-"), L("42")))
-                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Number", listOf(L("-"), L("42")))
                         )),
                         EOF
                 )),
@@ -198,11 +188,9 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Number", listOf(L("10.25")))
-                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Number", listOf(L("10.25")))
                         )),
                         EOF
                 )),
@@ -227,11 +215,9 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Number", listOf(L("-"), L("4321423.43245321459")))
-                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Number", listOf(L("-"), L("4321423.43245321459")))
                         )),
                         EOF
                 )),
@@ -247,14 +233,12 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Sum", listOf(
-                                                N("Number", listOf(L("4"))),
-                                                L("+"),
-                                                N("Number", listOf(L("7.0")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Sum", listOf(
+                                        N("Number", listOf(L("4"))),
+                                        L("+"),
+                                        N("Number", listOf(L("7.0")))
                                 ))
                         )),
                         EOF
@@ -271,18 +255,16 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
+                        N("Out", listOf(
+                                L("out"),
+                                N("Sum", listOf(
                                         N("Sum", listOf(
-                                                N("Sum", listOf(
-                                                        N("Number", listOf(L("4"))),
-                                                        L("+"),
-                                                        N("Number", listOf(L("7.0")))
-                                                )),
+                                                N("Number", listOf(L("4"))),
                                                 L("+"),
-                                                N("Number", listOf(L("2")))
-                                        ))
+                                                N("Number", listOf(L("7.0")))
+                                        )),
+                                        L("+"),
+                                        N("Number", listOf(L("2")))
                                 ))
                         )),
                         EOF
@@ -299,14 +281,12 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Sum", listOf(
-                                                N("Number", listOf(L("542"))),
-                                                L("-"),
-                                                N("Number", listOf(L("1342")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Sum", listOf(
+                                        N("Number", listOf(L("542"))),
+                                        L("-"),
+                                        N("Number", listOf(L("1342")))
                                 ))
                         )),
                         EOF
@@ -323,18 +303,16 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
+                        N("Out", listOf(
+                                L("out"),
+                                N("Sum", listOf(
                                         N("Sum", listOf(
-                                                N("Sum", listOf(
-                                                        N("Number", listOf(L("533"))),
-                                                        L("+"),
-                                                        N("Number", listOf(L("42")))
-                                                )),
-                                                L("-"),
-                                                N("Number", listOf(L("1342")))
-                                        ))
+                                                N("Number", listOf(L("533"))),
+                                                L("+"),
+                                                N("Number", listOf(L("42")))
+                                        )),
+                                        L("-"),
+                                        N("Number", listOf(L("1342")))
                                 ))
                         )),
                         EOF
@@ -351,14 +329,12 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Mul", listOf(
-                                                N("Number", listOf(L("1.25"))),
-                                                L("*"),
-                                                N("Number", listOf(L("3.123")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Number", listOf(L("1.25"))),
+                                        L("*"),
+                                        N("Number", listOf(L("3.123")))
                                 ))
                         )),
                         EOF
@@ -375,14 +351,12 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Mul", listOf(
-                                                N("Number", listOf(L("42"))),
-                                                L("/"),
-                                                N("Number", listOf(L("3.0")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Number", listOf(L("42"))),
+                                        L("/"),
+                                        N("Number", listOf(L("3.0")))
                                 ))
                         )),
                         EOF
@@ -399,22 +373,20 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
                                         N("Mul", listOf(
                                                 N("Mul", listOf(
-                                                        N("Mul", listOf(
-                                                                N("Number", listOf(L("42"))),
-                                                                L("/"),
-                                                                N("Number", listOf(L("12.11")))
-                                                        )),
-                                                        L("*"),
-                                                        N("Number", listOf(L("33331")))
+                                                        N("Number", listOf(L("42"))),
+                                                        L("/"),
+                                                        N("Number", listOf(L("12.11")))
                                                 )),
-                                                L("/"),
-                                                N("Number", listOf(L("3.0")))
-                                        ))
+                                                L("*"),
+                                                N("Number", listOf(L("33331")))
+                                        )),
+                                        L("/"),
+                                        N("Number", listOf(L("3.0")))
                                 ))
                         )),
                         EOF
@@ -431,17 +403,15 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Sum", listOf(
-                                                N("Number", listOf(L("1"))),
-                                                L("+"),
-                                                N("Mul", listOf(
-                                                        N("Number", listOf(L("2"))),
-                                                        L("*"),
-                                                        N("Number", listOf(L("4")))
-                                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Sum", listOf(
+                                        N("Number", listOf(L("1"))),
+                                        L("+"),
+                                        N("Mul", listOf(
+                                                N("Number", listOf(L("2"))),
+                                                L("*"),
+                                                N("Number", listOf(L("4")))
                                         ))
                                 ))
                         )),
@@ -459,18 +429,16 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Sum", listOf(
-                                                N("Mul", listOf(
-                                                        N("Number", listOf(L("1"))),
-                                                        L("*"),
-                                                        N("Number", listOf(L("2")))
-                                                )),
-                                                L("-"),
-                                                N("Number", listOf(L("4")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Sum", listOf(
+                                        N("Mul", listOf(
+                                                N("Number", listOf(L("1"))),
+                                                L("*"),
+                                                N("Number", listOf(L("2")))
+                                        )),
+                                        L("-"),
+                                        N("Number", listOf(L("4")))
                                 ))
                         )),
                         EOF
@@ -487,14 +455,12 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Pow", listOf(
-                                                N("Number", listOf(L("25"))),
-                                                L("^"),
-                                                N("Number", listOf(L("3")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Pow", listOf(
+                                        N("Number", listOf(L("25"))),
+                                        L("^"),
+                                        N("Number", listOf(L("3")))
                                 ))
                         )),
                         EOF
@@ -511,17 +477,15 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Mul", listOf(
-                                                N("Number", listOf(L("0"))),
-                                                L("*"),
-                                                N("Pow", listOf(
-                                                        N("Number", listOf(L("2"))),
-                                                        L("^"),
-                                                        N("Number", listOf(L("1.11")))
-                                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Number", listOf(L("0"))),
+                                        L("*"),
+                                        N("Pow", listOf(
+                                                N("Number", listOf(L("2"))),
+                                                L("^"),
+                                                N("Number", listOf(L("1.11")))
                                         ))
                                 ))
                         )),
@@ -539,18 +503,16 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Mul", listOf(
-                                                N("Pow", listOf(
-                                                        N("Number", listOf(L("0"))),
-                                                        L("^"),
-                                                        N("Number", listOf(L("2")))
-                                                )),
-                                                L("*"),
-                                                N("Number", listOf(L("1.11")))
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Pow", listOf(
+                                                N("Number", listOf(L("0"))),
+                                                L("^"),
+                                                N("Number", listOf(L("2")))
+                                        )),
+                                        L("*"),
+                                        N("Number", listOf(L("1.11")))
                                 ))
                         )),
                         EOF
@@ -567,14 +529,12 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Paren", listOf(
-                                                L("("),
-                                                N("Number", listOf(L("42"))),
-                                                L(")")
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Paren", listOf(
+                                        L("("),
+                                        N("Number", listOf(L("42"))),
+                                        L(")")
                                 ))
                         )),
                         EOF
@@ -600,22 +560,20 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Mul", listOf(
-                                                N("Paren", listOf(
-                                                        L("("),
-                                                        N("Sum", listOf(
-                                                                N("Number", listOf(L("1"))),
-                                                                L("+"),
-                                                                N("Number", listOf(L("2")))
-                                                        )),
-                                                        L(")")
+                        N("Out", listOf(
+                                L("out"),
+                                N("Mul", listOf(
+                                        N("Paren", listOf(
+                                                L("("),
+                                                N("Sum", listOf(
+                                                        N("Number", listOf(L("1"))),
+                                                        L("+"),
+                                                        N("Number", listOf(L("2")))
                                                 )),
-                                                L("*"),
-                                                N("Number", listOf(L("4")))
-                                        ))
+                                                L(")")
+                                        )),
+                                        L("*"),
+                                        N("Number", listOf(L("4")))
                                 ))
                         )),
                         EOF
@@ -632,21 +590,19 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Pow", listOf(
-                                                N("Number", listOf(L("1"))),
-                                                L("^"),
-                                                N("Paren", listOf(
-                                                        L("("),
-                                                        N("Mul", listOf(
-                                                                N("Number", listOf(L("2"))),
-                                                                L("*"),
-                                                                N("Number", listOf(L("4")))
-                                                        )),
-                                                        L(")")
-                                                ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Pow", listOf(
+                                        N("Number", listOf(L("1"))),
+                                        L("^"),
+                                        N("Paren", listOf(
+                                                L("("),
+                                                N("Mul", listOf(
+                                                        N("Number", listOf(L("2"))),
+                                                        L("*"),
+                                                        N("Number", listOf(L("4")))
+                                                )),
+                                                L(")")
                                         ))
                                 ))
                         )),
@@ -664,16 +620,14 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Seq", listOf(
-                                                L("{"),
-                                                N("Number", listOf(L("12"))),
-                                                L(","),
-                                                N("Number", listOf(L("42"))),
-                                                L("}")
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Seq", listOf(
+                                        L("{"),
+                                        N("Number", listOf(L("12"))),
+                                        L(","),
+                                        N("Number", listOf(L("42"))),
+                                        L("}")
                                 ))
                         )),
                         EOF
@@ -690,24 +644,22 @@ class ParserTests {
 
         Assert.assertEquals(
                 N("Program", listOf(
-                        N("Statement", listOf(
-                                N("Out", listOf(
-                                        L("out"),
-                                        N("Seq", listOf(
-                                                L("{"),
-                                                N("Sum", listOf(
-                                                        N("Number", listOf(L("12"))),
-                                                        L("-"),
-                                                        N("Number", listOf(L("4")))
-                                                )),
-                                                L(","),
-                                                N("Pow", listOf(
-                                                        N("Number", listOf(L("42"))),
-                                                        L("^"),
-                                                        N("Number", listOf(L("3")))
-                                                )),
-                                                L("}")
-                                        ))
+                        N("Out", listOf(
+                                L("out"),
+                                N("Seq", listOf(
+                                        L("{"),
+                                        N("Sum", listOf(
+                                                N("Number", listOf(L("12"))),
+                                                L("-"),
+                                                N("Number", listOf(L("4")))
+                                        )),
+                                        L(","),
+                                        N("Pow", listOf(
+                                                N("Number", listOf(L("42"))),
+                                                L("^"),
+                                                N("Number", listOf(L("3")))
+                                        )),
+                                        L("}")
                                 ))
                         )),
                         EOF

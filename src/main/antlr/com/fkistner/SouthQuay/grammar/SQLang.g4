@@ -13,16 +13,8 @@ program
 // Statements
 
 statement
-    : print
-    | out
-    ;
-
-print
-    : PRINT String
-    ;
-
-out
-    : OUT expression
+    : PRINT String      # Print
+    | OUT expression    # Out
     ;
 
 // Expressions
