@@ -687,7 +687,7 @@ class ParserTests {
                 N("Program", listOf(
                         N("Var", listOf(
                                 L("var"),
-                                N("Identifier", listOf(L("_mySequence1"))),
+                                L("_mySequence1"),
                                 L("="),
                                 N("Seq", listOf(
                                         L("{"),

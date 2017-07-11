@@ -15,7 +15,7 @@ program
 statement
     : PRINT String                  # Print
     | OUT expression                # Out
-    | VAR identifier EQ expression  # Var
+    | VAR Identifier EQ expression  # Var
     ;
 
 // Expressions
@@ -29,11 +29,6 @@ expression
     | SEQ_LEFT expression COMMA expression SEQ_RIGHT # Seq
     ;
 
-// Identifier
-
-identifier
-    : Identifier
-    ;
 
 // Lexer
 
