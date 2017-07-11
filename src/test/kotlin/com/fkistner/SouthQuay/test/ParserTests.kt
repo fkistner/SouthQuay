@@ -62,37 +62,45 @@ class ParserTests {
 
     @Test
     fun emptyInput() {
-        // Arrange
         val parser = bailingParserForString("")
 
-        // Act
         val program = parser.program()
 
-        // Assert = no exception
         Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
     }
 
     @Test
     fun whitespaceInput() {
-        // Arrange
         val parser = bailingParserForString("  \n  ")
 
-        // Act
         val program = parser.program()
 
-        // Assert = no exception
         Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
     }
 
     @Test(expected = RecognitionException::class)
     fun triviallyIllegalInput() {
-        // Arrange
         val parser = bailingParserForString("xyz")
 
-        // Act
         parser.program()
 
         // Assert = RecognitionException
+    }
+
+    @Test
+    fun printStatement() {
+        val parser = bailingParserForString("print \"hello\"")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N(RULE_program, listOf(
+                        N(RULE_statement, listOf(
+                                N(RULE_print, listOf(L("print"), L("\"hello\"")))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
     }
 
 }
