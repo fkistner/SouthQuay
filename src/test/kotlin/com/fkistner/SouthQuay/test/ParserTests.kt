@@ -18,6 +18,11 @@ private object Error : TestTree()
 /** EOF Node */
 private object EOF : TestTree()
 
+/** Assert that parser has detected syntax errors */
+private fun assertParserSyntaxErrors(parser: SQLangParser) {
+    Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+}
+
 class ParserTests {
 
     private fun parserForString(testString: String): SQLangParser {
@@ -71,7 +76,7 @@ class ParserTests {
 
         parser.program()
 
-        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+        assertParserSyntaxErrors(parser)
     }
 
     @Test
@@ -115,7 +120,7 @@ class ParserTests {
 
         parser.program()
 
-        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+        assertParserSyntaxErrors(parser)
     }
 
     @Test
@@ -124,7 +129,7 @@ class ParserTests {
 
         parser.program()
 
-        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+        assertParserSyntaxErrors(parser)
     }
 
     @Test
@@ -133,7 +138,7 @@ class ParserTests {
 
         parser.program()
 
-        Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
+        assertParserSyntaxErrors(parser)
     }
 
 }
