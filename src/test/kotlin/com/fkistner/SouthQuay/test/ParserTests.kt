@@ -23,6 +23,11 @@ private fun assertParserSyntaxErrors(parser: SQLangParser) {
     Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
 }
 
+/** Assert that parser was able to parse source without errors */
+private fun assertNoParserSyntaxErrors(parser: SQLangParser) {
+    Assert.assertEquals("Parser should not have syntax errors.", 0, parser.numberOfSyntaxErrors)
+}
+
 class ParserTests {
 
     private fun parserForString(testString: String): SQLangParser {
@@ -59,6 +64,7 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
     }
 
     @Test
@@ -68,6 +74,7 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
     }
 
     @Test
@@ -93,6 +100,7 @@ class ParserTests {
                         EOF
                 )),
                 toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
     }
 
     @Test
@@ -112,6 +120,7 @@ class ParserTests {
                         EOF
                 )),
                 toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
     }
 
     @Test
@@ -160,6 +169,7 @@ class ParserTests {
                         EOF
                 )),
                 toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
     }
 
 }
