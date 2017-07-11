@@ -193,4 +193,48 @@ class ParserTests {
                 toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
+
+    @Test
+    fun outputDecimal() {
+        val parser = parserForString("out 10.25")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N(RULE_program, listOf(
+                        N(RULE_statement, listOf(
+                                N(RULE_out, listOf(
+                                        L("out"),
+                                        N(RULE_expression, listOf(
+                                                N(RULE_number, listOf(L("10.25")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
+
+    @Test
+    fun outputNegativeDecimal() {
+        val parser = parserForString("out -4321423.43245321459")
+
+        val program = parser.program()
+
+        Assert.assertEquals(
+                N(RULE_program, listOf(
+                        N(RULE_statement, listOf(
+                                N(RULE_out, listOf(
+                                        L("out"),
+                                        N(RULE_expression, listOf(
+                                                N(RULE_number, listOf(L("-4321423.43245321459")))
+                                        ))
+                                ))
+                        )),
+                        EOF
+                )),
+                toTestTree(program))
+        assertNoParserSyntaxErrors(parser)
+    }
 }

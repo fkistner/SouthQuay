@@ -33,6 +33,7 @@ expression
 
 number
     : Integer
+    | Decimal
     ;
 
 // Lexer
@@ -44,6 +45,7 @@ OUT: 'out';
 // Literals
 String: '"' (~["])* '"';
 Integer: Sign? Digit+;
+Decimal: Sign? Digit+ '.' Digit+;
 
 fragment
 Digit: [0-9];
