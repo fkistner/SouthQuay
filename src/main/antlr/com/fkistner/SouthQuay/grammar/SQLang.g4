@@ -28,12 +28,7 @@ out
 // Expressions
 
 expression
-    : number
-    ;
-
-number
-    : Integer
-    | Decimal
+    : (Integer | Decimal)       # Number
     ;
 
 // Lexer

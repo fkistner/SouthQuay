@@ -10,7 +10,7 @@ import java.io.StringReader
 /** Simplified tree of parsed rules and tokens */
 private sealed class TestTree
 /** Rule Node */
-private data class N(val ruleIdx: Int, var children: List<TestTree> = listOf()) : TestTree()
+private data class N(val context: String, var children: List<TestTree> = listOf()) : TestTree()
 /** Leaf Node */
 private data class L(val text: String) : TestTree()
 /** Error Node */
@@ -52,7 +52,7 @@ class ParserTests {
 
             override fun visitChildren(node: RuleNode): TestTree {
                 val children = (0 until node.childCount).map { node.getChild(it).accept(this) }
-                return N(node.ruleContext.ruleIndex, children)
+                return N(node.ruleContext.javaClass.simpleName.removeSuffix("Context"), children)
             }
         })
     }
@@ -63,7 +63,7 @@ class ParserTests {
 
         val program = parser.program()
 
-        Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
+        Assert.assertEquals(N("Program", listOf(EOF)), toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
 
@@ -73,7 +73,7 @@ class ParserTests {
 
         val program = parser.program()
 
-        Assert.assertEquals(N(RULE_program, listOf(EOF)), toTestTree(program))
+        Assert.assertEquals(N("Program", listOf(EOF)), toTestTree(program))
         assertNoParserSyntaxErrors(parser)
     }
 
@@ -93,9 +93,9 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(
-                N(RULE_program, listOf(
-                        N(RULE_statement, listOf(
-                                N(RULE_print, listOf(L("print"), L("\"hello\"")))
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Print", listOf(L("print"), L("\"hello\"")))
                         )),
                         EOF
                 )),
@@ -110,12 +110,12 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(
-                N(RULE_program, listOf(
-                        N(RULE_statement, listOf(
-                                N(RULE_print, listOf(L("print"), L("\"hello\"")))
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Print", listOf(L("print"), L("\"hello\"")))
                         )),
-                        N(RULE_statement, listOf(
-                                N(RULE_print, listOf(L("print"), L("\"xyz\"")))
+                        N("Statement", listOf(
+                                N("Print", listOf(L("print"), L("\"xyz\"")))
                         )),
                         EOF
                 )),
@@ -157,13 +157,11 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(
-                N(RULE_program, listOf(
-                        N(RULE_statement, listOf(
-                                N(RULE_out, listOf(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
                                         L("out"),
-                                        N(RULE_expression, listOf(
-                                                N(RULE_number, listOf(L("10")))
-                                        ))
+                                        N("Number", listOf(L("10")))
                                 ))
                         )),
                         EOF
@@ -179,13 +177,11 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(
-                N(RULE_program, listOf(
-                        N(RULE_statement, listOf(
-                                N(RULE_out, listOf(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
                                         L("out"),
-                                        N(RULE_expression, listOf(
-                                                N(RULE_number, listOf(L("-42")))
-                                        ))
+                                        N("Number", listOf(L("-42")))
                                 ))
                         )),
                         EOF
@@ -201,13 +197,11 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(
-                N(RULE_program, listOf(
-                        N(RULE_statement, listOf(
-                                N(RULE_out, listOf(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
                                         L("out"),
-                                        N(RULE_expression, listOf(
-                                                N(RULE_number, listOf(L("10.25")))
-                                        ))
+                                        N("Number", listOf(L("10.25")))
                                 ))
                         )),
                         EOF
@@ -223,13 +217,11 @@ class ParserTests {
         val program = parser.program()
 
         Assert.assertEquals(
-                N(RULE_program, listOf(
-                        N(RULE_statement, listOf(
-                                N(RULE_out, listOf(
+                N("Program", listOf(
+                        N("Statement", listOf(
+                                N("Out", listOf(
                                         L("out"),
-                                        N(RULE_expression, listOf(
-                                                N(RULE_number, listOf(L("-4321423.43245321459")))
-                                        ))
+                                        N("Number", listOf(L("-4321423.43245321459")))
                                 ))
                         )),
                         EOF
