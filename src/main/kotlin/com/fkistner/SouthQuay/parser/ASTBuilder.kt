@@ -22,17 +22,15 @@ fun SQLangParser.toAST() : Program {
 fun SQLangParser.ProgramContext.toAST() : Program {
     val children = this.statement().map { it.accept(object : SQLangBaseVisitor<Statement>() {
         override fun visitPrint(ctx: SQLangParser.PrintContext): Statement {
-            return PrintStatement(ctx.String().text.trim('"'))
+            return PrintStatement(ctx.string.text.trim('"'))
         }
 
         override fun visitOut(ctx: SQLangParser.OutContext): Statement {
-            val expression = ctx.expression().toAST()
-            return OutStatement(expression)
+            return OutStatement(ctx.expr.toAST())
         }
 
         override fun visitVar(ctx: SQLangParser.VarContext): Statement {
-            val expression = ctx.expression().toAST()
-            return VarStatement(ctx.Identifier().text, expression)
+            return VarStatement(ctx.ident.text, ctx.expr.toAST())
         }
     }) }
     return Program(children)
@@ -41,14 +39,13 @@ fun SQLangParser.ProgramContext.toAST() : Program {
 fun SQLangParser.ExpressionContext.toAST() : Expression {
     return this.accept(object : SQLangBaseVisitor<Expression>() {
         override fun visitNumber(ctx: SQLangParser.NumberContext): Expression {
-            val minus = ctx.MINUS()
-            ctx.Integer()?.let {
+            ctx.integer?.let {
                 val value = it.text.toInt()
-                return IntegerLiteral(if (minus == null) value else value.unaryMinus())
+                return IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus())
             }
-            ctx.Real().let {
+            ctx.real.let {
                 val value = it.text.toDouble()
-                return RealLiteral(if (minus == null) value else value.unaryMinus())
+                return RealLiteral(if (ctx.minus == null) value else value.unaryMinus())
             }
         }
 

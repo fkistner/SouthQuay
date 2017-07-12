@@ -13,15 +13,15 @@ program
 // Statements
 
 statement
-    : PRINT String                  # Print
-    | OUT expression                # Out
-    | VAR Identifier EQ expression  # Var
+    : PRINT string=String                       # Print
+    | OUT expr=expression                       # Out
+    | VAR ident=Identifier EQ expr=expression   # Var
     ;
 
 // Expressions
 
 expression
-    : MINUS?  (Integer | Real)                          # Number
+    : minus=MINUS?  (integer=Integer | real=Real)       # Number
     | Identifier PAREN_LEFT
         expression (COMMA expression)* PAREN_RIGHT      # Fun
     | PAREN_LEFT expression PAREN_RIGHT                 # Paren
