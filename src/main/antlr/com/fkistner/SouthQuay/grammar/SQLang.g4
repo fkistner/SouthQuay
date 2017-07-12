@@ -22,16 +22,16 @@ statement
 
 expression
     : minus=MINUS?  (integer=Integer | real=Real)           # Number
-    | Identifier PAREN_LEFT
-        expression (COMMA expression)* PAREN_RIGHT          # Fun
+    | fun=Identifier PAREN_LEFT arg+=expression
+            (COMMA arg+=expression)* PAREN_RIGHT            # Fun
     | PAREN_LEFT expr=expression PAREN_RIGHT                # Paren
     | left=expression op= POW           right=expression    # Pow
     | left=expression op=(MUL  | DIV)   right=expression    # Mul
     | left=expression op=(PLUS | MINUS) right=expression    # Sum
     | SEQ_LEFT from=expression COMMA
                  to=expression SEQ_RIGHT                    # Seq
-    | Identifier+ LAM expression                            # Lam
-    | Identifier                                            # Ref
+    | params+=Identifier+ LAM body=expression               # Lam
+    | ident=Identifier                                      # Ref
     ;
 
 // Lexer

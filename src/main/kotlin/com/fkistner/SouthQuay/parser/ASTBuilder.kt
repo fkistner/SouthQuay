@@ -21,6 +21,11 @@ data class Mul(val left: Expression, val right: Expression) : Expression()
 data class Div(val left: Expression, val right: Expression) : Expression()
 data class Pow(val left: Expression, val right: Expression) : Expression()
 
+data class FunctionInvoc(val identifier: String, val args: List<Expression>) : Expression()
+data class Lambda(val parameters: List<String>, val body: Expression) : Expression()
+data class VariableRef(val identifier: String) : Expression()
+
+
 fun SQLangParser.toAST() : Program {
     return this.program().toAST()
 }
@@ -77,6 +82,18 @@ fun SQLangParser.ExpressionContext.toAST() : Expression {
 
         override fun visitParen(ctx: SQLangParser.ParenContext): Expression {
             return ctx.expr.toAST();
+        }
+
+        override fun visitRef(ctx: SQLangParser.RefContext): Expression {
+            return VariableRef(ctx.ident.text)
+        }
+
+        override fun visitLam(ctx: SQLangParser.LamContext): Expression {
+            return Lambda(ctx.params.map { it.text }, ctx.body.toAST())
+        }
+
+        override fun visitFun(ctx: SQLangParser.FunContext): Expression {
+            return FunctionInvoc(ctx.`fun`.text, ctx.arg.map { it.toAST() })
         }
     })
 }

@@ -110,4 +110,19 @@ class ASTTests {
                 )),
                 ast)
     }
+
+    @Test
+    fun newVariableFromMap() {
+        val parser = parserForString("var i = map({1, 4}, n -> 2 * n)")
+
+        val ast = parser.toAST()
+
+        Assert.assertEquals(Program(listOf(
+                    VarStatement("i", FunctionInvoc("map", listOf(
+                            Sequence(IntegerLiteral(1), IntegerLiteral(4)),
+                            Lambda(listOf("n"), Mul(IntegerLiteral(2), VariableRef("n")))
+                    )))
+                )),
+                ast)
+    }
 }
