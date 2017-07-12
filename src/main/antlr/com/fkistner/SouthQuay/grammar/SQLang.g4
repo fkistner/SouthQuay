@@ -21,7 +21,7 @@ statement
 // Expressions
 
 expression
-    : MINUS?  (Integer | Decimal)                       # Number
+    : MINUS?  (Integer | Real)                          # Number
     | Identifier PAREN_LEFT
         expression (COMMA expression)* PAREN_RIGHT      # Fun
     | PAREN_LEFT expression PAREN_RIGHT                 # Paren
@@ -59,7 +59,7 @@ COMMA: ',';
 // Literals
 String: '"' (~["])* '"';
 Integer: Digit+;
-Decimal: Digit+ '.' Digit+;
+Real:    Digit+ '.' Digit+;
 
 Identifier: (Letter | Special) (Digit | Letter | Special)*;
 

@@ -11,7 +11,7 @@ data class OutStatement  (val expression: Expression) : Statement()
 
 sealed class Expression : ASTNode()
 data class IntegerLiteral(val value: Int)    : Expression()
-data class DecimalLiteral(val value: Double) : Expression()
+data class RealLiteral   (val value: Double) : Expression()
 
 fun SQLangParser.toAST() : Program {
     return this.program().toAST()
@@ -39,9 +39,9 @@ fun SQLangParser.ExpressionContext.toAST() : Expression {
                 val value = it.text.toInt()
                 return IntegerLiteral(if (minus == null) value else value.unaryMinus())
             }
-            ctx.Decimal().let {
+            ctx.Real().let {
                 val value = it.text.toDouble()
-                return DecimalLiteral(if (minus == null) value else value.unaryMinus())
+                return RealLiteral(if (minus == null) value else value.unaryMinus())
             }
         }
     })

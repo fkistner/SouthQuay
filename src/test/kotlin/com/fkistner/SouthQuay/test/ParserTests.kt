@@ -152,7 +152,7 @@ class ParserTests {
     }
 
     @Test
-    fun outputDecimal() {
+    fun outputReal() {
         val parser = parserForString("out 10.25")
 
         val program = parser.program()
@@ -170,7 +170,7 @@ class ParserTests {
     }
 
     @Test
-    fun outputBadDecimal() {
+    fun outputBadReal() {
         val parser = parserForString("out 10.25.123")
 
         parser.program()
@@ -179,7 +179,7 @@ class ParserTests {
     }
 
     @Test
-    fun outputNegativeDecimal() {
+    fun outputNegativeReal() {
         val parser = parserForString("out -4321423.43245321459")
 
         val program = parser.program()

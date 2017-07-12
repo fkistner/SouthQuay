@@ -53,25 +53,25 @@ class ASTTests {
     }
 
     @Test
-    fun outputDecimal() {
+    fun outputReal() {
         val parser = parserForString("out 10.123")
 
         val ast = parser.toAST()
 
         Assert.assertEquals(Program(listOf(
-                    OutStatement(DecimalLiteral(10.123))
+                    OutStatement(RealLiteral(10.123))
                 )),
                 ast)
     }
 
     @Test
-    fun outputNegativeDecimal() {
+    fun outputNegativeReal() {
         val parser = parserForString("out -10.123")
 
         val ast = parser.toAST()
 
         Assert.assertEquals(Program(listOf(
-                    OutStatement(DecimalLiteral(-10.123))
+                    OutStatement(RealLiteral(-10.123))
                 )),
                 ast)
     }
