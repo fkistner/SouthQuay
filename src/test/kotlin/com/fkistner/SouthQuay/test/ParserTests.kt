@@ -8,7 +8,7 @@ import org.junit.*
 
 class ParserTests {
 
-    private fun toTestTree(program: ProgramContext) : TestTree {
+    private fun toTestTree(program: ProgramContext): TestTree {
         return program.accept(object : SQLangBaseVisitor<TestTree>() {
             override fun visitTerminal(node: TerminalNode): TestTree {
                 return if (node.symbol.type == Recognizer.EOF)

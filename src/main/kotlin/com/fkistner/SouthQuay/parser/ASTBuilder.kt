@@ -3,34 +3,34 @@ package com.fkistner.SouthQuay.parser
 import com.fkistner.SouthQuay.grammar.*
 
 sealed class ASTNode
-data class Program(val statements: List<Statement> = listOf()) : ASTNode()
+data class Program(val statements: List<Statement> = listOf()): ASTNode()
 
 sealed class Statement : ASTNode()
 data class PrintStatement(val stringLiteral: String)  : Statement()
-data class OutStatement  (val expression: Expression) : Statement()
-data class VarStatement  (val identifier: String, val expression: Expression) : Statement()
+data class OutStatement  (val expression: Expression): Statement()
+data class VarStatement  (val identifier: String, val expression: Expression): Statement()
 
 sealed class Expression : ASTNode()
 data class IntegerLiteral(val value: Int)    : Expression()
-data class RealLiteral   (val value: Double) : Expression()
-data class Sequence      (val from: Expression, val to: Expression) : Expression()
+data class RealLiteral   (val value: Double): Expression()
+data class Sequence      (val from: Expression, val to: Expression): Expression()
 
-data class Sum(val left: Expression, val right: Expression) : Expression()
-data class Sub(val left: Expression, val right: Expression) : Expression()
-data class Mul(val left: Expression, val right: Expression) : Expression()
-data class Div(val left: Expression, val right: Expression) : Expression()
-data class Pow(val left: Expression, val right: Expression) : Expression()
+data class Sum(val left: Expression, val right: Expression): Expression()
+data class Sub(val left: Expression, val right: Expression): Expression()
+data class Mul(val left: Expression, val right: Expression): Expression()
+data class Div(val left: Expression, val right: Expression): Expression()
+data class Pow(val left: Expression, val right: Expression): Expression()
 
-data class FunctionInvoc(val identifier: String, val args: List<Expression>) : Expression()
-data class Lambda(val parameters: List<String>, val body: Expression) : Expression()
-data class VariableRef(val identifier: String) : Expression()
+data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression()
+data class Lambda(val parameters: List<String>, val body: Expression): Expression()
+data class VariableRef(val identifier: String): Expression()
 
 
 fun SQLangParser.toAST() = this.program().toAST()
 
 fun SQLangParser.ProgramContext.toAST() = Program(statement().map { it.toAST() })
 
-fun SQLangParser.StatementContext.toAST() : Statement {
+fun SQLangParser.StatementContext.toAST(): Statement {
     return this.accept(object : SQLangBaseVisitor<Statement>() {
         override fun visitPrint(ctx: SQLangParser.PrintContext): Statement {
             return PrintStatement(ctx.string.text.trim('"'))
@@ -46,7 +46,7 @@ fun SQLangParser.StatementContext.toAST() : Statement {
     })
 }
 
-fun SQLangParser.ExpressionContext.toAST() : Expression {
+fun SQLangParser.ExpressionContext.toAST(): Expression {
     return this.accept(object : SQLangBaseVisitor<Expression>() {
         override fun visitNumber(ctx: SQLangParser.NumberContext): Expression {
             ctx.integer?.let {
