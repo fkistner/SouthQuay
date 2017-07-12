@@ -6,27 +6,6 @@ import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.tree.*
 import org.junit.*
 
-/** Simplified tree of parsed rules and tokens */
-private sealed class TestTree
-/** Rule Node */
-private data class N(val context: String, var children: List<TestTree> = listOf()) : TestTree()
-/** Leaf Node */
-private data class L(val text: String) : TestTree()
-/** Error Node */
-private data class Error(val text: String) : TestTree()
-/** EOF Node */
-private object EOF : TestTree()
-
-/** Assert that parser has detected syntax errors */
-private fun assertParserSyntaxErrors(parser: SQLangParser) {
-    Assert.assertTrue("Parser should have syntax errors.", parser.numberOfSyntaxErrors > 0)
-}
-
-/** Assert that parser was able to parse source without errors */
-private fun assertNoParserSyntaxErrors(parser: SQLangParser) {
-    Assert.assertEquals("Parser should not have syntax errors.", 0, parser.numberOfSyntaxErrors)
-}
-
 class ParserTests {
 
     private fun toTestTree(program: ProgramContext) : TestTree {
