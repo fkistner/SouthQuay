@@ -75,4 +75,16 @@ class ASTTests {
                 )),
                 ast)
     }
+
+    @Test
+    fun newVariableFromSequence() {
+        val parser = parserForString("var myVar1 = {3, 10}")
+
+        val ast = parser.toAST()
+
+        Assert.assertEquals(Program(listOf(
+                    VarStatement("myVar1", Sequence(IntegerLiteral(3), IntegerLiteral(10)))
+                )),
+                ast)
+    }
 }

@@ -8,10 +8,12 @@ data class Program(val statements: List<Statement> = listOf()) : ASTNode()
 sealed class Statement : ASTNode()
 data class PrintStatement(val stringLiteral: String)  : Statement()
 data class OutStatement  (val expression: Expression) : Statement()
+data class VarStatement  (val identifier: String, val expression: Expression) : Statement()
 
 sealed class Expression : ASTNode()
 data class IntegerLiteral(val value: Int)    : Expression()
 data class RealLiteral   (val value: Double) : Expression()
+data class Sequence      (val from: Expression, val to: Expression) : Expression()
 
 fun SQLangParser.toAST() : Program {
     return this.program().toAST()
@@ -26,6 +28,11 @@ fun SQLangParser.ProgramContext.toAST() : Program {
         override fun visitOut(ctx: SQLangParser.OutContext): Statement {
             val expression = ctx.expression().toAST()
             return OutStatement(expression)
+        }
+
+        override fun visitVar(ctx: SQLangParser.VarContext): Statement {
+            val expression = ctx.expression().toAST()
+            return VarStatement(ctx.Identifier().text, expression)
         }
     }) }
     return Program(children)
@@ -43,6 +50,10 @@ fun SQLangParser.ExpressionContext.toAST() : Expression {
                 val value = it.text.toDouble()
                 return RealLiteral(if (minus == null) value else value.unaryMinus())
             }
+        }
+
+        override fun visitSeq(ctx: SQLangParser.SeqContext): Expression {
+            return Sequence(ctx.from.toAST(), ctx.to.toAST())
         }
     })
 }
