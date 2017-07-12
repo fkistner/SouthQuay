@@ -87,4 +87,27 @@ class ASTTests {
                 )),
                 ast)
     }
+
+    @Test
+    fun outputMathOperation() {
+        val parser = parserForString("out 2*(1+2-3*4/5^6)")
+
+        val ast = parser.toAST()
+
+        Assert.assertEquals(Program(listOf(
+                    OutStatement(
+                            Mul(
+                                    IntegerLiteral(2),
+                                    Sub(
+                                            Sum(IntegerLiteral(1), IntegerLiteral(2)),
+                                            Div(
+                                                    Mul(IntegerLiteral(3), IntegerLiteral(4)),
+                                                    Pow(IntegerLiteral(5), IntegerLiteral(6))
+                                            )
+                                    )
+                            )
+                    )
+                )),
+                ast)
+    }
 }

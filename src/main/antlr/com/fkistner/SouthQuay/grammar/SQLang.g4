@@ -21,17 +21,17 @@ statement
 // Expressions
 
 expression
-    : minus=MINUS?  (integer=Integer | real=Real)       # Number
+    : minus=MINUS?  (integer=Integer | real=Real)           # Number
     | Identifier PAREN_LEFT
-        expression (COMMA expression)* PAREN_RIGHT      # Fun
-    | PAREN_LEFT expression PAREN_RIGHT                 # Paren
-    | expression  POW           expression              # Pow
-    | expression (MUL  | DIV)   expression              # Mul
-    | expression (PLUS | MINUS) expression              # Sum
+        expression (COMMA expression)* PAREN_RIGHT          # Fun
+    | PAREN_LEFT expr=expression PAREN_RIGHT                # Paren
+    | left=expression op= POW           right=expression    # Pow
+    | left=expression op=(MUL  | DIV)   right=expression    # Mul
+    | left=expression op=(PLUS | MINUS) right=expression    # Sum
     | SEQ_LEFT from=expression COMMA
-                 to=expression SEQ_RIGHT                # Seq
-    | Identifier+ LAM expression                        # Lam
-    | Identifier                                        # Ref
+                 to=expression SEQ_RIGHT                    # Seq
+    | Identifier+ LAM expression                            # Lam
+    | Identifier                                            # Ref
     ;
 
 // Lexer

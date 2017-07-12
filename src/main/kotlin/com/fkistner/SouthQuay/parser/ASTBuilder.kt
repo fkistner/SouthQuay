@@ -15,6 +15,12 @@ data class IntegerLiteral(val value: Int)    : Expression()
 data class RealLiteral   (val value: Double) : Expression()
 data class Sequence      (val from: Expression, val to: Expression) : Expression()
 
+data class Sum(val left: Expression, val right: Expression) : Expression()
+data class Sub(val left: Expression, val right: Expression) : Expression()
+data class Mul(val left: Expression, val right: Expression) : Expression()
+data class Div(val left: Expression, val right: Expression) : Expression()
+data class Pow(val left: Expression, val right: Expression) : Expression()
+
 fun SQLangParser.toAST() : Program {
     return this.program().toAST()
 }
@@ -51,6 +57,26 @@ fun SQLangParser.ExpressionContext.toAST() : Expression {
 
         override fun visitSeq(ctx: SQLangParser.SeqContext): Expression {
             return Sequence(ctx.from.toAST(), ctx.to.toAST())
+        }
+
+        override fun visitMul(ctx: SQLangParser.MulContext): Expression {
+            val left = ctx.left.toAST()
+            val right = ctx.right.toAST()
+            return if (ctx.op.type == SQLangParser.MUL) Mul(left, right) else Div(left, right)
+        }
+
+        override fun visitPow(ctx: SQLangParser.PowContext): Expression {
+            return Pow(ctx.left.toAST(), ctx.right.toAST())
+        }
+
+        override fun visitSum(ctx: SQLangParser.SumContext): Expression {
+            val left = ctx.left.toAST()
+            val right = ctx.right.toAST()
+            return if (ctx.op.type == SQLangParser.PLUS) Sum(left, right) else Sub(left, right)
+        }
+
+        override fun visitParen(ctx: SQLangParser.ParenContext): Expression {
+            return ctx.expr.toAST();
         }
     })
 }
