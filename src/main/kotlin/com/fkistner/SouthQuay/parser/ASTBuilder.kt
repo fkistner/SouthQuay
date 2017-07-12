@@ -6,13 +6,17 @@ sealed class ASTNode
 data class Program(val statements: List<Statement> = listOf()) : ASTNode()
 
 sealed class Statement : ASTNode()
+data class PrintStatement(val stringLiteral: String) : Statement()
 
-object ASTBuilder : SQLangBaseVisitor<ASTNode>() {
-    override fun visitProgram(ctx: SQLangParser.ProgramContext?): ASTNode {
-        return Program()
-    }
+fun SQLangParser.toAST() : Program {
+    return this.program().toAST()
 }
 
-fun SQLangParser.toAST() : ASTNode {
-    return this.program().accept(ASTBuilder)
+fun SQLangParser.ProgramContext.toAST() : Program {
+    val children = this.statement().map { it.accept(object : SQLangBaseVisitor<Statement>() {
+        override fun visitPrint(ctx: SQLangParser.PrintContext): Statement {
+            return PrintStatement(ctx.String().text.trim('"'))
+        }
+    }) }
+    return Program(children)
 }

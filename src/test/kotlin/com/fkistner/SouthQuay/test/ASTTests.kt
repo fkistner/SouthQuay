@@ -15,4 +15,13 @@ class ASTTests {
                 ast)
     }
 
+    @Test
+    fun printStatement() {
+        val parser = parserForString("print \"a\"")
+
+        val ast = parser.toAST()
+
+        Assert.assertEquals(Program(listOf(PrintStatement("a"))),
+                ast)
+    }
 }
