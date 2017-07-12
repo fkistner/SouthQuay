@@ -26,12 +26,12 @@ data class Lambda(val parameters: List<String>, val body: Expression) : Expressi
 data class VariableRef(val identifier: String) : Expression()
 
 
-fun SQLangParser.toAST() : Program {
-    return this.program().toAST()
-}
+fun SQLangParser.toAST() = this.program().toAST()
 
-fun SQLangParser.ProgramContext.toAST() : Program {
-    val children = this.statement().map { it.accept(object : SQLangBaseVisitor<Statement>() {
+fun SQLangParser.ProgramContext.toAST() = Program(statement().map { it.toAST() })
+
+fun SQLangParser.StatementContext.toAST() : Statement {
+    return this.accept(object : SQLangBaseVisitor<Statement>() {
         override fun visitPrint(ctx: SQLangParser.PrintContext): Statement {
             return PrintStatement(ctx.string.text.trim('"'))
         }
@@ -43,8 +43,7 @@ fun SQLangParser.ProgramContext.toAST() : Program {
         override fun visitVar(ctx: SQLangParser.VarContext): Statement {
             return VarStatement(ctx.ident.text, ctx.expr.toAST())
         }
-    }) }
-    return Program(children)
+    })
 }
 
 fun SQLangParser.ExpressionContext.toAST() : Expression {
