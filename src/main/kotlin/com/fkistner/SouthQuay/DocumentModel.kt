@@ -6,7 +6,7 @@ import java.net.URL
 import javax.swing.event.*
 
 
-class DocumentModel: DocumentListener {
+class DocumentModel(val newDocumentListener: ((RSyntaxDocument) -> Unit)? = null): DocumentListener {
     var isDirty = false
     var document: RSyntaxDocument = createNewDocument()
     var path: URL? = null
@@ -15,18 +15,26 @@ class DocumentModel: DocumentListener {
 
     private fun createNewDocument() = RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_NONE)
 
-    fun open(file: URL) {
-        path = file
+    private fun newDocument(initAction: () -> Unit) {
         document = createNewDocument()
-        isDirty = false
-        editorKit.read(file.openStream(), document, 0)
-        document.addDocumentListener(this)
+        initAction()
+        newDocumentListener?.invoke(document)
+    }
+
+    fun open(file: URL) {
+        newDocument {
+            editorKit.read(file.openStream(), document, 0)
+            path = file
+            isDirty = false
+            document.addDocumentListener(this)
+        }
     }
 
     fun close() {
-        path = null
-        document = createNewDocument()
-        isDirty = false
+        newDocument {
+            path = null
+            isDirty = false
+        }
     }
 
     fun save(file: URL) {
