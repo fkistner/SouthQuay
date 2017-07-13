@@ -1,8 +1,12 @@
 package com.fkistner.SouthQuay
 
 import org.fife.ui.rsyntaxtextarea.*
+import java.io.File
 import java.net.URL
 import javax.swing.event.*
+import java.io.BufferedWriter
+import java.nio.file.*
+
 
 class DocumentModel: DocumentListener {
     var isDirty = false
@@ -24,6 +28,15 @@ class DocumentModel: DocumentListener {
     fun close() {
         path = null
         document = createNewDocument()
+        isDirty = false
+    }
+
+    fun save(file: URL) {
+        val text = document.getText(0, document.length)
+        File(file.toURI()).outputStream().bufferedWriter().use {
+            it.write(text)
+        }
+        path = file
         isDirty = false
     }
 
