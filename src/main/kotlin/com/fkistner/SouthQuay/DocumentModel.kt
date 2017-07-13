@@ -3,13 +3,22 @@ package com.fkistner.SouthQuay
 import org.fife.ui.rsyntaxtextarea.*
 import java.io.File
 import java.net.URL
+import java.nio.file.Paths
 import javax.swing.event.*
 
 
 class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel) -> Unit)? = null) : DocumentListener {
     var isDirty = false
     lateinit var document: RSyntaxDocument
+    var fileName: String? = null
+
     var path: URL? = null
+        set(value) {
+            field = value
+            isDirty = false
+            if (value != null)
+                fileName = Paths.get(value.path).fileName.toString()
+        }
 
     companion object {
         private val editorKit = RSyntaxTextAreaEditorKit()
@@ -34,7 +43,6 @@ class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel)
         newDocument {
             Companion.editorKit.read(file.openStream(), document, 0)
             path = file
-            isDirty = false
             document.addDocumentListener(this)
         }
     }
@@ -42,7 +50,6 @@ class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel)
     fun close() {
         newDocument {
             path = null
-            isDirty = false
         }
     }
 
@@ -52,7 +59,6 @@ class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel)
             it.write(text)
         }
         path = file
-        isDirty = false
     }
 
     override fun changedUpdate(e: DocumentEvent?) {

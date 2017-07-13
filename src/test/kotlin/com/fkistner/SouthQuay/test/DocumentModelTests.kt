@@ -6,7 +6,8 @@ import java.io.File
 import java.nio.file.*
 
 class DocumentModelTests {
-    private val sampleResource = "/Sample.sq"
+    private val sampleFileName = "Sample.sq"
+    private val sampleResource = "/$sampleFileName"
 
     @Test
     fun initial() {
@@ -173,5 +174,14 @@ class DocumentModelTests {
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(url.readText(), documentModel.document.getText(0, documentModel.document.length))
+    }
+
+    @Test
+    fun fileName() {
+        val url = javaClass.getResource(sampleResource)
+        Assert.assertNotNull("Bad test setup.", url)
+
+        val documentModel = DocumentModel(url)
+        Assert.assertEquals(sampleFileName, documentModel.fileName)
     }
 }
