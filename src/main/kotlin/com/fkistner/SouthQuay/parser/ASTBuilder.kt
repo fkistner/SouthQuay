@@ -1,17 +1,18 @@
 package com.fkistner.SouthQuay.parser
 
 import com.fkistner.SouthQuay.grammar.*
+import org.antlr.v4.runtime.*
 
 sealed class ASTNode
 data class Program(val statements: List<Statement> = listOf()): ASTNode()
 
 sealed class Statement : ASTNode()
-data class PrintStatement(val stringLiteral: String)  : Statement()
+data class PrintStatement(val stringLiteral: String) : Statement()
 data class OutStatement  (val expression: Expression): Statement()
 data class VarStatement  (val identifier: String, val expression: Expression): Statement()
 
 sealed class Expression : ASTNode()
-data class IntegerLiteral(val value: Int)    : Expression()
+data class IntegerLiteral(val value: Int)   : Expression()
 data class RealLiteral   (val value: Double): Expression()
 data class Sequence      (val from: Expression, val to: Expression): Expression()
 
@@ -95,4 +96,26 @@ fun SQLangParser.ExpressionContext.toAST(): Expression {
             return FunctionInvoc(ctx.`fun`.text, ctx.arg.map { it.toAST() })
         }
     })
+}
+
+object ASTBuilder {
+    fun parseStream(charStream: CharStream, errorContainer: MutableList<SQLangError> = mutableListOf()): Program? {
+        val errorListener = object : BaseErrorListener() {
+            override fun syntaxError(recognizer: Recognizer<*, *>?, offendingSymbol: Any?, line: Int, charPositionInLine: Int, msg: String?, e: RecognitionException?) {
+                errorContainer.add(SyntaxError(msg, offendingSymbol, line, charPositionInLine))
+            }
+        }
+
+        val lexer = SQLangLexer(charStream)
+        lexer.addErrorListener(errorListener)
+        val parser = SQLangParser(CommonTokenStream(lexer))
+        parser.addErrorListener(errorListener)
+
+        val program = parser.program()
+
+        if (errorContainer.count() > 0) {
+            return null
+        }
+        return program.toAST()
+    }
 }

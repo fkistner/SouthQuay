@@ -1,7 +1,9 @@
 package com.fkistner.SouthQuay.test
 
 import com.fkistner.SouthQuay.parser.*
+import org.antlr.v4.runtime.*
 import org.junit.*
+import java.io.StringReader
 
 class ASTTests {
 
@@ -124,5 +126,61 @@ class ASTTests {
                     )))
                 )),
                 ast)
+    }
+
+    @Test
+    fun invalidToken() {
+        val charStream = CharStreams.fromReader(StringReader("#"))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        val error = errors[0]
+        Assert.assertEquals(1, error.line)
+        Assert.assertEquals(0, error.column)
+        Assert.assertTrue("Extraneous input not detected.", error.message?.startsWith("extraneous input '#'") == true)
+    }
+
+    @Test
+    fun invalidTokenInVariableDeclaration() {
+        val charStream = CharStreams.fromReader(StringReader("var \""))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        val error = errors[0]
+        Assert.assertEquals(1, error.line)
+        Assert.assertEquals(4, error.column)
+        Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input '\"'") == true)
+    }
+
+    @Test
+    fun unbalancedStringLiteral() {
+        val charStream = CharStreams.fromReader(StringReader("print \"Test\nout {3, 6}"))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        val error = errors[0]
+        Assert.assertEquals(1, error.line)
+        Assert.assertEquals(6, error.column)
+        Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input '\"'") == true)
+    }
+
+    @Test
+    fun outMissingIdentifier() {
+        val charStream = CharStreams.fromReader(StringReader("out print \"Test\"\nout {3, 6}"))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        val error = errors[0]
+        Assert.assertEquals(1, error.line)
+        Assert.assertEquals(4, error.column)
+        Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input 'print'") == true)
     }
 }
