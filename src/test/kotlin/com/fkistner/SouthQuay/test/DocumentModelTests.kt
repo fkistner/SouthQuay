@@ -160,4 +160,18 @@ class DocumentModelTests {
         Assert.assertArrayEquals(insertedBytes, prefixBytes)
         Assert.assertArrayEquals(javaClass.getResourceAsStream(sampleResource).readBytes(), savedStream.readBytes())
     }
+
+    @Test
+    fun openAt() {
+        val url = javaClass.getResource(sampleResource)
+        Assert.assertNotNull("Bad test setup.", url)
+
+        var newDoc = 0
+        val documentModel = DocumentModel(url) { newDoc++ }
+
+        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
+        Assert.assertEquals(url.readText(), documentModel.document.getText(0, documentModel.document.length))
+    }
 }
