@@ -6,19 +6,22 @@ import java.net.URL
 import javax.swing.event.*
 
 
-class DocumentModel(val newDocumentListener: ((RSyntaxDocument) -> Unit)? = null): DocumentListener {
+class DocumentModel(val newDocumentListener: ((DocumentModel) -> Unit)? = null) : DocumentListener {
     var isDirty = false
-    var document: RSyntaxDocument = createNewDocument()
+    var document= createNewDocument()
     var path: URL? = null
 
     private val editorKit = RSyntaxTextAreaEditorKit()
-
     private fun createNewDocument() = RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_NONE)
+
+    init {
+        newDocumentListener?.invoke(this)
+    }
 
     private fun newDocument(initAction: () -> Unit) {
         document = createNewDocument()
         initAction()
-        newDocumentListener?.invoke(document)
+        newDocumentListener?.invoke(this)
     }
 
     fun open(file: URL) {

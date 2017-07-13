@@ -6,17 +6,17 @@ import java.io.File
 import java.nio.file.*
 
 class DocumentModelTests {
+    private val sampleResource = "/Sample.sq"
+
     @Test
     fun initial() {
         var newDoc = 0
         val documentModel = DocumentModel { newDoc++ }
-        Assert.assertEquals(0, newDoc)
+        Assert.assertEquals(1, newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(null, documentModel.path)
         Assert.assertEquals(0, documentModel.document.length)
     }
-
-    private val sampleResource = "/Sample.sq"
 
     @Test
     fun openFile() {
@@ -27,7 +27,7 @@ class DocumentModelTests {
         val documentModel = DocumentModel { newDoc++ }
         documentModel.open(url)
 
-        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(2, newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(url.readText(), documentModel.document.getText(0, documentModel.document.length))
@@ -43,7 +43,7 @@ class DocumentModelTests {
         documentModel.open(url)
         documentModel.document.insertString(0, "Test", null)
 
-        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(2, newDoc)
         Assert.assertEquals(true, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(138, documentModel.document.length)
@@ -59,7 +59,7 @@ class DocumentModelTests {
         documentModel.open(url)
         documentModel.document.remove(5, 10)
 
-        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(2, newDoc)
         Assert.assertEquals(true, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(124, documentModel.document.length)
@@ -76,7 +76,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, "Test", null)
         documentModel.open(url)
 
-        Assert.assertEquals(2, newDoc)
+        Assert.assertEquals(3, newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(134, documentModel.document.length)
@@ -93,7 +93,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, "Test", null)
         documentModel.close()
 
-        Assert.assertEquals(2, newDoc)
+        Assert.assertEquals(3, newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(null, documentModel.path)
         Assert.assertEquals(0, documentModel.document.length)
@@ -113,7 +113,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, insertedString, null)
         documentModel.save(saveAsFile)
 
-        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(2, newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(saveAsFile.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(138, documentModel.document.length)
@@ -148,7 +148,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, insertedString, null)
         documentModel.save(url)
 
-        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(2, newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(138, documentModel.document.length)
