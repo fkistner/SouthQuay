@@ -4,8 +4,6 @@ import org.fife.ui.rsyntaxtextarea.*
 import java.io.File
 import java.net.URL
 import javax.swing.event.*
-import java.io.BufferedWriter
-import java.nio.file.*
 
 
 class DocumentModel: DocumentListener {

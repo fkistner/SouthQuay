@@ -2,8 +2,8 @@ package com.fkistner.SouthQuay.test
 
 import com.fkistner.SouthQuay.DocumentModel
 import org.junit.*
-import java.io.*
-import java.nio.file.Files
+import java.io.File
+import java.nio.file.*
 
 class DocumentModelTests {
     @Test
@@ -105,7 +105,39 @@ class DocumentModelTests {
         Assert.assertEquals(138, documentModel.document.length)
 
         val savedStream = saveAsFile.openStream()
+        val insertedBytes = insertedString.toByteArray()
+        val prefixBytes = ByteArray(insertedBytes.count())
+        Assert.assertEquals(insertedBytes.count(), savedStream.read(prefixBytes))
+        Assert.assertArrayEquals(insertedBytes, prefixBytes)
+        Assert.assertArrayEquals(javaClass.getResourceAsStream(sampleResource).readBytes(), savedStream.readBytes())
+    }
 
+    @Test
+    fun openFileEditSave() {
+        val resourceStream = javaClass.getResourceAsStream(sampleResource)
+        Assert.assertNotNull("Bad test setup.", resourceStream)
+
+        val tempFile = File.createTempFile("SQTest", ".sq")
+        val url = tempFile.toURI().toURL()
+
+        Files.copy(resourceStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
+
+        val documentModel = DocumentModel()
+        documentModel.open(url)
+
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
+        Assert.assertEquals(javaClass.getResource(sampleResource).readText(), documentModel.document.getText(0, documentModel.document.length))
+
+        val insertedString = "Test"
+        documentModel.document.insertString(0, insertedString, null)
+        documentModel.save(url)
+
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
+        Assert.assertEquals(138, documentModel.document.length)
+
+        val savedStream = url.openStream()
         val insertedBytes = insertedString.toByteArray()
         val prefixBytes = ByteArray(insertedBytes.count())
         Assert.assertEquals(insertedBytes.count(), savedStream.read(prefixBytes))
