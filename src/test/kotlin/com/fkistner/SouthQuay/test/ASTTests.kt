@@ -183,4 +183,22 @@ class ASTTests {
         Assert.assertEquals(4, error.column)
         Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input 'print'") == true)
     }
+
+    @Test
+    fun multipleErrors() {
+        val charStream = CharStreams.fromReader(StringReader("out print \"Test\"\nout {\"Hello\", 6}"))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(2, errors.count())
+        val errorA = errors[0]
+        Assert.assertEquals(1, errorA.line)
+        Assert.assertEquals(4, errorA.column)
+        Assert.assertTrue("Mismatched input not detected.", errorA.message?.startsWith("mismatched input 'print'") == true)
+        val errorB = errors[1]
+        Assert.assertEquals(2, errorB.line)
+        Assert.assertEquals(5, errorB.column)
+        Assert.assertTrue("Mismatched input not detected.", errorB.message?.startsWith("mismatched input '\"Hello\"'") == true)
+    }
 }
