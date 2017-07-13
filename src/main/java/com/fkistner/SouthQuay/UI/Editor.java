@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class Editor {
     public JPanel panel;
-    private RSyntaxTextArea syntaxTextArea;
+    public RSyntaxTextArea syntaxTextArea;
     private RTextScrollPane scrollPane;
 
     private void createUIComponents() {
