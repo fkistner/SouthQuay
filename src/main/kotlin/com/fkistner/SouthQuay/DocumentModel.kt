@@ -8,6 +8,11 @@ import javax.swing.event.*
 
 
 class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel) -> Unit)? = null) : DocumentListener {
+    companion object {
+        private val editorKit = RSyntaxTextAreaEditorKit()
+        var untitledCounter = 0
+    }
+
     var isDirty = false
     lateinit var document: RSyntaxDocument
     var fileName: String? = null
@@ -16,13 +21,8 @@ class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel)
         set(value) {
             field = value
             isDirty = false
-            if (value != null)
-                fileName = Paths.get(value.path).fileName.toString()
+            fileName = value?.let { Paths.get(it.path).fileName.toString() } ?: "Untitled ${++untitledCounter}"
         }
-
-    companion object {
-        private val editorKit = RSyntaxTextAreaEditorKit()
-    }
 
     private fun createNewDocument() = RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_NONE)
 
@@ -41,7 +41,7 @@ class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel)
 
     fun open(file: URL) {
         newDocument {
-            Companion.editorKit.read(file.openStream(), document, 0)
+            editorKit.read(file.openStream(), document, 0)
             path = file
             document.addDocumentListener(this)
         }

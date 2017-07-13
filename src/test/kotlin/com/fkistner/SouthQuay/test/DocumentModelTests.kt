@@ -9,6 +9,11 @@ class DocumentModelTests {
     private val sampleFileName = "Sample.sq"
     private val sampleResource = "/$sampleFileName"
 
+    @Before
+    fun setup() {
+        DocumentModel.Companion.untitledCounter = 0
+    }
+
     @Test
     fun initial() {
         var newDoc = 0
@@ -183,5 +188,18 @@ class DocumentModelTests {
 
         val documentModel = DocumentModel(url)
         Assert.assertEquals(sampleFileName, documentModel.fileName)
+    }
+
+    @Test
+    fun untitledFileName() {
+        val documentModel = DocumentModel()
+        Assert.assertEquals("Untitled 1", documentModel.fileName)
+    }
+
+    @Test
+    fun untitledMultiFileName() {
+        val documentModel = DocumentModel()
+        documentModel.close()
+        Assert.assertEquals("Untitled 2", documentModel.fileName)
     }
 }
