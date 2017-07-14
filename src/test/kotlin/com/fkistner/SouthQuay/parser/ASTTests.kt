@@ -1,6 +1,7 @@
 package com.fkistner.SouthQuay.parser
 
 import com.fkistner.SouthQuay.grammar.parserForString
+import com.fkistner.SouthQuay.interpreter.*
 import org.antlr.v4.runtime.CharStreams
 import org.junit.*
 import java.io.StringReader
@@ -230,5 +231,42 @@ class ASTTests {
             for ((leftIdx,left) in expressions.withIndex()) for ((rightIdx,right) in expressions.withIndex())  {
                 Assert.assertEquals(expected[leftIdx][rightIdx], op(left, right).type)
         }
+    }
+
+    @Test
+    fun variableScope() {
+        val charStream = CharStreams.fromReader(StringReader("var i = 5 var j = 8.0 out j out i"))
+        val errors = mutableListOf<SQLangError>()
+
+        val program = ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(4, program?.statements?.count())
+        val varI = program!!.statements[0] as VarStatement
+        val varJ = program  .statements[1] as VarStatement
+        val j = (program.statements[2] as OutStatement).expression as VariableRef
+        val i = (program.statements[3] as OutStatement).expression as VariableRef
+        Assert.assertEquals(Type.Real,    j.type)
+        Assert.assertEquals(Type.Integer, i.type)
+        Assert.assertTrue("Wrong reference.", i.declaration === varI)
+        Assert.assertTrue("Wrong reference.", j.declaration === varJ)
+    }
+
+    @Test
+    fun functionScope() {
+        val charStream = CharStreams.fromReader(StringReader("var sequence = map({0, n}, i -> (-1)^i / (2 * i + 1))\n" +
+                "var quarterPi = reduce(sequence, 0, x y -> x + y)"))
+        val errors = mutableListOf<SQLangError>()
+
+        val program = ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(2, program?.statements?.count())
+        val varSequence = program!!.statements[0]  as VarStatement
+        val varQuarterPi = program .statements[1] as VarStatement
+        val map    = varSequence.expression  as FunctionInvoc
+        val reduce = varQuarterPi.expression as FunctionInvoc
+        Assert.assertEquals(Type.Sequence, map.type)
+        Assert.assertEquals(Type.Integer,  reduce.type)
+        Assert.assertTrue("Wrong reference.", map.target    is MapFunction)
+        Assert.assertTrue("Wrong reference.", reduce.target is ReduceFunction)
     }
 }
