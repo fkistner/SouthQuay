@@ -158,7 +158,6 @@ object ASTBuilder {
 
     fun parseText(text: String): Pair<Program?, MutableList<SQLangError>> {
         val charStream = CharStreams.fromReader(StringReader(text))
-        val errorContainer  = mutableListOf<SQLangError>()
-        return Pair(parseStream(charStream, errorContainer), errorContainer)
+        return parseStream(charStream)
     }
 }
