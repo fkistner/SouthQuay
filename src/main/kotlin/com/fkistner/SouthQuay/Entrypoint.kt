@@ -43,7 +43,7 @@ private fun newEditor(path: URL? = null) {
             if (documentModel.isDirty) {
                 when (shouldSaveDialog()) {
                     true -> {
-                        fileSaveAs()
+                        fileSave()
                         return
                     }
                     null -> return
