@@ -201,4 +201,34 @@ class ASTTests {
         Assert.assertEquals(5, errorB.column)
         Assert.assertTrue("Mismatched input not detected.", errorB.message?.startsWith("mismatched input '\"Hello\"'") == true)
     }
+
+    @Test
+    fun literalTypes() {
+        val types = listOf(IntegerLiteral(0), RealLiteral(0.0),
+                Sequence(IntegerLiteral(1), IntegerLiteral(2)),
+                Lambda(listOf("x"), IntegerLiteral(3)))
+                .map(Expression::type)
+
+        Assert.assertEquals(listOf(Type.Integer, Type.Real, Type.Sequence, Type.Lambda(Type.Integer)), types)
+    }
+
+    @Test
+    fun binaryOperationTypes() {
+        val expressions = listOf(IntegerLiteral(0), RealLiteral(0.0),
+                Sequence(IntegerLiteral(1), IntegerLiteral(2)),
+                Lambda(listOf("x"), IntegerLiteral(3)))
+        val ops: (Expression, Expression) -> Expression = ::Sum
+
+        val expected = listOf(
+                listOf(Type.Integer, Type.Real,  Type.Error, Type.Error),
+                listOf(Type.Real,    Type.Real,  Type.Error, Type.Error),
+                listOf(Type.Error,   Type.Error, Type.Error, Type.Error),
+                listOf(Type.Error,   Type.Error, Type.Error, Type.Error)
+        )
+
+        for (op in listOf(::Sum, ::Sub, ::Mul, ::Div, ::Pow))
+            for ((leftIdx,left) in expressions.withIndex()) for ((rightIdx,right) in expressions.withIndex())  {
+                Assert.assertEquals(expected[leftIdx][rightIdx], op(left, right).type)
+        }
+    }
 }

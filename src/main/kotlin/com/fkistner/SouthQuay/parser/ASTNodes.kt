@@ -32,25 +32,48 @@ data class VarStatement  (val identifier: String, val expression: Expression): S
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 
-sealed class Expression : ASTNode()
+sealed class Type {
+    object Error: Type()
+    object Integer: Type()
+    object Real: Type()
+    object Sequence: Type()
+    data class Lambda(val type: Type): Type()
+}
+sealed class Expression : ASTNode() {
+    abstract val type: Type
+}
+
 data class IntegerLiteral(val value: Int)   : Expression() {
+    override val type get() = Type.Integer
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 data class RealLiteral   (val value: Double): Expression() {
+    override val type get() = Type.Real
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 data class Sequence      (val from: Expression, val to: Expression): Expression() {
+    override val type get() = Type.Sequence
     override val children get() = listOf(from, to)
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 
-sealed class BinaryOperation: Expression() {
+sealed class BinaryOperation : Expression() {
+    override val type get() = resolve(left, right)
     abstract val left: Expression
     abstract val right: Expression
     override val children get() = listOf(left, right)
+}
+fun resolve(left: Expression, right: Expression): Type {
+    return when {
+        left.type === Type.Integer && right.type === Type.Integer -> Type.Integer
+        left.type === Type.Integer && right.type === Type.Real
+        || left.type === Type.Real && right.type === Type.Integer
+        || left.type === Type.Real && right.type === Type.Real -> Type.Real
+        else -> Type.Error
+    }
 }
 
 data class Sum(override val left: Expression, override val right: Expression): BinaryOperation() {
@@ -74,17 +97,18 @@ data class Pow(override val left: Expression, override val right: Expression): B
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 
-data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression(){
+data class FunctionInvoc(val identifier: String, val args: List<Expression>, override val type: Type = Type.Error): Expression() {
     override val children get() = args
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
-data class Lambda(val parameters: List<String>, val body: Expression): Expression(){
+data class Lambda(val parameters: List<String>, val body: Expression): Expression() {
+    override val type get() = Type.Lambda(body.type)
     override val children get() = listOf(body)
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
-data class VariableRef(val identifier: String): Expression() {
+data class VariableRef(val identifier: String, override val type: Type = Type.Error): Expression() {
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
