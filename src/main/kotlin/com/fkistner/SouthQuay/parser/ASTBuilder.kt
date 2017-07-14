@@ -36,12 +36,24 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
     return this.accept(object : SQLangBaseVisitor<Expression>() {
         override fun visitNumber(ctx: SQLangParser.NumberContext): Expression {
             ctx.integer?.let {
-                val value = it.text.toInt()
-                return IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                try {
+                    val value = it.text.toInt()
+                    return IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                } catch (e: NumberFormatException) {
+                    val literal = IntegerLiteral(Int.MIN_VALUE)
+                    scope.errorContainer.add(TypeError("Number is not within value range [${Int.MIN_VALUE}, ${Int.MAX_VALUE}]", literal))
+                    return literal
+                }
             }
             ctx.real.let {
-                val value = it.text.toDouble()
-                return RealLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                try {
+                    val value = it.text.toDouble()
+                    return RealLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                } catch (e: NumberFormatException) {
+                    val literal = RealLiteral(Double.NaN)
+                    scope.errorContainer.add(TypeError("Number is not within value range [${Double.MIN_VALUE}, ${Double.MAX_VALUE}]", literal))
+                    return literal
+                }
             }
         }
 
