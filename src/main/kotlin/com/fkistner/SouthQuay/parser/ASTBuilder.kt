@@ -3,10 +3,10 @@ package com.fkistner.SouthQuay.parser
 import com.fkistner.SouthQuay.grammar.*
 import org.antlr.v4.runtime.*
 
-fun SQLangParser.toAST() = this.program().toAST()
+fun SQLangParser.toAST(errorContainer: MutableList<SQLangError> = mutableListOf()) = this.program().toAST(errorContainer)
 
-fun SQLangParser.ProgramContext.toAST(): Program {
-    val scope = Scope()
+fun SQLangParser.ProgramContext.toAST(errorContainer: MutableList<SQLangError> = mutableListOf()): Program {
+    val scope = Scope(errorContainer)
     return Program(statement().map { it.toAST(scope) }, scope)
 }
 
@@ -23,6 +23,7 @@ fun SQLangParser.StatementContext.toAST(scope: Scope): Statement {
         override fun visitVar(ctx: SQLangParser.VarContext): Statement {
             val identifier = ctx.ident.text
             val varStatement = VarStatement(identifier, ctx.expr.toAST(scope))
+            if (scope.variables.containsKey(identifier)) scope.errorContainer.add(TypeError("Variable '$identifier' redeclared", varStatement))
             scope.variables[identifier] = varStatement
             return varStatement
         }
@@ -42,24 +43,46 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
             }
         }
 
+        fun checkBinaryOperation(op: BinaryOperation) {
+            if (op.left.type == Type.Error || op.right.type == Type.Error) return
+            if (op.type == Type.Error)
+                scope.errorContainer.add(TypeError("Incompatible arguments ${op.left.type} and ${op.right.type}", op))
+        }
+
         override fun visitSeq(ctx: SQLangParser.SeqContext): Expression {
-            return Sequence(ctx.from.toAST(scope), ctx.to.toAST(scope))
+            val from = ctx.from.toAST(scope)
+            val to = ctx.to.toAST(scope)
+            when (from.type) {
+                Type.Error, Type.Integer -> {}
+                else -> scope.errorContainer.add(TypeError("Illegal sequence start, expected Integer, found $from.type", from))
+            }
+            when (to.type) {
+                Type.Error, Type.Integer -> {}
+                else -> scope.errorContainer.add(TypeError("Illegal sequence end, expected Integer, found $to.type", to))
+            }
+            return Sequence(from, to)
         }
 
         override fun visitMul(ctx: SQLangParser.MulContext): Expression {
             val left = ctx.left.toAST(scope)
             val right = ctx.right.toAST(scope)
-            return if (ctx.op.type == SQLangParser.MUL) Mul(left, right) else Div(left, right)
+            val op = if (ctx.op.type == SQLangParser.MUL) Mul(left, right) else Div(left, right)
+            checkBinaryOperation(op)
+            return op
         }
 
         override fun visitPow(ctx: SQLangParser.PowContext): Expression {
-            return Pow(ctx.left.toAST(scope), ctx.right.toAST(scope))
+            val pow = Pow(ctx.left.toAST(scope), ctx.right.toAST(scope))
+            checkBinaryOperation(pow)
+            return pow
         }
 
         override fun visitSum(ctx: SQLangParser.SumContext): Expression {
             val left = ctx.left.toAST(scope)
             val right = ctx.right.toAST(scope)
-            return if (ctx.op.type == SQLangParser.PLUS) Sum(left, right) else Sub(left, right)
+            val op = if (ctx.op.type == SQLangParser.PLUS) Sum(left, right) else Sub(left, right)
+            checkBinaryOperation(op)
+            return op
         }
 
         override fun visitParen(ctx: SQLangParser.ParenContext): Expression {
@@ -68,10 +91,15 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
 
         override fun visitRef(ctx: SQLangParser.RefContext): Expression {
             val identifier = ctx.ident.text
-            return VariableRef(identifier, scope.variables[identifier])
+            val declaration = scope.variables[identifier]
+            val variableRef = VariableRef(identifier, declaration)
+            if (declaration == null) scope.errorContainer.add(TypeError("Unknown variable '$identifier'", variableRef))
+            return variableRef
         }
 
         override fun visitLam(ctx: SQLangParser.LamContext): Expression {
+            //val lambdaScope = Scope(errorContainer)
+            //return Lambda(ctx.params.map { it.text }, ctx.body.toAST(lambdaScope), lambdaScope)
             return Lambda(ctx.params.map { it.text }, ctx.body.toAST(scope))
         }
 
@@ -100,6 +128,6 @@ object ASTBuilder {
         if (errorContainer.count() > 0) {
             return null
         }
-        return program.toAST()
+        return program.toAST(errorContainer)
     }
 }

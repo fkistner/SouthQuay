@@ -7,3 +7,9 @@ class SyntaxError(message: String?, val offendingSymbol: Any?, line: Int, column
         return "SyntaxError(message='$message', offendingSymbol=$offendingSymbol, line=$line, column=$column)"
     }
 }
+
+class TypeError(message: String, val offendingNode: ASTNode): SQLangError(message, 0, 0) {
+    override fun toString(): String {
+        return "TypeError(message='$message', offendingNode=$offendingNode)"
+    }
+}

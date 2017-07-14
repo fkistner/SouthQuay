@@ -39,11 +39,21 @@ data class VarStatement  (val identifier: String, val expression: Expression): S
 }
 
 sealed class Type {
-    object Error: Type()
-    object Integer: Type()
-    object Real: Type()
-    object Sequence: Type()
-    data class Lambda(val type: Type): Type()
+    object Error: Type() {
+        override fun toString(): String = "Error"
+    }
+    object Integer: Type() {
+        override fun toString(): String = "Integer"
+    }
+    object Real: Type() {
+        override fun toString(): String = "Real"
+    }
+    object Sequence: Type() {
+        override fun toString(): String = "Sequence"
+    }
+    data class Lambda(val type: Type): Type() {
+        override fun toString(): String = "Lambda<$type>"
+    }
 }
 sealed class Expression : ASTNode() {
     abstract val type: Type

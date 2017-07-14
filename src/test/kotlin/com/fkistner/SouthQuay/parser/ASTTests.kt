@@ -218,7 +218,6 @@ class ASTTests {
         val expressions = listOf(IntegerLiteral(0), RealLiteral(0.0),
                 Sequence(IntegerLiteral(1), IntegerLiteral(2)),
                 Lambda(listOf("x"), IntegerLiteral(3)))
-        val ops: (Expression, Expression) -> Expression = ::Sum
 
         val expected = listOf(
                 listOf(Type.Integer, Type.Real,  Type.Error, Type.Error),
@@ -230,7 +229,7 @@ class ASTTests {
         for (op in listOf(::Sum, ::Sub, ::Mul, ::Div, ::Pow))
             for ((leftIdx,left) in expressions.withIndex()) for ((rightIdx,right) in expressions.withIndex())  {
                 Assert.assertEquals(expected[leftIdx][rightIdx], op(left, right).type)
-        }
+            }
     }
 
     @Test
@@ -268,5 +267,53 @@ class ASTTests {
         Assert.assertEquals(Type.Integer,  reduce.type)
         Assert.assertTrue("Wrong reference.", map.target    is MapFunction)
         Assert.assertTrue("Wrong reference.", reduce.target is ReduceFunction)
+    }
+
+    @Test
+    fun undeclaredVariable() {
+        val charStream = CharStreams.fromReader(StringReader("out a"))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        Assert.assertTrue("Missing variable not detected.", errors[0].message!!.startsWith("Unknown variable 'a'"))
+    }
+
+    @Test
+    fun redeclaredVariable() {
+        val charStream = CharStreams.fromReader(StringReader("var a = 1 var a = 2"))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        Assert.assertTrue("Redeclaration of variable not detected.", errors[0].message!!.startsWith("Variable 'a' redeclared"))
+    }
+
+    @Test
+    fun incompatibleBinOp() {
+        for (program in listOf("out 1+{3,5}", "out 1*{3,5}", "out 1^{3,5}")) {
+            val charStream = CharStreams.fromReader(StringReader(program))
+            val errors = mutableListOf<SQLangError>()
+
+            ASTBuilder.parseStream(charStream, errors)
+
+            Assert.assertEquals(1, errors.count())
+            Assert.assertTrue("Incompatible arguments not detected.", errors[0].message!!.startsWith("Incompatible arguments Integer and Sequence"))
+        }
+    }
+
+    @Test
+    fun badSequence() {
+        for ((case, program) in mapOf(Pair("start", "out {3.0,5}"), Pair("end", "out {3,5.0}"))) {
+            val charStream = CharStreams.fromReader(StringReader(program))
+            val errors = mutableListOf<SQLangError>()
+
+            ASTBuilder.parseStream(charStream, errors)
+
+            Assert.assertEquals(1, errors.count())
+            Assert.assertTrue("Bad sequence not detected.", errors[0].message!!.startsWith("Illegal sequence $case, expected Integer, found Real"))
+        }
     }
 }
