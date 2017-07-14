@@ -80,7 +80,7 @@ private fun newEditor(path: URL? = null) {
 
         private fun present(fileDialog: FileDialog): URL? {
             fileDialog.file = FileType
-            fileDialog.setFilenameFilter { dir, name -> name.endsWith(".sq") }
+            fileDialog.setFilenameFilter { _, name -> name.endsWith(".sq") }
             fileDialog.setLocationRelativeTo(frame)
             fileDialog.isVisible = true
 
