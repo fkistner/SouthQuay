@@ -100,15 +100,19 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
         }
 
         override fun visitLam(ctx: SQLangParser.LamContext): Expression {
-            //val lambdaScope = Scope(errorContainer)
-            //return Lambda(ctx.params.map { it.text }, ctx.body.toAST(lambdaScope), lambdaScope)
-            val parameters = ctx.params.map { VarDeclaration(it.text, Type.Error) }
-            return Lambda(parameters, ctx.body.toAST(scope))
+            val lambdaScope = Scope(scope)
+            val parameters = ctx.params.map { VarDeclaration(it.text, Type.Integer) }
+            parameters.map { lambdaScope.variables[it.identifier] = it }
+            return Lambda(parameters, ctx.body.toAST(lambdaScope), lambdaScope)
         }
 
         override fun visitFun(ctx: SQLangParser.FunContext): Expression {
-            val identifier = ctx.`fun`.text
-            return FunctionInvoc(identifier, ctx.arg.map { it.toAST(scope) }, scope.functions[identifier])
+            val args = ctx.arg.map { it.toAST(scope) }
+            val signature = FunctionSignature(ctx.`fun`.text, args.map { it.type })
+            val target = scope.functions[signature]
+            val functionInvoc = FunctionInvoc(signature.identifier, args, target)
+            if (target == null) scope.errorContainer.add(TypeError("Function ${signature.identifier}(${signature.argumentTypes.joinToString()}) is not defined", functionInvoc))
+            return functionInvoc
         }
     })
 }

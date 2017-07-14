@@ -252,16 +252,33 @@ class ASTTests {
     }
 
     @Test
+    fun lambdaScope() {
+        val charStream = CharStreams.fromReader(StringReader("var i = 0 out map({0, 10}, i -> i)"))
+        val errors = mutableListOf<SQLangError>()
+
+        val program = ASTBuilder.parseStream(charStream, errors)
+        Assert.assertEquals(2, program?.statements?.count())
+        val funInvoc = (program!!.statements[1] as OutStatement).expression as FunctionInvoc
+        Assert.assertEquals(2, funInvoc.args.count())
+        val lambda = funInvoc.args[1] as Lambda
+        Assert.assertEquals(1, lambda.parameters.count())
+        val declI = lambda.parameters[0]
+        val i = lambda.body as VariableRef
+        Assert.assertEquals(Type.Integer, i.type)
+        Assert.assertTrue("Wrong reference.", i.declaration === declI)
+    }
+
+    @Test
     fun functionScope() {
-        val charStream = CharStreams.fromReader(StringReader("var sequence = map({0, n}, i -> (-1)^i / (2 * i + 1))\n" +
+        val charStream = CharStreams.fromReader(StringReader("var n = 10 var sequence = map({0, n}, i -> (-1)^i / (2 * i + 1))\n" +
                 "var quarterPi = reduce(sequence, 0, x y -> x + y)"))
         val errors = mutableListOf<SQLangError>()
 
         val program = ASTBuilder.parseStream(charStream, errors)
 
-        Assert.assertEquals(2, program?.statements?.count())
-        val varSequence = program!!.statements[0]  as VarStatement
-        val varQuarterPi = program .statements[1] as VarStatement
+        Assert.assertEquals(3, program?.statements?.count())
+        val varSequence = program!!.statements[1]  as VarStatement
+        val varQuarterPi = program .statements[2] as VarStatement
         val map    = varSequence.expression  as FunctionInvoc
         val reduce = varQuarterPi.expression as FunctionInvoc
         Assert.assertEquals(Type.Sequence, map.type)
@@ -315,6 +332,20 @@ class ASTTests {
 
             Assert.assertEquals(1, errors.count())
             Assert.assertTrue("Bad sequence not detected.", errors[0].message!!.startsWith("Illegal sequence $case, expected Integer, found Real"))
+        }
+    }
+
+    @Test
+    fun undefinedFunction() {
+        for ((case, input) in mapOf(Pair("map(Sequence, Lambda<Real>)", "out map({3,5}, i -> i * 2.0)"),
+                Pair("reduce(Sequence, Real, Lambda<Integer>)", "out reduce({3,5}, 2.0, x y -> x + y)"))) {
+            val charStream = CharStreams.fromReader(StringReader(input))
+            val errors = mutableListOf<SQLangError>()
+
+            ASTBuilder.parseStream(charStream, errors)
+
+            Assert.assertEquals(1, errors.count())
+            Assert.assertTrue("Undefined function not detected.", errors[0].message!!.startsWith("Function $case is not defined"))
         }
     }
 }
