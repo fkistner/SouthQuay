@@ -68,4 +68,12 @@ class ExpressionVisitor: ASTVisitor<Any> {
             }
         }
     }
+
+    override fun visit(sequence: Sequence): Any? {
+        val from = sequence.from.accept(this)
+        val to = sequence.to.accept(this)
+        if (from == null || to == null) return null
+        val result = from as Int..to as Int
+        return result
+    }
 }
