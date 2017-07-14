@@ -60,6 +60,11 @@ open class CountingVisitor : ASTVisitor {
         return false
     }
 
+    override fun visit(varDeclaration: VarDeclaration): Boolean {
+        visitCounter++
+        return false
+    }
+
     override fun visit(varStatement: VarStatement): Boolean {
         visitCounter++
         return false
@@ -121,6 +126,10 @@ open class CountingVisitor : ASTVisitor {
     }
 
     override fun endVisit(integerLiteral: IntegerLiteral) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(varDeclaration: VarDeclaration) {
         endVisitCounter++
     }
 

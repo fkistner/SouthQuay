@@ -12,6 +12,7 @@ interface ASTVisitor {
     fun visit(sequence: Sequence) = true
     fun visit(realLiteral: RealLiteral) = true
     fun visit(integerLiteral: IntegerLiteral) = true
+    fun visit(varDeclaration: VarDeclaration) = true
     fun visit(varStatement: VarStatement) = true
     fun visit(outStatement: OutStatement) = true
     fun visit(printStatement: PrintStatement) = true
@@ -27,6 +28,7 @@ interface ASTVisitor {
     fun endVisit(sequence: Sequence) = Unit
     fun endVisit(realLiteral: RealLiteral) = Unit
     fun endVisit(integerLiteral: IntegerLiteral) = Unit
+    fun endVisit(varDeclaration: VarDeclaration) = Unit
     fun endVisit(varStatement: VarStatement) = Unit
     fun endVisit(outStatement: OutStatement) = Unit
     fun endVisit(printStatement: PrintStatement) = Unit

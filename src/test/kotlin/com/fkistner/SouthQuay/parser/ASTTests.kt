@@ -86,7 +86,8 @@ class ASTTests {
         val ast = parser.toAST()
 
         Assert.assertEquals(Program(listOf(
-                    VarStatement("myVar1", Sequence(IntegerLiteral(3), IntegerLiteral(10)))
+                    VarStatement(VarDeclaration("myVar1", Type.Sequence),
+                            Sequence(IntegerLiteral(3), IntegerLiteral(10)))
                 )),
                 ast)
     }
@@ -121,9 +122,9 @@ class ASTTests {
         val ast = parser.toAST()
 
         Assert.assertEquals(Program(listOf(
-                    VarStatement("i", FunctionInvoc("map", listOf(
+                    VarStatement(VarDeclaration("i", Type.Sequence), FunctionInvoc("map", listOf(
                             Sequence(IntegerLiteral(1), IntegerLiteral(4)),
-                            Lambda(listOf("n"), Mul(IntegerLiteral(2), VariableRef("n")))
+                            Lambda(listOf(VarDeclaration("n", Type.Integer)), Mul(IntegerLiteral(2), VariableRef("n")))
                     )))
                 )),
                 ast)
@@ -207,7 +208,7 @@ class ASTTests {
     fun literalTypes() {
         val types = listOf(IntegerLiteral(0), RealLiteral(0.0),
                 Sequence(IntegerLiteral(1), IntegerLiteral(2)),
-                Lambda(listOf("x"), IntegerLiteral(3)))
+                Lambda(listOf(VarDeclaration("x", Type.Integer)), IntegerLiteral(3)))
                 .map(Expression::type)
 
         Assert.assertEquals(listOf(Type.Integer, Type.Real, Type.Sequence, Type.Lambda(Type.Integer)), types)
@@ -217,7 +218,7 @@ class ASTTests {
     fun binaryOperationTypes() {
         val expressions = listOf(IntegerLiteral(0), RealLiteral(0.0),
                 Sequence(IntegerLiteral(1), IntegerLiteral(2)),
-                Lambda(listOf("x"), IntegerLiteral(3)))
+                Lambda(listOf(VarDeclaration("x", Type.Integer)), IntegerLiteral(3)))
 
         val expected = listOf(
                 listOf(Type.Integer, Type.Real,  Type.Error, Type.Error),
@@ -246,8 +247,8 @@ class ASTTests {
         val i = (program.statements[3] as OutStatement).expression as VariableRef
         Assert.assertEquals(Type.Real,    j.type)
         Assert.assertEquals(Type.Integer, i.type)
-        Assert.assertTrue("Wrong reference.", i.declaration === varI)
-        Assert.assertTrue("Wrong reference.", j.declaration === varJ)
+        Assert.assertTrue("Wrong reference.", i.declaration === varI.declaration)
+        Assert.assertTrue("Wrong reference.", j.declaration === varJ.declaration)
     }
 
     @Test

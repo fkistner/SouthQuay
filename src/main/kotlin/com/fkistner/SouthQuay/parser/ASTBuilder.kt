@@ -22,9 +22,11 @@ fun SQLangParser.StatementContext.toAST(scope: Scope): Statement {
 
         override fun visitVar(ctx: SQLangParser.VarContext): Statement {
             val identifier = ctx.ident.text
-            val varStatement = VarStatement(identifier, ctx.expr.toAST(scope))
+            val expression = ctx.expr.toAST(scope)
+            val varDeclaration = VarDeclaration(identifier, expression.type)
+            val varStatement = VarStatement(varDeclaration, expression)
             if (scope.variables.containsKey(identifier)) scope.errorContainer.add(TypeError("Variable '$identifier' redeclared", varStatement))
-            scope.variables[identifier] = varStatement
+            scope.variables[identifier] = varDeclaration
             return varStatement
         }
     })
@@ -100,7 +102,8 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
         override fun visitLam(ctx: SQLangParser.LamContext): Expression {
             //val lambdaScope = Scope(errorContainer)
             //return Lambda(ctx.params.map { it.text }, ctx.body.toAST(lambdaScope), lambdaScope)
-            return Lambda(ctx.params.map { it.text }, ctx.body.toAST(scope))
+            val parameters = ctx.params.map { VarDeclaration(it.text, Type.Error) }
+            return Lambda(parameters, ctx.body.toAST(scope))
         }
 
         override fun visitFun(ctx: SQLangParser.FunContext): Expression {

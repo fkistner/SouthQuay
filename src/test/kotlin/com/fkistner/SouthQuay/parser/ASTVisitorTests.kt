@@ -26,7 +26,7 @@ class ASTVisitorTests {
 
     @Test
     fun visitLambda() {
-        val node = Lambda(listOf("a", "b"), VariableRef("n"))
+        val node = Lambda(listOf(VarDeclaration("a", Type.Integer)), VariableRef("n"))
 
         val visitor = object : CountingVisitor() {
             override fun visit(lambda: Lambda): Boolean {
@@ -35,27 +35,37 @@ class ASTVisitorTests {
             }
 
             override fun endVisit(lambda: Lambda) {
-                Assert.assertEquals(2, ++endVisitCounter)
+                Assert.assertEquals(3, ++endVisitCounter)
+            }
+
+            override fun visit(varDeclaration: VarDeclaration): Boolean {
+                Assert.assertEquals(2, ++visitCounter)
+                return true
+            }
+
+            override fun endVisit(varDeclaration: VarDeclaration) {
+                Assert.assertEquals(1, ++endVisitCounter)
             }
 
             override fun visit(variableRef: VariableRef): Boolean {
-                Assert.assertEquals(2, ++visitCounter)
+                Assert.assertEquals(3, ++visitCounter)
                 return false
             }
 
             override fun endVisit(variableRef: VariableRef) {
-                Assert.assertEquals(1, ++endVisitCounter)
+                Assert.assertEquals(2, ++endVisitCounter)
             }
         }
         node.accept(visitor)
 
-        Assert.assertEquals(2, visitor.visitCounter)
-        Assert.assertEquals(2, visitor.endVisitCounter)
+        Assert.assertEquals(3, visitor.visitCounter)
+        Assert.assertEquals(3, visitor.endVisitCounter)
     }
 
     @Test
     fun visitLambdaNoChild() {
-        val node = Lambda(listOf("a", "b"), VariableRef("n"))
+        val node = Lambda(listOf(VarDeclaration("a", Type.Integer), VarDeclaration("b", Type.Integer)),
+                VariableRef("n"))
 
         val visitor = object : CountingVisitor() {
             override fun visit(lambda: Lambda): Boolean {
@@ -75,7 +85,9 @@ class ASTVisitorTests {
 
     @Test
     fun visitFunctionInvoc() {
-        val node = FunctionInvoc("a", listOf(VariableRef("i"), Lambda(listOf("a", "b"), VariableRef("n"))))
+        val node = FunctionInvoc("a", listOf(VariableRef("i"),
+                Lambda(listOf(VarDeclaration("a", Type.Integer),
+                        VarDeclaration("b", Type.Integer)), VariableRef("n"))))
 
         val visitor = object : CountingVisitor() {
             override fun visit(functionInvoc: FunctionInvoc): Boolean {
@@ -113,7 +125,9 @@ class ASTVisitorTests {
 
     @Test
     fun visitFunctionInvocNoChildren() {
-        val node = FunctionInvoc("a", listOf(VariableRef("i"), Lambda(listOf("a", "b"), VariableRef("n"))))
+        val node = FunctionInvoc("a", listOf(VariableRef("i"),
+                Lambda(listOf(VarDeclaration("a", Type.Integer),
+                        VarDeclaration("b", Type.Integer)), VariableRef("n"))))
 
         val visitor = object : CountingVisitor() {
             override fun visit(functionInvoc: FunctionInvoc): Boolean {
@@ -391,7 +405,7 @@ class ASTVisitorTests {
 
     @Test
     fun visitVarStatement() {
-        val node = VarStatement("a", IntegerLiteral(5))
+        val node = VarStatement(VarDeclaration("a", Type.Integer), IntegerLiteral(5))
 
         val visitor = object : CountingVisitor() {
             override fun visit(varStatement: VarStatement): Boolean {
@@ -400,27 +414,36 @@ class ASTVisitorTests {
             }
 
             override fun endVisit(varStatement: VarStatement) {
-                Assert.assertEquals(2, ++endVisitCounter)
+                Assert.assertEquals(3, ++endVisitCounter)
             }
 
-            override fun visit(integerLiteral: IntegerLiteral): Boolean {
+            override fun visit(varDeclaration: VarDeclaration): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
             }
 
-            override fun endVisit(integerLiteral: IntegerLiteral) {
+            override fun endVisit(varDeclaration: VarDeclaration) {
                 Assert.assertEquals(1, ++endVisitCounter)
+            }
+
+            override fun visit(integerLiteral: IntegerLiteral): Boolean {
+                Assert.assertEquals(3, ++visitCounter)
+                return false
+            }
+
+            override fun endVisit(integerLiteral: IntegerLiteral) {
+                Assert.assertEquals(2, ++endVisitCounter)
             }
         }
         node.accept(visitor)
 
-        Assert.assertEquals(2, visitor.visitCounter)
-        Assert.assertEquals(2, visitor.endVisitCounter)
+        Assert.assertEquals(3, visitor.visitCounter)
+        Assert.assertEquals(3, visitor.endVisitCounter)
     }
 
     @Test
     fun visitVarStatementNoChild() {
-        val node = VarStatement("a", IntegerLiteral(5))
+        val node = VarStatement(VarDeclaration("a", Type.Integer), IntegerLiteral(5))
 
         val visitor = object : CountingVisitor() {
             override fun visit(varStatement: VarStatement): Boolean {

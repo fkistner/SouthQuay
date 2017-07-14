@@ -23,17 +23,28 @@ data class Program(val statements: List<Statement> = listOf()): ASTNode() {
 }
 
 sealed class Statement : ASTNode()
-data class PrintStatement(val stringLiteral: String) : Statement() {
+data class PrintStatement(val stringLiteral: String): Statement() {
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
-data class OutStatement  (val expression: Expression): Statement() {
+data class OutStatement(val expression: Expression): Statement() {
     override val children get() = listOf(expression)
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
-data class VarStatement  (val identifier: String, val expression: Expression): Statement() {
-    override val children get() = listOf(expression)
+
+data class VarDeclaration(val identifier: String): ASTNode() {
+    var type: Type = Type.Error
+
+    constructor(identifier: String, type: Type): this(identifier) {
+        this.type = type
+    }
+
+    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
+    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+}
+data class VarStatement(val declaration: VarDeclaration, val expression: Expression): Statement() {
+    override val children get() = listOf(declaration, expression)
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
@@ -76,7 +87,7 @@ data class Sequence      (val from: Expression, val to: Expression): Expression(
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 
-sealed class BinaryOperation : Expression() {
+sealed class BinaryOperation: Expression() {
     override val type get() = resolve(left, right)
     abstract val left: Expression
     abstract val right: Expression
@@ -116,6 +127,8 @@ data class Pow(override val left: Expression, override val right: Expression): B
 interface Function {
     val type: Type
 }
+data class FunctionSignature(val identifier: String, val argumentTypes: List<Type>)
+
 data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression() {
     var target: Function? = null
 
@@ -129,26 +142,26 @@ data class FunctionInvoc(val identifier: String, val args: List<Expression>): Ex
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 
-data class Lambda(val parameters: List<String>, val body: Expression): Expression() {
+data class Lambda(val parameters: List<VarDeclaration>, val body: Expression): Expression() {
     var scope: Scope? = null
 
-    constructor(parameters: List<String>, body: Expression, scope: Scope): this(parameters, body) {
+    constructor(parameters: List<VarDeclaration>, body: Expression, scope: Scope): this(parameters, body) {
         this.scope = scope
     }
 
     override val type get() = Type.Lambda(body.type)
-    override val children get() = listOf(body)
+    override val children get() = parameters + listOf(body)
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
 data class VariableRef(val identifier: String): Expression() {
-    var declaration: VarStatement? = null
+    var declaration: VarDeclaration? = null
 
-    constructor(identifier: String, declaration: VarStatement?): this(identifier) {
+    constructor(identifier: String, declaration: VarDeclaration?): this(identifier) {
         this.declaration = declaration
     }
 
-    override val type get() = declaration?.expression?.type ?: Type.Error
+    override val type get() = declaration?.type ?: Type.Error
     override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
     override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
 }
