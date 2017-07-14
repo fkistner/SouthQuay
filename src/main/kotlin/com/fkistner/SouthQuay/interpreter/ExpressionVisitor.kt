@@ -12,7 +12,7 @@ class ExpressionVisitor: ASTVisitor<Any> {
         return realLiteral.value
     }
 
-    private fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Any?): Any? {
+    private inline fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Any?): Any? {
         val left  = binaryOperation.left.accept(this)
         val right = binaryOperation.right.accept(this)
         if (left == null || right == null) return null
