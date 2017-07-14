@@ -1,7 +1,7 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.parser
 
-import com.fkistner.SouthQuay.parser.*
-import org.antlr.v4.runtime.*
+import com.fkistner.SouthQuay.grammar.parserForString
+import org.antlr.v4.runtime.CharStreams
 import org.junit.*
 import java.io.StringReader
 

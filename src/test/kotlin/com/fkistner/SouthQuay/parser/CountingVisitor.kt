@@ -1,6 +1,4 @@
-package com.fkistner.SouthQuay.test
-
-import com.fkistner.SouthQuay.parser.*
+package com.fkistner.SouthQuay.parser
 
 
 open class CountingVisitor : ASTVisitor {

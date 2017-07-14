@@ -1,4 +1,4 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.grammar
 
 /** Simplified tree of parsed rules and tokens */
 internal sealed class TestTree

@@ -1,6 +1,5 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.parser
 
-import com.fkistner.SouthQuay.parser.*
 import org.junit.*
 
 

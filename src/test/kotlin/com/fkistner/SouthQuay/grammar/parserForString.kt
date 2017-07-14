@@ -1,4 +1,4 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.grammar
 
 import com.fkistner.SouthQuay.grammar.*
 import org.antlr.v4.runtime.*

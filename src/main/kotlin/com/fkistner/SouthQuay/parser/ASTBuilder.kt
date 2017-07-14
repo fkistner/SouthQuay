@@ -180,7 +180,7 @@ fun SQLangParser.ExpressionContext.toAST(): Expression {
         }
 
         override fun visitParen(ctx: SQLangParser.ParenContext): Expression {
-            return ctx.expr.toAST();
+            return ctx.expr.toAST()
         }
 
         override fun visitRef(ctx: SQLangParser.RefContext): Expression {

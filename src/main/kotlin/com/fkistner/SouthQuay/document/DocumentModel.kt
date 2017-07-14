@@ -1,4 +1,4 @@
-package com.fkistner.SouthQuay
+package com.fkistner.SouthQuay.document
 
 import org.fife.ui.rsyntaxtextarea.*
 import java.io.File

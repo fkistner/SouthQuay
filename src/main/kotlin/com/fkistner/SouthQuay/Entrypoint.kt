@@ -1,15 +1,15 @@
 package com.fkistner.SouthQuay
 
 import com.fkistner.SouthQuay.UI.*
-import com.fkistner.SouthQuay.UI.Menu
-import java.awt.*
+import com.fkistner.SouthQuay.document.DocumentModel
+import java.awt.FileDialog
 import java.net.URL
 import java.nio.file.Paths
 import javax.swing.*
 
 fun main(args: Array<String>) {
-    System.setProperty("apple.laf.useScreenMenuBar", "true");
-    System.setProperty("apple.awt.application.name", "South Quay");
+    System.setProperty("apple.laf.useScreenMenuBar", "true")
+    System.setProperty("apple.awt.application.name", "South Quay")
 
     newEditor()
 }

@@ -1,6 +1,5 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.document
 
-import com.fkistner.SouthQuay.DocumentModel
 import org.junit.*
 import java.io.File
 import java.nio.file.*

@@ -1,6 +1,5 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.grammar
 
-import com.fkistner.SouthQuay.grammar.SQLangParser
 import org.junit.Assert
 
 /** Assert that parser has detected syntax errors */

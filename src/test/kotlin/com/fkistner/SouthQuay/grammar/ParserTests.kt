@@ -1,8 +1,7 @@
-package com.fkistner.SouthQuay.test
+package com.fkistner.SouthQuay.grammar
 
-import com.fkistner.SouthQuay.grammar.*
-import com.fkistner.SouthQuay.grammar.SQLangParser.*
-import org.antlr.v4.runtime.*
+import com.fkistner.SouthQuay.grammar.SQLangParser.ProgramContext
+import org.antlr.v4.runtime.Recognizer
 import org.antlr.v4.runtime.tree.*
 import org.junit.*
 
