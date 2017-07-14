@@ -1,22 +1,22 @@
 package com.fkistner.SouthQuay.parser
 
-interface ASTVisitor {
-    fun visit(variableRef: VariableRef) = true
-    fun visit(lambda: Lambda) = true
-    fun visit(functionInvoc: FunctionInvoc) = true
-    fun visit(sum: Sum) = true
-    fun visit(sub: Sub) = true
-    fun visit(mul: Mul) = true
-    fun visit(div: Div) = true
-    fun visit(pow: Pow) = true
-    fun visit(sequence: Sequence) = true
-    fun visit(realLiteral: RealLiteral) = true
-    fun visit(integerLiteral: IntegerLiteral) = true
-    fun visit(varDeclaration: VarDeclaration) = true
-    fun visit(varStatement: VarStatement) = true
-    fun visit(outStatement: OutStatement) = true
-    fun visit(printStatement: PrintStatement) = true
-    fun visit(program: Program) = true
+interface ASTVisitor<out T> {
+    fun visit(variableRef: VariableRef): T? = null
+    fun visit(lambda: Lambda): T? = null
+    fun visit(functionInvoc: FunctionInvoc): T? = null
+    fun visit(sum: Sum): T? = null
+    fun visit(sub: Sub): T? = null
+    fun visit(mul: Mul): T? = null
+    fun visit(div: Div): T? = null
+    fun visit(pow: Pow): T? = null
+    fun visit(sequence: Sequence): T? = null
+    fun visit(realLiteral: RealLiteral): T? = null
+    fun visit(integerLiteral: IntegerLiteral): T? = null
+    fun visit(varDeclaration: VarDeclaration): T? = null
+    fun visit(varStatement: VarStatement): T? = null
+    fun visit(outStatement: OutStatement): T? = null
+    fun visit(printStatement: PrintStatement): T? = null
+    fun visit(program: Program): T? = null
     fun endVisit(variableRef: VariableRef) = Unit
     fun endVisit(lambda: Lambda) = Unit
     fun endVisit(functionInvoc: FunctionInvoc) = Unit

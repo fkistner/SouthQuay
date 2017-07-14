@@ -2,12 +2,18 @@ package com.fkistner.SouthQuay.parser
 
 sealed class ASTNode {
     open val children: List<ASTNode> = emptyList()
-    fun accept(visitor: ASTVisitor) {
-        if (visit(visitor)) children.map { it.accept(visitor) }
+    fun <T>accept(visitor: ASTVisitor<T>): T? {
+        val returnValue = visit(visitor)
         endVisit(visitor)
+        return returnValue
     }
-    protected abstract fun    visit(visitor: ASTVisitor): Boolean
-    protected abstract fun endVisit(visitor: ASTVisitor)
+
+    fun <T>acceptChildren(visitor: ASTVisitor<T>) {
+        children.map { it.accept(visitor) }
+    }
+
+    protected abstract fun <T>   visit(visitor: ASTVisitor<T>): T?
+    protected abstract fun <T>endVisit(visitor: ASTVisitor<T>)
 }
 
 data class Program(val statements: List<Statement> = listOf()): ASTNode() {
@@ -18,19 +24,19 @@ data class Program(val statements: List<Statement> = listOf()): ASTNode() {
     }
 
     override val children get() = statements
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
 sealed class Statement : ASTNode()
 data class PrintStatement(val stringLiteral: String): Statement() {
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class OutStatement(val expression: Expression): Statement() {
     override val children get() = listOf(expression)
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
 data class VarDeclaration(val identifier: String): ASTNode() {
@@ -40,13 +46,13 @@ data class VarDeclaration(val identifier: String): ASTNode() {
         this.type = type
     }
 
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class VarStatement(val declaration: VarDeclaration, val expression: Expression): Statement() {
     override val children get() = listOf(declaration, expression)
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
 sealed class Type {
@@ -72,19 +78,19 @@ sealed class Expression : ASTNode() {
 
 data class IntegerLiteral(val value: Int)   : Expression() {
     override val type get() = Type.Integer
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class RealLiteral   (val value: Double): Expression() {
     override val type get() = Type.Real
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class Sequence      (val from: Expression, val to: Expression): Expression() {
     override val type get() = Type.Sequence
     override val children get() = listOf(from, to)
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
 sealed class BinaryOperation: Expression() {
@@ -104,24 +110,24 @@ fun resolve(left: Expression, right: Expression): Type {
 }
 
 data class Sum(override val left: Expression, override val right: Expression): BinaryOperation() {
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class Sub(override val left: Expression, override val right: Expression): BinaryOperation() {
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class Mul(override val left: Expression, override val right: Expression): BinaryOperation() {
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class Div(override val left: Expression, override val right: Expression): BinaryOperation() {
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class Pow(override val left: Expression, override val right: Expression): BinaryOperation() {
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
 interface Function {
@@ -138,8 +144,8 @@ data class FunctionInvoc(val identifier: String, val args: List<Expression>): Ex
 
     override val type get() = target?.type ?: Type.Error
     override val children get() = args
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
 data class Lambda(val parameters: List<VarDeclaration>, val body: Expression): Expression() {
@@ -151,8 +157,8 @@ data class Lambda(val parameters: List<VarDeclaration>, val body: Expression): E
 
     override val type get() = Type.Lambda(body.type)
     override val children get() = parameters + listOf(body)
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class VariableRef(val identifier: String): Expression() {
     var declaration: VarDeclaration? = null
@@ -162,6 +168,6 @@ data class VariableRef(val identifier: String): Expression() {
     }
 
     override val type get() = declaration?.type ?: Type.Error
-    override fun    visit(visitor: ASTVisitor) = visitor.visit(this)
-    override fun endVisit(visitor: ASTVisitor) = visitor.endVisit(this)
+    override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
+    override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }

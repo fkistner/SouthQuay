@@ -1,88 +1,72 @@
 package com.fkistner.SouthQuay.parser
 
 
-open class CountingVisitor : ASTVisitor {
+open class CountingVisitor : ASTVisitor<Unit> {
     var visitCounter = 0
     var endVisitCounter = 0
 
-    override fun visit(variableRef: VariableRef): Boolean {
+    override fun visit(variableRef: VariableRef) {
         visitCounter++
-        return false
     }
 
-    override fun visit(lambda: Lambda): Boolean {
+    override fun visit(lambda: Lambda) {
         visitCounter++
-        return false
     }
 
-    override fun visit(functionInvoc: FunctionInvoc): Boolean {
+    override fun visit(functionInvoc: FunctionInvoc) {
         visitCounter++
-        return false
     }
 
-    override fun visit(sum: Sum): Boolean {
+    override fun visit(sum: Sum) {
         visitCounter++
-        return false
     }
 
-    override fun visit(sub: Sub): Boolean {
+    override fun visit(sub: Sub) {
         visitCounter++
-        return false
     }
 
-    override fun visit(mul: Mul): Boolean {
+    override fun visit(mul: Mul) {
         visitCounter++
-        return false
     }
 
-    override fun visit(div: Div): Boolean {
+    override fun visit(div: Div) {
         visitCounter++
-        return false
     }
 
-    override fun visit(pow: Pow): Boolean {
+    override fun visit(pow: Pow) {
         visitCounter++
-        return false
     }
 
-    override fun visit(sequence: Sequence): Boolean {
+    override fun visit(sequence: Sequence) {
         visitCounter++
-        return false
     }
 
-    override fun visit(realLiteral: RealLiteral): Boolean {
+    override fun visit(realLiteral: RealLiteral) {
         visitCounter++
-        return false
     }
 
-    override fun visit(integerLiteral: IntegerLiteral): Boolean {
+    override fun visit(integerLiteral: IntegerLiteral) {
         visitCounter++
-        return false
     }
 
-    override fun visit(varDeclaration: VarDeclaration): Boolean {
+    override fun visit(varDeclaration: VarDeclaration) {
         visitCounter++
-        return false
     }
 
-    override fun visit(varStatement: VarStatement): Boolean {
+    override fun visit(varStatement: VarStatement) {
         visitCounter++
-        return false
     }
 
-    override fun visit(outStatement: OutStatement): Boolean {
+    override fun visit(outStatement: OutStatement) {
         visitCounter++
-        return false
     }
 
-    override fun visit(printStatement: PrintStatement): Boolean {
+    override fun visit(printStatement: PrintStatement) {
         visitCounter++
-        return false
     }
 
-    override fun visit(program: Program): Boolean {
+    override fun visit(program: Program) {
         visitCounter++
-        return false
     }
 
     override fun endVisit(variableRef: VariableRef) {
