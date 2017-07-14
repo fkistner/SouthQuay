@@ -24,8 +24,7 @@ interface ASTVisitor {
 sealed class ASTNode {
     open val children: List<ASTNode> = emptyList()
     fun accept(visitor: ASTVisitor) {
-        if (acceptVisitor(visitor))
-            children.map { it.acceptVisitor(visitor) }
+        if (visit(visitor)) children.map { it.accept(visitor) }
     }
     protected abstract fun acceptVisitor(visitor: ASTVisitor): Boolean
 }

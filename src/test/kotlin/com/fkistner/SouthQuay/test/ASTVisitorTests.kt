@@ -379,4 +379,29 @@ class ASTVisitorTests {
 
         Assert.assertEquals(1, visitor.visitCounter)
     }
+
+    @Test
+    fun visitNestedHierarchies() {
+        val node = Program(listOf(OutStatement(VariableRef("n"))))
+
+        val visitor = object : CountingVisitor() {
+            override fun visit(program: Program): Boolean {
+                Assert.assertEquals(1, ++visitCounter)
+                return true
+            }
+
+            override fun visit(outStatement: OutStatement): Boolean {
+                Assert.assertEquals(2, ++visitCounter)
+                return true
+            }
+
+            override fun visit(variableRef: VariableRef): Boolean {
+                Assert.assertEquals(3, ++visitCounter)
+                return true
+            }
+        }
+        node.accept(visitor)
+
+        Assert.assertEquals(3, visitor.visitCounter)
+    }
 }
