@@ -14,10 +14,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return true
             }
+
+            override fun endVisit(variableRef: VariableRef) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -30,14 +35,23 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(lambda: Lambda) {
+                Assert.assertEquals(2, ++endVisitCounter)
+            }
+
             override fun visit(variableRef: VariableRef): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
+            }
+
+            override fun endVisit(variableRef: VariableRef) {
+                Assert.assertEquals(1, ++endVisitCounter)
             }
         }
         node.accept(visitor)
 
         Assert.assertEquals(2, visitor.visitCounter)
+        Assert.assertEquals(2, visitor.endVisitCounter)
     }
 
     @Test
@@ -49,10 +63,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(lambda: Lambda) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -65,19 +84,32 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(functionInvoc: FunctionInvoc) {
+                Assert.assertEquals(3, ++endVisitCounter)
+            }
+
             override fun visit(lambda: Lambda): Boolean {
                 Assert.assertEquals(3, ++visitCounter)
                 return false
+            }
+
+            override fun endVisit(lambda: Lambda) {
+                Assert.assertEquals(2, ++endVisitCounter)
             }
 
             override fun visit(variableRef: VariableRef): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(variableRef: VariableRef) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(3, visitor.visitCounter)
+        Assert.assertEquals(3, visitor.endVisitCounter)
     }
 
     @Test
@@ -89,10 +121,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(functionInvoc: FunctionInvoc) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -105,28 +142,58 @@ class ASTVisitorTests {
 
             val visitor = object : CountingVisitor() {
                 override fun visit(sum: Sum): Boolean {
-                    if (op == sum) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == sum) Assert.assertEquals(1, visitCounter)
                     return true
+                }
+
+                override fun endVisit(sum: Sum) {
+                    ++endVisitCounter
+                    if (op == sum) Assert.assertEquals(3, endVisitCounter)
                 }
 
                 override fun visit(sub: Sub): Boolean {
-                    if (op == sub) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == sub) Assert.assertEquals(1, visitCounter)
                     return true
+                }
+
+                override fun endVisit(sub: Sub) {
+                    ++endVisitCounter
+                    if (op == sub) Assert.assertEquals(3, endVisitCounter)
                 }
 
                 override fun visit(mul: Mul): Boolean {
-                    if (op == mul) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == mul) Assert.assertEquals(1, visitCounter)
                     return true
+                }
+
+                override fun endVisit(mul: Mul) {
+                    ++endVisitCounter
+                    if (op == mul) Assert.assertEquals(3, endVisitCounter)
                 }
 
                 override fun visit(div: Div): Boolean {
-                    if (op == div) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == div) Assert.assertEquals(1, visitCounter)
                     return true
                 }
 
+                override fun endVisit(div: Div) {
+                    ++endVisitCounter
+                    if (op == div) Assert.assertEquals(3, endVisitCounter)
+                }
+
                 override fun visit(pow: Pow): Boolean {
-                    if (op == pow) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == pow) Assert.assertEquals(1, visitCounter)
                     return true
+                }
+
+                override fun endVisit(pow: Pow) {
+                    ++endVisitCounter
+                    if (op == pow) Assert.assertEquals(3, endVisitCounter)
                 }
 
                 override fun visit(variableRef: VariableRef): Boolean {
@@ -134,14 +201,23 @@ class ASTVisitorTests {
                     return false
                 }
 
+                override fun endVisit(variableRef: VariableRef) {
+                    Assert.assertEquals(1, ++endVisitCounter)
+                }
+
                 override fun visit(functionInvoc: FunctionInvoc): Boolean {
                     Assert.assertEquals(3, ++visitCounter)
                     return false
+                }
+
+                override fun endVisit(functionInvoc: FunctionInvoc) {
+                    Assert.assertEquals(2, ++endVisitCounter)
                 }
             }
             op.accept(visitor)
 
             Assert.assertEquals(3, visitor.visitCounter)
+            Assert.assertEquals(3, visitor.endVisitCounter)
         }
     }
 
@@ -155,33 +231,64 @@ class ASTVisitorTests {
 
             val visitor = object : CountingVisitor() {
                 override fun visit(sum: Sum): Boolean {
-                    if (op == sum) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == sum) Assert.assertEquals(1, visitCounter)
                     return false
+                }
+
+                override fun endVisit(sum: Sum) {
+                    ++endVisitCounter
+                    if (op == sum) Assert.assertEquals(1, endVisitCounter)
                 }
 
                 override fun visit(sub: Sub): Boolean {
-                    if (op == sub) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == sub) Assert.assertEquals(1, visitCounter)
                     return false
+                }
+
+                override fun endVisit(sub: Sub) {
+                    ++endVisitCounter
+                    if (op == sub) Assert.assertEquals(1, endVisitCounter)
                 }
 
                 override fun visit(mul: Mul): Boolean {
-                    if (op == mul) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == mul) Assert.assertEquals(1, visitCounter)
                     return false
+                }
+
+                override fun endVisit(mul: Mul) {
+                    ++endVisitCounter
+                    if (op == mul) Assert.assertEquals(1, endVisitCounter)
                 }
 
                 override fun visit(div: Div): Boolean {
-                    if (op == div) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == div) Assert.assertEquals(1, visitCounter)
                     return false
                 }
 
+                override fun endVisit(div: Div) {
+                    ++endVisitCounter
+                    if (op == div) Assert.assertEquals(1, endVisitCounter)
+                }
+
                 override fun visit(pow: Pow): Boolean {
-                    if (op == pow) Assert.assertEquals(1, ++visitCounter)
+                    ++visitCounter
+                    if (op == pow) Assert.assertEquals(1, visitCounter)
                     return false
+                }
+
+                override fun endVisit(pow: Pow) {
+                    ++endVisitCounter
+                    if (op == pow) Assert.assertEquals(1, endVisitCounter)
                 }
             }
             op.accept(visitor)
 
             Assert.assertEquals(1, visitor.visitCounter)
+            Assert.assertEquals(1, visitor.endVisitCounter)
         }
     }
 
@@ -195,19 +302,32 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(sequence: Sequence) {
+                Assert.assertEquals(3, ++endVisitCounter)
+            }
+
             override fun visit(variableRef: VariableRef): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
+            }
+
+            override fun endVisit(variableRef: VariableRef) {
+                Assert.assertEquals(1, ++endVisitCounter)
             }
 
             override fun visit(sum: Sum): Boolean {
                 Assert.assertEquals(3, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(sum: Sum) {
+                Assert.assertEquals(2, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(3, visitor.visitCounter)
+        Assert.assertEquals(3, visitor.endVisitCounter)
     }
 
     @Test
@@ -219,10 +339,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(sequence: Sequence) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -234,10 +359,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return true
             }
+
+            override fun endVisit(realLiteral: RealLiteral) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -249,10 +379,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return true
             }
+
+            override fun endVisit(integerLiteral: IntegerLiteral) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -265,14 +400,23 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(varStatement: VarStatement) {
+                Assert.assertEquals(2, ++endVisitCounter)
+            }
+
             override fun visit(integerLiteral: IntegerLiteral): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
+            }
+
+            override fun endVisit(integerLiteral: IntegerLiteral) {
+                Assert.assertEquals(1, ++endVisitCounter)
             }
         }
         node.accept(visitor)
 
         Assert.assertEquals(2, visitor.visitCounter)
+        Assert.assertEquals(2, visitor.endVisitCounter)
     }
 
     @Test
@@ -284,10 +428,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(varStatement: VarStatement) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -300,14 +449,23 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(outStatement: OutStatement) {
+                Assert.assertEquals(2, ++endVisitCounter)
+            }
+
             override fun visit(integerLiteral: IntegerLiteral): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
+            }
+
+            override fun endVisit(integerLiteral: IntegerLiteral) {
+                Assert.assertEquals(1, ++endVisitCounter)
             }
         }
         node.accept(visitor)
 
         Assert.assertEquals(2, visitor.visitCounter)
+        Assert.assertEquals(2, visitor.endVisitCounter)
     }
 
     @Test
@@ -319,10 +477,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(outStatement: OutStatement) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -334,10 +497,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return true
             }
+
+            override fun endVisit(printStatement: PrintStatement) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -350,19 +518,32 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(program: Program) {
+                Assert.assertEquals(3, ++endVisitCounter)
+            }
+
             override fun visit(printStatement: PrintStatement): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return false
+            }
+
+            override fun endVisit(printStatement: PrintStatement) {
+                Assert.assertEquals(1, ++endVisitCounter)
             }
 
             override fun visit(outStatement: OutStatement): Boolean {
                 Assert.assertEquals(3, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(outStatement: OutStatement) {
+                Assert.assertEquals(2, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(3, visitor.visitCounter)
+        Assert.assertEquals(3, visitor.endVisitCounter)
     }
 
     @Test
@@ -374,10 +555,15 @@ class ASTVisitorTests {
                 Assert.assertEquals(1, ++visitCounter)
                 return false
             }
+
+            override fun endVisit(program: Program) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(1, visitor.visitCounter)
+        Assert.assertEquals(1, visitor.endVisitCounter)
     }
 
     @Test
@@ -390,18 +576,31 @@ class ASTVisitorTests {
                 return true
             }
 
+            override fun endVisit(program: Program) {
+                Assert.assertEquals(3, ++endVisitCounter)
+            }
+
             override fun visit(outStatement: OutStatement): Boolean {
                 Assert.assertEquals(2, ++visitCounter)
                 return true
+            }
+
+            override fun endVisit(outStatement: OutStatement) {
+                Assert.assertEquals(2, ++endVisitCounter)
             }
 
             override fun visit(variableRef: VariableRef): Boolean {
                 Assert.assertEquals(3, ++visitCounter)
                 return true
             }
+
+            override fun endVisit(variableRef: VariableRef) {
+                Assert.assertEquals(1, ++endVisitCounter)
+            }
         }
         node.accept(visitor)
 
         Assert.assertEquals(3, visitor.visitCounter)
+        Assert.assertEquals(3, visitor.endVisitCounter)
     }
 }

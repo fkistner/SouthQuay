@@ -5,6 +5,7 @@ import com.fkistner.SouthQuay.parser.*
 
 open class CountingVisitor : ASTVisitor {
     var visitCounter = 0
+    var endVisitCounter = 0
 
     override fun visit(variableRef: VariableRef): Boolean {
         visitCounter++
@@ -79,5 +80,65 @@ open class CountingVisitor : ASTVisitor {
     override fun visit(program: Program): Boolean {
         visitCounter++
         return false
+    }
+
+    override fun endVisit(variableRef: VariableRef) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(lambda: Lambda) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(functionInvoc: FunctionInvoc) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(sum: Sum) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(sub: Sub) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(mul: Mul) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(div: Div) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(pow: Pow) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(sequence: Sequence) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(realLiteral: RealLiteral) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(integerLiteral: IntegerLiteral) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(varStatement: VarStatement) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(outStatement: OutStatement) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(printStatement: PrintStatement) {
+        endVisitCounter++
+    }
+
+    override fun endVisit(program: Program) {
+        endVisitCounter++
     }
 }
