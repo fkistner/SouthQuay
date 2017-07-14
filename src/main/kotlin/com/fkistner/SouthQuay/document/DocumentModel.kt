@@ -53,8 +53,11 @@ class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel)
         }
     }
 
+    val text: String
+        get() = document.getText(0, document.length)
+
     fun save(file: URL) {
-        val text = document.getText(0, document.length)
+        val text = text
         File(file.toURI()).outputStream().bufferedWriter().use {
             it.write(text)
         }

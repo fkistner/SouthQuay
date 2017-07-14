@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.fkistner.SouthQuay.UI.Editor">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.fkistner.SouthQuay.UI.EditorBase">
   <grid id="c6e20" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
@@ -43,6 +43,31 @@
           </grid>
         </children>
       </scrollpane>
+      <toolbar id="f4950">
+        <constraints border-constraint="South"/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="81ab8" class="javax.swing.JLabel" binding="statusLabel">
+            <constraints/>
+            <properties/>
+          </component>
+          <grid id="a16b5" layout-manager="GridBagLayout">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <component id="87810" class="javax.swing.JButton" binding="evaluateButton">
+            <constraints/>
+            <properties>
+              <text value="▶"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
     </children>
   </grid>
 </form>

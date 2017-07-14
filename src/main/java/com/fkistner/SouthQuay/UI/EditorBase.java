@@ -8,12 +8,14 @@ import java.awt.*;
 /**
  * Created by florian on 7/12/17.
  */
-public class Editor {
-    public JPanel panel;
-    private JScrollPane scrollPane;
-    public RSyntaxTextArea syntaxTextArea;
-    private RSyntaxTextArea outputTextArea;
-    private Gutter gutter;
+public class EditorBase {
+    protected JPanel panel;
+    protected JScrollPane scrollPane;
+    protected RSyntaxTextArea syntaxTextArea;
+    protected RSyntaxTextArea outputTextArea;
+    protected JButton evaluateButton;
+    protected JLabel statusLabel;
+    protected Gutter gutter;
 
 
     private void createUIComponents() {
@@ -63,6 +65,17 @@ public class Editor {
         syntaxTextArea.setTabsEmulated(true);
         syntaxTextArea.setWhitespaceVisible(true);
         panel1.add(syntaxTextArea, BorderLayout.CENTER);
+        final JToolBar toolBar1 = new JToolBar();
+        toolBar1.setFloatable(false);
+        panel.add(toolBar1, BorderLayout.SOUTH);
+        statusLabel = new JLabel();
+        toolBar1.add(statusLabel);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridBagLayout());
+        toolBar1.add(panel2);
+        evaluateButton = new JButton();
+        evaluateButton.setText("▶");
+        toolBar1.add(evaluateButton);
     }
 
     /**
