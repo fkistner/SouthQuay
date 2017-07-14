@@ -3,28 +3,96 @@ package com.fkistner.SouthQuay.parser
 import com.fkistner.SouthQuay.grammar.*
 import org.antlr.v4.runtime.*
 
-sealed class ASTNode
-data class Program(val statements: List<Statement> = listOf()): ASTNode()
+interface ASTVisitor {
+    fun visit(variableRef: VariableRef) = true
+    fun visit(lambda: Lambda) = true
+    fun visit(functionInvoc: FunctionInvoc) = true
+    fun visit(sum: Sum) = true
+    fun visit(sub: Sub) = true
+    fun visit(mul: Mul) = true
+    fun visit(div: Div) = true
+    fun visit(pow: Pow) = true
+    fun visit(sequence: Sequence) = true
+    fun visit(realLiteral: RealLiteral) = true
+    fun visit(integerLiteral: IntegerLiteral) = true
+    fun visit(varStatement: VarStatement) = true
+    fun visit(outStatement: OutStatement) = true
+    fun visit(printStatement: PrintStatement) = true
+    fun visit(program: Program) = true
+}
+
+sealed class ASTNode {
+    open val children: List<ASTNode> = emptyList()
+    fun accept(visitor: ASTVisitor) {
+        if (acceptVisitor(visitor))
+            children.map { it.acceptVisitor(visitor) }
+    }
+    protected abstract fun acceptVisitor(visitor: ASTVisitor): Boolean
+}
+
+data class Program(val statements: List<Statement> = listOf()): ASTNode() {
+    override val children get() = statements
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
 
 sealed class Statement : ASTNode()
-data class PrintStatement(val stringLiteral: String) : Statement()
-data class OutStatement  (val expression: Expression): Statement()
-data class VarStatement  (val identifier: String, val expression: Expression): Statement()
+data class PrintStatement(val stringLiteral: String) : Statement() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class OutStatement  (val expression: Expression): Statement() {
+    override val children get() = listOf(expression)
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class VarStatement  (val identifier: String, val expression: Expression): Statement() {
+    override val children get() = listOf(expression)
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
 
 sealed class Expression : ASTNode()
-data class IntegerLiteral(val value: Int)   : Expression()
-data class RealLiteral   (val value: Double): Expression()
-data class Sequence      (val from: Expression, val to: Expression): Expression()
+data class IntegerLiteral(val value: Int)   : Expression() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class RealLiteral   (val value: Double): Expression() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class Sequence      (val from: Expression, val to: Expression): Expression() {
+    override val children get() = listOf(from, to)
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
 
-data class Sum(val left: Expression, val right: Expression): Expression()
-data class Sub(val left: Expression, val right: Expression): Expression()
-data class Mul(val left: Expression, val right: Expression): Expression()
-data class Div(val left: Expression, val right: Expression): Expression()
-data class Pow(val left: Expression, val right: Expression): Expression()
+sealed class BinaryOperation: Expression() {
+    abstract val left: Expression
+    abstract val right: Expression
+    override val children get() = listOf(left, right)
+}
 
-data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression()
-data class Lambda(val parameters: List<String>, val body: Expression): Expression()
-data class VariableRef(val identifier: String): Expression()
+data class Sum(override val left: Expression, override val right: Expression): BinaryOperation() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class Sub(override val left: Expression, override val right: Expression): BinaryOperation() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class Mul(override val left: Expression, override val right: Expression): BinaryOperation() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class Div(override val left: Expression, override val right: Expression): BinaryOperation() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class Pow(override val left: Expression, override val right: Expression): BinaryOperation() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+
+data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression(){
+    override val children get() = args
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class Lambda(val parameters: List<String>, val body: Expression): Expression(){
+    override val children get() = listOf(body)
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
+data class VariableRef(val identifier: String): Expression() {
+    override fun acceptVisitor(visitor: ASTVisitor): Boolean = visitor.visit(this)
+}
 
 
 fun SQLangParser.toAST() = this.program().toAST()
