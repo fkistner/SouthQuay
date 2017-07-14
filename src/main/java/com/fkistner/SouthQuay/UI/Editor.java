@@ -1,7 +1,7 @@
 package com.fkistner.SouthQuay.UI;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rtextarea.RTextScrollPane;
+import org.fife.ui.rtextarea.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,17 +10,22 @@ import java.awt.*;
  */
 public class Editor {
     public JPanel panel;
+    private JScrollPane scrollPane;
     public RSyntaxTextArea syntaxTextArea;
-    private RTextScrollPane scrollPane;
+    private RSyntaxTextArea outputTextArea;
+    private Gutter gutter;
+
 
     private void createUIComponents() {
         syntaxTextArea = new RSyntaxTextArea();
         syntaxTextArea.setCodeFoldingEnabled(true);
-        syntaxTextArea.setPaintMatchedBracketPair(true);
-        syntaxTextArea.setTabsEmulated(true);
-        scrollPane = new RTextScrollPane(syntaxTextArea);
-        scrollPane.setFoldIndicatorEnabled(true);
-        scrollPane.setIconRowHeaderEnabled(true);
+        Font defaultFont = new Font("Monospaced", Font.PLAIN, 12);
+        gutter = new Gutter(syntaxTextArea);
+        gutter.setLineNumberFont(defaultFont);
+        gutter.setLineNumberColor(Color.GRAY);
+        gutter.setBookmarkingEnabled(true);
+        scrollPane = new JScrollPane(syntaxTextArea);
+        scrollPane.setRowHeaderView(gutter);
     }
 
     {
@@ -41,10 +46,23 @@ public class Editor {
         createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
-        panel.setPreferredSize(new Dimension(480, 480));
-        scrollPane.setLineNumbersEnabled(true);
+        panel.setPreferredSize(new Dimension(600, 600));
+        scrollPane.setVerticalScrollBarPolicy(22);
         panel.add(scrollPane, BorderLayout.CENTER);
-        scrollPane.setViewportView(syntaxTextArea);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
+        scrollPane.setViewportView(panel1);
+        outputTextArea = new RSyntaxTextArea();
+        outputTextArea.setBackground(new Color(-1644826));
+        outputTextArea.setEditable(false);
+        outputTextArea.setHighlightCurrentLine(false);
+        outputTextArea.setPreferredSize(new Dimension(200, 15));
+        panel1.add(outputTextArea, BorderLayout.EAST);
+        syntaxTextArea.setPaintMatchedBracketPair(true);
+        syntaxTextArea.setPaintTabLines(true);
+        syntaxTextArea.setTabsEmulated(true);
+        syntaxTextArea.setWhitespaceVisible(true);
+        panel1.add(syntaxTextArea, BorderLayout.CENTER);
     }
 
     /**
