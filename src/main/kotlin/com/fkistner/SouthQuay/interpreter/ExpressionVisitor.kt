@@ -1,25 +1,26 @@
 package com.fkistner.SouthQuay.interpreter
 
+import com.fkistner.SouthQuay.interpreter.functions.InvocableFunction
 import com.fkistner.SouthQuay.parser.*
 
 
 class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
-    override fun visit(integerLiteral: IntegerLiteral): Any? {
+    override fun visit(integerLiteral: IntegerLiteral): Int {
         return integerLiteral.value
     }
 
-    override fun visit(realLiteral: RealLiteral): Any? {
+    override fun visit(realLiteral: RealLiteral): Double {
         return realLiteral.value
     }
 
-    private inline fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Any?): Any? {
+    private inline fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Number?): Number? {
         val left  = binaryOperation.left.accept(this)
         val right = binaryOperation.right.accept(this)
         if (left == null || right == null) return null
         return op(left, right)
     }
 
-    override fun visit(sum: Sum): Any? {
+    override fun visit(sum: Sum): Number? {
         return evaluate(sum) { left, right ->
             when (sum.type) {
                 Type.Integer -> left as Int + right as Int
@@ -29,7 +30,7 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(sub: Sub): Any? {
+    override fun visit(sub: Sub): Number? {
         return evaluate(sub) { left, right ->
             when (sub.type) {
                 Type.Integer -> left as Int - right as Int
@@ -39,7 +40,7 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(mul: Mul): Any? {
+    override fun visit(mul: Mul): Number? {
         return evaluate(mul) { left, right ->
             when (mul.type) {
                 Type.Integer -> left as Int * right as Int
@@ -49,7 +50,7 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(div: Div): Any? {
+    override fun visit(div: Div): Number? {
         return evaluate(div) { left, right ->
             when (div.type) {
                 Type.Integer -> left as Int / right as Int
@@ -59,7 +60,7 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(pow: Pow): Any? {
+    override fun visit(pow: Pow): Number? {
         return evaluate(pow) { left, right ->
             when (pow.type) {
                 Type.Integer -> Math.pow((left as Int).toDouble(), (right as Int).toDouble()).toInt()
@@ -69,7 +70,7 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(sequence: Sequence): Any? {
+    override fun visit(sequence: Sequence): IntRange? {
         val from = sequence.from.accept(this)
         val to = sequence.to.accept(this)
         if (from == null || to == null) return null
