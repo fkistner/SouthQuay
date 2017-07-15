@@ -143,4 +143,36 @@ class InterpreterTests {
 
         Assert.assertEquals(1, participant.statementCounter)
     }
+
+    @Test
+    fun saveLoadVariable() {
+        val (program, _) = ASTBuilder.parseText("var i = 3*12 out i")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.assertEquals(2, statementCounter)
+                Assert.assertEquals("36", string)
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                when (statement) {
+                    is VarStatement -> {
+                        Assert.assertEquals(1, statementCounter)
+                        Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+                    }
+                    is OutStatement -> {
+                        Assert.assertEquals(2, statementCounter)
+                        Assert.assertTrue("Wrong reference.", program.statements[1] === statement)
+                    }
+                }
+
+            }
+        }
+        val interpreter = Interpreter(participant)
+        interpreter.execute(program)
+
+        Assert.assertEquals(2, participant.statementCounter)
+    }
 }

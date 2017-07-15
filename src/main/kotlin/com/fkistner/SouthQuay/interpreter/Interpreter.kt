@@ -3,7 +3,10 @@ package com.fkistner.SouthQuay.interpreter
 import com.fkistner.SouthQuay.parser.*
 
 class Interpreter(val executionParticipant: ExecutionParticipant) {
+
     private val statementVisitor = object: ASTVisitor<Unit> {
+        var context = ExecutionContext()
+
         override fun visit(program: Program) {
             program.acceptChildren(this)
         }
@@ -15,9 +18,16 @@ class Interpreter(val executionParticipant: ExecutionParticipant) {
 
         override fun visit(outStatement: OutStatement) {
             executionParticipant.statementExecuting(outStatement)
-            val expressionVisitor = ExpressionVisitor()
+            val expressionVisitor = ExpressionVisitor(context)
             val result = outStatement.expression.accept(expressionVisitor)
             executionParticipant.output(outStatement, result.toString())
+        }
+
+        override fun visit(varStatement: VarStatement) {
+            executionParticipant.statementExecuting(varStatement)
+            val expressionVisitor = ExpressionVisitor(context)
+            val result = varStatement.expression.accept(expressionVisitor)
+            context.activeValues[varStatement.declaration] = result
         }
     }
 

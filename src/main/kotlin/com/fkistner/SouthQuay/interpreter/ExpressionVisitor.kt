@@ -3,7 +3,7 @@ package com.fkistner.SouthQuay.interpreter
 import com.fkistner.SouthQuay.parser.*
 
 
-class ExpressionVisitor: ASTVisitor<Any> {
+class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
     override fun visit(integerLiteral: IntegerLiteral): Any? {
         return integerLiteral.value
     }
@@ -75,5 +75,9 @@ class ExpressionVisitor: ASTVisitor<Any> {
         if (from == null || to == null) return null
         val result = from as Int..to as Int
         return result
+    }
+
+    override fun visit(variableRef: VariableRef): Any? {
+        return variableRef.declaration?.let { context.activeValues[it] }
     }
 }
