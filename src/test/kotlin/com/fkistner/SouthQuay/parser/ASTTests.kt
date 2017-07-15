@@ -359,19 +359,4 @@ class ASTTests {
         Assert.assertEquals(1, errors.count())
         Assert.assertTrue("Overflow not detected.", errors[0].message!!.startsWith("Number is not within value range"))
     }
-
-    @Test
-    fun hugeDouble() {
-        Double.MAX_VALUE
-        val charStream = CharStreams.fromReader(StringReader("out 179769313486231570814527423731704356798070567525844" +
-                "9965989174768031572607800285387605895586327668781715404589535143824642343213268894641827684675467035375" +
-                "1698604991057655128207624549009038932894407586850845513394230458323690322294816580855933212334827479782" +
-                "6204144723168738177180919299881250404026184124858369"))
-        val errors = mutableListOf<SQLangError>()
-
-        ASTBuilder.parseStream(charStream, errors)
-
-        Assert.assertEquals(1, errors.count())
-        Assert.assertTrue("Overflow not detected.", errors[0].message!!.startsWith("Number is not within value range"))
-    }
 }
