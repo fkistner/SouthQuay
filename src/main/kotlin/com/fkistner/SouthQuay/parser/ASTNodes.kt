@@ -1,5 +1,7 @@
 package com.fkistner.SouthQuay.parser
 
+import com.fkistner.SouthQuay.interpreter.ExpressionVisitor
+
 sealed class ASTNode {
     open val children: List<ASTNode> = emptyList()
     fun <T>accept(visitor: ASTVisitor<T>): T? {

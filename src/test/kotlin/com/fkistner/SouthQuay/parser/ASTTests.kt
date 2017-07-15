@@ -1,7 +1,7 @@
 package com.fkistner.SouthQuay.parser
 
 import com.fkistner.SouthQuay.grammar.parserForString
-import com.fkistner.SouthQuay.interpreter.*
+import com.fkistner.SouthQuay.interpreter.functions.*
 import org.antlr.v4.runtime.CharStreams
 import org.junit.*
 import java.io.StringReader
@@ -277,7 +277,7 @@ class ASTTests {
         val program = ASTBuilder.parseStream(charStream, errors)
 
         Assert.assertEquals(3, program?.statements?.count())
-        val varSequence = program!!.statements[1]  as VarStatement
+        val varSequence = program!!.statements[1] as VarStatement
         val varQuarterPi = program .statements[2] as VarStatement
         val map    = varSequence.expression  as FunctionInvoc
         val reduce = varQuarterPi.expression as FunctionInvoc

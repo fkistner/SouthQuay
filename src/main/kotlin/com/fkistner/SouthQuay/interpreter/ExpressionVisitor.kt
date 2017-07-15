@@ -81,4 +81,20 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
     override fun visit(variableRef: VariableRef): Any? {
         return variableRef.declaration?.let { context.activeValues[it] }
     }
+
+    override fun visit(functionInvoc: FunctionInvoc): Any? {
+        val args = functionInvoc.args.map { it.accept(this) }
+        return (functionInvoc.target as? InvocableFunction)?.invoke(args)
+    }
+
+    override fun visit(lambda: Lambda): InvocableFunction {
+        return { args ->
+            val innerContext = ExecutionContext()
+            for ((idx, value) in args.withIndex()) {
+                innerContext.activeValues[lambda.parameters[idx]] = value
+            }
+            val visitor = ExpressionVisitor(innerContext)
+            lambda.body.accept(visitor)
+        }
+    }
 }
