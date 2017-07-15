@@ -13,11 +13,11 @@ import javax.swing.*
 
 class Editor(path: URL? = null): EditorBase() {
     init {
-        val frame = JFrame("South Quay")
+        val frame = JFrame(ApplicationName)
 
         val documentModel = DocumentModel(path) { documentModel ->
             syntaxTextArea.document = documentModel.document
-            frame.title = "South Quay – ${documentModel.fileName}"
+            frame.title = "$ApplicationName – ${documentModel.fileName}"
         }
 
         frame.jMenuBar = Menu.create(object : MenuListener {
@@ -64,12 +64,12 @@ class Editor(path: URL? = null): EditorBase() {
             }
 
             private fun openFileDialog(): URL? {
-                val fileDialog = FileDialog(frame, "Open South Quay Script", FileDialog.LOAD)
+                val fileDialog = FileDialog(frame, "Open $ApplicationName Script", FileDialog.LOAD)
                 return present(fileDialog)
             }
 
             private fun saveFileDialog(): URL? {
-                val fileDialog = FileDialog(frame, "Save South Quay Script", FileDialog.SAVE)
+                val fileDialog = FileDialog(frame, "Save $ApplicationName Script", FileDialog.SAVE)
                 return present(fileDialog)
             }
 
