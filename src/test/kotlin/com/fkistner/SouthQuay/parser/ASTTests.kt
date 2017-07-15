@@ -211,7 +211,7 @@ class ASTTests {
                 Lambda(listOf(VarDeclaration("x", Type.Integer)), IntegerLiteral(3)))
                 .map(Expression::type)
 
-        Assert.assertEquals(listOf(Type.Integer, Type.Real, Type.Sequence, Type.Lambda(Type.Integer)), types)
+        Assert.assertEquals(listOf(Type.Integer, Type.Real, Type.Sequence, Type.Lambda), types)
     }
 
     @Test
@@ -337,8 +337,8 @@ class ASTTests {
 
     @Test
     fun undefinedFunction() {
-        for ((case, input) in mapOf(Pair("map(Sequence, Lambda<Real>)", "out map({3,5}, i -> i * 2.0)"),
-                Pair("reduce(Sequence, Real, Lambda<Integer>)", "out reduce({3,5}, 2.0, x y -> x + y)"))) {
+        for ((case, input) in mapOf(Pair("map(Sequence, Lambda, Lambda)", "out map({3,5}, i -> i * 2.0, i -> i / 4)"),
+                Pair("reduce(Sequence, Real, Real, Lambda)", "out reduce({3,5}, 2.0, 4.2, x y -> x + y)"))) {
             val charStream = CharStreams.fromReader(StringReader(input))
             val errors = mutableListOf<SQLangError>()
 

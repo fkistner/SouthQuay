@@ -6,7 +6,7 @@ import com.fkistner.SouthQuay.parser.*
 
 object FunctionRegistry {
     val functions = mapOf<FunctionSignature, TypedInvocableFunction>(
-            Pair(FunctionSignature("apply",  listOf(Type.Integer, Type.Lambda(Type.Integer))), ApplyFunction),
-            Pair(FunctionSignature("map",    listOf(Type.Sequence, Type.Lambda(Type.Integer))), MapFunction),
-            Pair(FunctionSignature("reduce", listOf(Type.Sequence, Type.Integer, Type.Lambda(Type.Integer))), ReduceFunction))
+            Pair(FunctionSignature("apply",  listOf(Type.Integer, Type.Lambda)), ApplyFunction),
+            Pair(FunctionSignature("map",    listOf(Type.Sequence, Type.Lambda)), MapFunction),
+            Pair(FunctionSignature("reduce", listOf(Type.Sequence, Type.Integer, Type.Lambda)), ReduceFunction))
 }

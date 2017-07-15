@@ -62,8 +62,8 @@ sealed class Type {
     object Sequence: Type() {
         override fun toString(): String = "Sequence"
     }
-    data class Lambda(val type: Type): Type() {
-        override fun toString(): String = "Lambda<$type>"
+    object Lambda : Type() {
+        override fun toString(): String = "Lambda"
     }
 }
 sealed class Expression : ASTNode() {
@@ -143,7 +143,7 @@ data class FunctionInvoc(val identifier: String, val args: List<Expression>): Ex
 }
 
 data class Lambda(val parameters: List<VarDeclaration>, val body: Expression): Expression() {
-    override val type get() = Type.Lambda(body.type)
+    override val type get() = Type.Lambda
     override val children get() = parameters + listOf(body)
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
