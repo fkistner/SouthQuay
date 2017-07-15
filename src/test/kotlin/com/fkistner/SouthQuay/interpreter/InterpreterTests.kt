@@ -253,4 +253,27 @@ class InterpreterTests {
 
         Assert.assertEquals(1, participant.statementCounter)
     }
+
+    @Test
+    fun reduceSequence() {
+        val (program, _) = ASTBuilder.parseText("out reduce({1, 10}, 5, a i -> a+i)")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertEquals("60", string)
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+            }
+        }
+        val interpreter = Interpreter(participant)
+        interpreter.execute(program)
+
+        Assert.assertEquals(1, participant.statementCounter)
+    }
 }
