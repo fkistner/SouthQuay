@@ -86,7 +86,7 @@ class ASTTests {
         val ast = parser.toAST()
 
         Assert.assertEquals(Program(listOf(
-                    VarStatement(VarDeclaration("myVar1", Type.Sequence),
+                    VarStatement(VarDeclaration("myVar1", Type.Sequence(Type.Integer)),
                             Sequence(IntegerLiteral(3), IntegerLiteral(10)))
                 )),
                 ast)
@@ -122,7 +122,7 @@ class ASTTests {
         val ast = parser.toAST()
 
         Assert.assertEquals(Program(listOf(
-                    VarStatement(VarDeclaration("i", Type.Sequence), FunctionInvoc("map", listOf(
+                    VarStatement(VarDeclaration("i", Type.Sequence(Type.Integer)), FunctionInvoc("map", listOf(
                             Sequence(IntegerLiteral(1), IntegerLiteral(4)),
                             Lambda(listOf(VarDeclaration("n", Type.Integer)), Mul(IntegerLiteral(2), VariableRef("n")))
                     )))
@@ -211,7 +211,7 @@ class ASTTests {
                 Lambda(listOf(VarDeclaration("x", Type.Integer)), IntegerLiteral(3)))
                 .map(Expression::type)
 
-        Assert.assertEquals(listOf(Type.Integer, Type.Real, Type.Sequence, Type.Lambda), types)
+        Assert.assertEquals(listOf(Type.Integer, Type.Real, Type.Sequence(Type.Integer), Type.Lambda), types)
     }
 
     @Test
@@ -281,7 +281,7 @@ class ASTTests {
         val varQuarterPi = program .statements[2] as VarStatement
         val map    = varSequence.expression  as FunctionInvoc
         val reduce = varQuarterPi.expression as FunctionInvoc
-        Assert.assertEquals(Type.Sequence, map.type)
+        Assert.assertEquals(Type.Sequence(Type.Integer), map.type)
         Assert.assertEquals(Type.Integer,  reduce.type)
         Assert.assertTrue("Wrong reference.", map.target    is MapFunction)
         Assert.assertTrue("Wrong reference.", reduce.target is ReduceFunction)
@@ -337,8 +337,8 @@ class ASTTests {
 
     @Test
     fun undefinedFunction() {
-        for ((case, input) in mapOf(Pair("map(Sequence, Lambda, Lambda)", "out map({3,5}, i -> i * 2.0, i -> i / 4)"),
-                Pair("reduce(Sequence, Real, Real, Lambda)", "out reduce({3,5}, 2.0, 4.2, x y -> x + y)"))) {
+        for ((case, input) in mapOf(Pair("map(Sequence<Integer>, Lambda, Lambda)", "out map({3,5}, i -> i * 2.0, i -> i / 4)"),
+                Pair("reduce(Sequence<Integer>, Real, Real, Lambda)", "out reduce({3,5}, 2.0, 4.2, x y -> x + y)"))) {
             val charStream = CharStreams.fromReader(StringReader(input))
             val errors = mutableListOf<SQLangError>()
 

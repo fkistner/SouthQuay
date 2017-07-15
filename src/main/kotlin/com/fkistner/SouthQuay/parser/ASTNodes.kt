@@ -59,8 +59,8 @@ sealed class Type {
     object Real: Type() {
         override fun toString(): String = "Real"
     }
-    object Sequence: Type() {
-        override fun toString(): String = "Sequence"
+    data class Sequence(val type: Type): Type() {
+        override fun toString(): String = "Sequence<$type>"
     }
     object Lambda : Type() {
         override fun toString(): String = "Lambda"
@@ -81,7 +81,7 @@ data class RealLiteral   (val value: Double): Expression() {
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 data class Sequence      (val from: Expression, val to: Expression): Expression() {
-    override val type get() = Type.Sequence
+    override val type get() = Type.Sequence(Type.Integer)
     override val children get() = listOf(from, to)
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
