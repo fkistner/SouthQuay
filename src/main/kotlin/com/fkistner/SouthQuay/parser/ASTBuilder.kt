@@ -8,7 +8,7 @@ fun SQLangParser.toAST(errorContainer: MutableList<SQLangError> = mutableListOf(
 
 fun SQLangParser.ProgramContext.toAST(errorContainer: MutableList<SQLangError> = mutableListOf()): Program {
     val scope = Scope(errorContainer)
-    return Program(statement().map { it.toAST(scope) }, scope)
+    return Program(statement().map { it.toAST(scope) })
 }
 
 fun SQLangParser.StatementContext.toAST(scope: Scope): Statement {
@@ -116,7 +116,7 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
             val lambdaScope = Scope(scope)
             val parameters = ctx.params.map { VarDeclaration(it.text, Type.Integer) }
             parameters.map { lambdaScope.variables[it.identifier] = it }
-            return Lambda(parameters, ctx.body.toAST(lambdaScope), lambdaScope)
+            return Lambda(parameters, ctx.body.toAST(lambdaScope))
         }
 
         override fun visitFun(ctx: SQLangParser.FunContext): Expression {
