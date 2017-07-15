@@ -1,7 +1,7 @@
 package com.fkistner.SouthQuay.UI
 
-import com.fkistner.SouthQuay.FileType
-import com.fkistner.SouthQuay.document.*
+import com.fkistner.SouthQuay.*
+import com.fkistner.SouthQuay.document.DocumentModel
 import com.fkistner.SouthQuay.interpreter.*
 import com.fkistner.SouthQuay.parser.*
 import java.awt.FileDialog
@@ -113,21 +113,38 @@ class Editor(path: URL? = null): EditorBase() {
             outputTextArea.text = ""
 
             executor.submit {
-                val (program, errors) = ASTBuilder.parseText(documentModel.text)
+                val astBuilder = ASTBuilder
+                val (parseResult, parseDuration) = measurePerformance(documentModel.text) { text ->
+                    astBuilder.parseText(text)
+                }
+                val (program, errors) = parseResult
 
                 SwingUtilities.invokeLater {
                     errors.forEach { outputTextArea.append("ERROR: $it\n") }
                 }
 
+                var executionDuration: Double? = null
+
                 try {
-                    program?.let { interpreter.execute(it) }
+                    program?.let {
+                        val i = interpreter
+                        executionDuration = measurePerformance(it) {
+                            i.execute(it)
+                        }.second
+                    }
                 } catch (t: Throwable) {
                     val writer = StringWriter()
                     t.printStackTrace(PrintWriter(writer))
 
                     SwingUtilities.invokeLater { outputTextArea.append("EXCEPTION: ${writer.buffer}\n") }
                 } finally {
-                    SwingUtilities.invokeLater { evaluateButton.isEnabled = true }
+                    var performanceInfo = "Parse time %.4fs".format(parseDuration)
+                    executionDuration?.let { performanceInfo += ", execution time %.4fs".format(it) }
+
+                    SwingUtilities.invokeLater {
+                        evaluateButton.isEnabled = true
+                        statusLabel.text = performanceInfo
+                    }
                 }
             }
         }
