@@ -1,7 +1,9 @@
 package com.fkistner.SouthQuay.interpreter
 
-import com.fkistner.SouthQuay.interpreter.functions.*
+import com.fkistner.SouthQuay.interpreter.functions.InvocableFunction
+import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
+import java.util.stream.IntStream
 
 
 class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
@@ -55,11 +57,11 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(sequence: Sequence): IntRange? {
+    override fun visit(sequence: Sequence): SequenceValue? {
         val from = sequence.from.accept(this)
         val to = sequence.to.accept(this)
         if (from == null || to == null) return null
-        return from as Int..to as Int
+        return SequenceValue { IntStream.rangeClosed(from as Int, to as Int) }
     }
 
     override fun visit(variableRef: VariableRef) = variableRef.declaration?.let { context.activeValues[it] }
