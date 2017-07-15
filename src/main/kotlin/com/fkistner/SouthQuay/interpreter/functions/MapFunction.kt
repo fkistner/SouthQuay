@@ -1,15 +1,32 @@
 package com.fkistner.SouthQuay.interpreter.functions
 
 import com.fkistner.SouthQuay.interpreter.values.SequenceValue
-import com.fkistner.SouthQuay.parser.Type
+import com.fkistner.SouthQuay.parser.*
 
 object MapFunction : TypedInvocableFunction {
-    override val type get() = Type.Sequence(Type.Integer)
+    override fun resolve(invocation: FunctionInvoc): Type {
+        val sequence = invocation.args[0] as Sequence
+        val lambda = invocation.args[1] as Lambda
+        lambda.parameters[0].type = sequence.type.innerType
+        return Type.Sequence(lambda.body.type)
+    }
 
-    override fun invoke(args: List<Any?>): Any? {
-        val sequence = args[0] as SequenceValue?
-        val lambda = args[1] as InvocableFunction?
+    override fun invoke(invocation: FunctionInvoc, args: List<Any?>): Any? {
+        val sequence = args[0] as SequenceValue<Number>?
+        val lambda = args[1] as InvocableLambda?
         if (lambda == null || sequence == null) return null
-        return SequenceValue { sequence.stream().map { lambda(listOf(it)) as Int } }
+
+        val type = (invocation.type as Type.Sequence).innerType
+        return type.accept(object: Type.Visitor<SequenceValue<Number>> {
+            override fun visitInteger(): SequenceValue<Number> {
+                val mapper = { n: Number -> lambda(listOf(n)) as Int }
+                return sequence.map(mapper)
+            }
+
+            override fun visitReal(): SequenceValue<Number> {
+                val mapper = { n: Number -> lambda(listOf(n)) as Double }
+                return sequence.map(mapper)
+            }
+        })
     }
 }

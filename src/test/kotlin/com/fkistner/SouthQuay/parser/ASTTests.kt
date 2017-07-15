@@ -282,7 +282,26 @@ class ASTTests {
         val map    = varSequence.expression  as FunctionInvoc
         val reduce = varQuarterPi.expression as FunctionInvoc
         Assert.assertEquals(Type.Sequence(Type.Integer), map.type)
-        Assert.assertEquals(Type.Integer,  reduce.type)
+        Assert.assertEquals(Type.Integer, reduce.type)
+        Assert.assertTrue("Wrong reference.", map.target    is MapFunction)
+        Assert.assertTrue("Wrong reference.", reduce.target is ReduceFunction)
+    }
+
+    @Test
+    fun functionScopeRealSequence() {
+        val charStream = CharStreams.fromReader(StringReader("var n = 10 var sequence = map({0, n}, i -> i*1.125)\n" +
+                "var quarterPi = reduce(sequence, 0, x y -> x + y)"))
+        val errors = mutableListOf<SQLangError>()
+
+        val program = ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(3, program?.statements?.count())
+        val varSequence = program!!.statements[1] as VarStatement
+        val varQuarterPi = program .statements[2] as VarStatement
+        val map    = varSequence.expression  as FunctionInvoc
+        val reduce = varQuarterPi.expression as FunctionInvoc
+        Assert.assertEquals(Type.Sequence(Type.Real), map.type)
+        Assert.assertEquals(Type.Real, reduce.type)
         Assert.assertTrue("Wrong reference.", map.target    is MapFunction)
         Assert.assertTrue("Wrong reference.", reduce.target is ReduceFunction)
     }

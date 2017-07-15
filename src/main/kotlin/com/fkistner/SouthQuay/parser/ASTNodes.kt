@@ -50,19 +50,30 @@ data class VarStatement(val declaration: VarDeclaration, val expression: Express
 }
 
 sealed class Type {
+    interface Visitor<T> {
+        fun visitInteger(): T? = null
+        fun visitReal(): T? = null
+        fun visitSequence(innerType: Type): T? = null
+        fun visitLambda(): T? = null
+    }
+    open fun <T>accept(visitor: Visitor<T>): T? = null
     object Error: Type() {
         override fun toString(): String = "Error"
     }
     object Integer: Type() {
+        override fun <T>accept(visitor: Visitor<T>) = visitor.visitInteger()
         override fun toString(): String = "Integer"
     }
     object Real: Type() {
+        override fun <T>accept(visitor: Visitor<T>) = visitor.visitReal()
         override fun toString(): String = "Real"
     }
-    data class Sequence(val type: Type): Type() {
-        override fun toString(): String = "Sequence<$type>"
+    data class Sequence(val innerType: Type): Type() {
+        override fun <T>accept(visitor: Visitor<T>) = visitor.visitSequence(innerType)
+        override fun toString(): String = "Sequence<$innerType>"
     }
     object Lambda : Type() {
+        override fun <T>accept(visitor: Visitor<T>) = visitor.visitLambda()
         override fun toString(): String = "Lambda"
     }
 }
@@ -125,18 +136,22 @@ data class Pow(override val left: Expression, override val right: Expression): B
 }
 
 interface Function {
-    val type: Type
+    fun resolve(invocation: FunctionInvoc): Type
 }
 data class FunctionSignature(val identifier: String, val argumentTypes: List<Type>)
 
 data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression() {
     var target: Function? = null
+        set(value) {
+            field = value
+            value?.let { type = it.resolve(this) }
+        }
 
     constructor(identifier: String, args: List<Expression>, target: Function?): this(identifier, args) {
         this.target = target
     }
 
-    override val type get() = target?.type ?: Type.Error
+    override var type: Type = Type.Error
     override val children get() = args
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)

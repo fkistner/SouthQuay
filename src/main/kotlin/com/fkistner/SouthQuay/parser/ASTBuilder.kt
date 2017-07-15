@@ -114,7 +114,7 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression {
 
         override fun visitLam(ctx: SQLangParser.LamContext): Expression {
             val lambdaScope = Scope(scope)
-            val parameters = ctx.params.map { VarDeclaration(it.text, Type.Integer) }
+            val parameters = ctx.params.map { VarDeclaration(it.text, Type.Error) }
             parameters.map { lambdaScope.variables[it.identifier] = it }
             return Lambda(parameters, ctx.body.toAST(lambdaScope))
         }
