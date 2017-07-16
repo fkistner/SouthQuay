@@ -111,39 +111,42 @@ class Editor(path: URL? = null): EditorBase() {
         evaluateButton.addActionListener {
             evaluateButton.isEnabled = false
             outputTextArea.text = ""
+            statusLabel.text = ""
 
             executor.submit {
-                val astBuilder = ASTBuilder
-                val (parseResult, parseDuration) = measurePerformance(documentModel.text) { text ->
-                    astBuilder.parseText(text)
-                }
-                val (program, errors) = parseResult
+                var parseDuration: Double? = null
+                var program: Program? = null
+                var errors: List<SQLangError> = emptyList()
 
-                SwingUtilities.invokeLater {
-                    errors.forEach { outputTextArea.append("ERROR: $it\n") }
+                try {
+                    with (measurePerformance(documentModel.text, ASTBuilder::parseText)) {
+                        parseDuration = second
+                        with (first) { program = first; errors  = second }
+                    }
+                } finally {
+                    if (parseDuration != null || errors.isNotEmpty()) {
+                        val performanceInfo = parseDuration?.let { "Parse time %.4fs".format(it) }
+                        SwingUtilities.invokeLater {
+                            performanceInfo?.let { statusLabel.text = it }
+                            errors.forEach { outputTextArea.append("ERROR: $it\n") }
+                        }
+                    }
                 }
 
                 var executionDuration: Double? = null
 
                 try {
-                    program?.let {
-                        val i = interpreter
-                        executionDuration = measurePerformance(it) {
-                            i.execute(it)
-                        }.second
-                    }
+                    executionDuration = program?.let { measurePerformance(it, interpreter::execute).second }
                 } catch (t: Throwable) {
                     val writer = StringWriter()
                     t.printStackTrace(PrintWriter(writer))
 
                     SwingUtilities.invokeLater { outputTextArea.append("EXCEPTION: ${writer.buffer}\n") }
                 } finally {
-                    var performanceInfo = "Parse time %.4fs".format(parseDuration)
-                    executionDuration?.let { performanceInfo += ", execution time %.4fs".format(it) }
-
+                    val performanceInfo = executionDuration?.let { ", execution time %.4fs".format(it) }
                     SwingUtilities.invokeLater {
                         evaluateButton.isEnabled = true
-                        statusLabel.text = performanceInfo
+                        performanceInfo?.let { statusLabel.text += it }
                     }
                 }
             }
