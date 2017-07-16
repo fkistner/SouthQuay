@@ -15,9 +15,9 @@ class DocumentModelTests {
 
     @Test
     fun initial() {
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
-        Assert.assertEquals(1, newDoc)
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(null, documentModel.path)
         Assert.assertEquals(0, documentModel.document.length)
@@ -28,11 +28,11 @@ class DocumentModelTests {
         val url = javaClass.getResource(sampleResource)
         Assert.assertNotNull("Bad test setup.", url)
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
         documentModel.open(url)
 
-        Assert.assertEquals(2, newDoc)
+        Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(url.readText(), documentModel.document.getText(0, documentModel.document.length))
@@ -43,13 +43,21 @@ class DocumentModelTests {
         val url = javaClass.getResource(sampleResource)
         Assert.assertNotNull("Bad test setup.", url)
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
-        documentModel.open(url)
-        documentModel.document.insertString(0, "Test", null)
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
+        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.infoChanged)
 
-        Assert.assertEquals(2, newDoc)
+        documentModel.open(url)
+        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(false, documentModel.isDirty)
+
+        documentModel.document.insertString(0, "Test", null)
+        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.infoChanged)
         Assert.assertEquals(true, documentModel.isDirty)
+
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(138, documentModel.document.length)
     }
@@ -59,13 +67,22 @@ class DocumentModelTests {
         val url = javaClass.getResource(sampleResource)
         Assert.assertNotNull("Bad test setup.", url)
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
-        documentModel.open(url)
-        documentModel.document.remove(5, 10)
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
+        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(false, documentModel.isDirty)
 
-        Assert.assertEquals(2, newDoc)
+        documentModel.open(url)
+        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(false, documentModel.isDirty)
+
+        documentModel.document.remove(5, 10)
+        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.infoChanged)
         Assert.assertEquals(true, documentModel.isDirty)
+
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(124, documentModel.document.length)
     }
@@ -75,13 +92,13 @@ class DocumentModelTests {
         val url = javaClass.getResource(sampleResource)
         Assert.assertNotNull("Bad test setup.", url)
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
         documentModel.open(url)
         documentModel.document.insertString(0, "Test", null)
         documentModel.open(url)
 
-        Assert.assertEquals(3, newDoc)
+        Assert.assertEquals(3, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(134, documentModel.document.length)
@@ -92,13 +109,13 @@ class DocumentModelTests {
         val url = javaClass.getResource(sampleResource)
         Assert.assertNotNull("Bad test setup.", url)
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
         documentModel.open(url)
         documentModel.document.insertString(0, "Test", null)
         documentModel.close()
 
-        Assert.assertEquals(3, newDoc)
+        Assert.assertEquals(3, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(null, documentModel.path)
         Assert.assertEquals(0, documentModel.document.length)
@@ -111,14 +128,14 @@ class DocumentModelTests {
 
         val saveAsFile = File.createTempFile("SQTest", ".sq").toURI().toURL()
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
         documentModel.open(url)
         val insertedString = "Test"
         documentModel.document.insertString(0, insertedString, null)
         documentModel.save(saveAsFile)
 
-        Assert.assertEquals(2, newDoc)
+        Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(saveAsFile.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(138, documentModel.document.length)
@@ -141,8 +158,8 @@ class DocumentModelTests {
 
         Files.copy(resourceStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
 
-        var newDoc = 0
-        val documentModel = DocumentModel { newDoc++ }
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
         documentModel.open(url)
 
         Assert.assertEquals(false, documentModel.isDirty)
@@ -153,7 +170,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, insertedString, null)
         documentModel.save(url)
 
-        Assert.assertEquals(2, newDoc)
+        Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(138, documentModel.document.length)
@@ -171,10 +188,10 @@ class DocumentModelTests {
         val url = javaClass.getResource(sampleResource)
         Assert.assertNotNull("Bad test setup.", url)
 
-        var newDoc = 0
-        val documentModel = DocumentModel(url) { newDoc++ }
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(url, listener)
 
-        Assert.assertEquals(1, newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(url.readText(), documentModel.document.getText(0, documentModel.document.length))
@@ -186,19 +203,19 @@ class DocumentModelTests {
         Assert.assertNotNull("Bad test setup.", url)
 
         val documentModel = DocumentModel(url)
-        Assert.assertEquals(sampleFileName, documentModel.fileName)
+        Assert.assertEquals(sampleFileName, documentModel.documentName)
     }
 
     @Test
     fun untitledFileName() {
         val documentModel = DocumentModel()
-        Assert.assertEquals("Untitled 1", documentModel.fileName)
+        Assert.assertEquals("Untitled 1", documentModel.documentName)
     }
 
     @Test
     fun untitledMultiFileName() {
         val documentModel = DocumentModel()
         documentModel.close()
-        Assert.assertEquals("Untitled 2", documentModel.fileName)
+        Assert.assertEquals("Untitled 2", documentModel.documentName)
     }
 }

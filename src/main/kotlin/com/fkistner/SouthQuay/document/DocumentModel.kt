@@ -7,71 +7,78 @@ import java.nio.file.Paths
 import javax.swing.event.*
 
 
-class DocumentModel(path: URL? = null, val newDocumentListener: ((DocumentModel) -> Unit)? = null) : DocumentListener {
+class DocumentModel(var path: URL? = null, val documentListener: Listener? = null) : DocumentListener {
     companion object {
         private val editorKit = RSyntaxTextAreaEditorKit()
         var untitledCounter = 0
     }
 
+    var document = createNewDocument()
+    var documentName: String
     var isDirty = false
-    lateinit var document: RSyntaxDocument
-    var fileName: String? = null
 
-    var path: URL? = null
-        set(value) {
-            field = value
-            isDirty = false
-            fileName = value?.let { Paths.get(it.path).fileName.toString() } ?: "Untitled ${++untitledCounter}"
-        }
-
+    private fun getFileName(url: URL) = Paths.get(url.path).fileName.toString()
+    private fun getUntitledName() = "Untitled ${++untitledCounter}"
     private fun createNewDocument() = RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_NONE)
-
-    init {
-        when (path) {
-            null -> close()
-            else -> open(path)
-        }
-    }
-
-    private fun newDocument(initAction: () -> Unit) {
-        document = createNewDocument()
-        initAction()
-        newDocumentListener?.invoke(this)
-    }
-
-    fun open(file: URL) {
-        newDocument {
-            editorKit.read(file.openStream(), document, 0)
-            path = file
-            document.addDocumentListener(this)
-        }
-    }
-
-    fun close() {
-        newDocument {
-            path = null
-        }
-    }
 
     val text: String
         get() = document.getText(0, document.length)
 
+    init {
+        documentName = path.let {
+            when (it) {
+                null -> getUntitledName()
+                else -> {
+                    read(it)
+                    getFileName(it)
+                }
+            }
+        }
+        initNewDocument()
+    }
+
+    private fun resetInfo(file: URL?) {
+        isDirty = false
+        path = file
+        documentName = file?.let(this::getFileName) ?: getUntitledName()
+    }
+
+    private fun newDocument(file: URL? = null) {
+        document = createNewDocument()
+        resetInfo(file)
+        file?.let(this::read)
+        initNewDocument()
+    }
+
+    private fun initNewDocument() {
+        document.addDocumentListener(this)
+        documentListener?.newDocument(this)
+    }
+
+    private fun read(file: URL) = editorKit.read(file.openStream(), document, 0).also { isDirty = false }
+
+    fun open(file: URL) = newDocument(file)
+    fun close() = newDocument()
+
     fun save(file: URL) {
-        val text = text
         File(file.toURI()).outputStream().bufferedWriter().use {
             it.write(text)
         }
-        path = file
+        resetInfo(file)
+        documentListener?.infoChanged(this)
     }
 
-    override fun changedUpdate(e: DocumentEvent?) {
-    }
+    override fun changedUpdate(e: DocumentEvent?) = Unit
+    override fun insertUpdate(e: DocumentEvent?) = flagDirty()
+    override fun removeUpdate(e: DocumentEvent?) = flagDirty()
 
-    override fun insertUpdate(e: DocumentEvent?) {
+    private fun flagDirty() = isDirty.let { wasDirty ->
         isDirty = true
+        if (!wasDirty) documentListener?.infoChanged(this)
     }
 
-    override fun removeUpdate(e: DocumentEvent?) {
-        isDirty = true
+    interface Listener {
+        fun newDocument(documentModel: DocumentModel) = Unit
+        fun infoChanged(documentModel: DocumentModel) = Unit
     }
 }
