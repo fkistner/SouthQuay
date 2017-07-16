@@ -12,13 +12,17 @@ import java.util.concurrent.Executors
 import javax.swing.*
 
 class Editor(path: URL? = null): EditorBase() {
-    init {
-        val frame = JFrame(ApplicationName)
+    val frame = JFrame(ApplicationName)
 
-        val documentModel = DocumentModel(path) { documentModel ->
-            syntaxTextArea.document = documentModel.document
-            frame.title = "$ApplicationName – ${documentModel.fileName}"
-        }
+    val documentModel = DocumentModel(path) { documentModel ->
+        syntaxTextArea.document = documentModel.document
+        frame.title = "$ApplicationName – ${documentModel.fileName}"
+    }
+
+    val executionControl = ExecutionControl(this)
+
+    init {
+        // frame.getRootPane().putClientProperty("Window.documentModified", Boolean.TRUE)
 
         frame.jMenuBar = Menu.create(object : MenuListener {
             override fun fileNew() {
@@ -100,56 +104,11 @@ class Editor(path: URL? = null): EditorBase() {
             }
         })
 
-        val interpreter = Interpreter(object: ExecutionParticipant {
-            override fun output(statement: Statement, string: String) {
-                outputTextArea.append("$string\n")
-            }
-        })
-
-        val executor = Executors.newSingleThreadExecutor()
-
         evaluateButton.addActionListener {
-            evaluateButton.isEnabled = false
-            outputTextArea.text = ""
-            statusLabel.text = ""
-
-            executor.submit {
-                var parseDuration: Double? = null
-                var program: Program? = null
-                var errors: List<SQLangError> = emptyList()
-
-                try {
-                    with (measurePerformance(documentModel.text, ASTBuilder::parseText)) {
-                        parseDuration = second
-                        with (first) { program = first; errors  = second }
-                    }
-                } finally {
-                    if (parseDuration != null || errors.isNotEmpty()) {
-                        val performanceInfo = parseDuration?.let { "Parse time %.4fs".format(it) }
-                        SwingUtilities.invokeLater {
-                            performanceInfo?.let { statusLabel.text = it }
-                            errors.forEach { outputTextArea.append("ERROR: $it\n") }
-                        }
-                    }
-                }
-
-                var executionDuration: Double? = null
-
-                try {
-                    executionDuration = program?.let { measurePerformance(it, interpreter::execute).second }
-                } catch (t: Throwable) {
-                    val writer = StringWriter()
-                    t.printStackTrace(PrintWriter(writer))
-
-                    SwingUtilities.invokeLater { outputTextArea.append("EXCEPTION: ${writer.buffer}\n") }
-                } finally {
-                    val performanceInfo = executionDuration?.let { ", execution time %.4fs".format(it) }
-                    SwingUtilities.invokeLater {
-                        evaluateButton.isEnabled = true
-                        performanceInfo?.let { statusLabel.text += it }
-                    }
-                }
-            }
+            executionControl.run()
+        }
+        abortButton.addActionListener {
+            executionControl.abort()
         }
 
         frame.contentPane = panel

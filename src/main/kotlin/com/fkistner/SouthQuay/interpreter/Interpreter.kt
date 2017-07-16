@@ -2,7 +2,7 @@ package com.fkistner.SouthQuay.interpreter
 
 import com.fkistner.SouthQuay.parser.*
 
-class Interpreter(val executionParticipant: ExecutionParticipant) {
+class Interpreter(val executionParticipant: InterpreterParticipant) {
 
     private val statementVisitor = object: ASTVisitor<Unit> {
         var context = ExecutionContext()

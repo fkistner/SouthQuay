@@ -9,40 +9,6 @@
     </properties>
     <border type="none"/>
     <children>
-      <scrollpane id="78125" binding="scrollPane" custom-create="true">
-        <constraints border-constraint="Center"/>
-        <properties>
-          <verticalScrollBarPolicy value="22"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <grid id="27dc6" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints/>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="c1097" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="outputTextArea">
-                <constraints border-constraint="East"/>
-                <properties>
-                  <background color="-1644826"/>
-                  <editable value="false"/>
-                  <highlightCurrentLine value="false"/>
-                  <preferredSize width="200" height="15"/>
-                </properties>
-              </component>
-              <component id="d2f26" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="syntaxTextArea" custom-create="true">
-                <constraints border-constraint="Center"/>
-                <properties>
-                  <paintMatchedBracketPair value="true"/>
-                  <paintTabLines value="true"/>
-                  <tabsEmulated value="true"/>
-                  <whitespaceVisible value="true"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-        </children>
-      </scrollpane>
       <toolbar id="f4950">
         <constraints border-constraint="South"/>
         <properties>
@@ -66,8 +32,55 @@
               <text value="▶"/>
             </properties>
           </component>
+          <component id="780d" class="javax.swing.JButton" binding="abortButton">
+            <constraints/>
+            <properties>
+              <text value="◼"/>
+              <visible value="false"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
+      <scrollpane id="78125" binding="scrollPane" custom-create="true">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <splitpane id="660be">
+            <constraints/>
+            <properties>
+              <continuousLayout value="true"/>
+              <dividerLocation value="358"/>
+              <resizeWeight value="0.618"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="d2f26" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="syntaxTextArea" custom-create="true">
+                <constraints>
+                  <splitpane position="left"/>
+                </constraints>
+                <properties>
+                  <paintMatchedBracketPair value="true"/>
+                  <paintTabLines value="true"/>
+                  <tabsEmulated value="true"/>
+                  <whitespaceVisible value="true"/>
+                </properties>
+              </component>
+              <component id="c1097" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="outputTextArea">
+                <constraints>
+                  <splitpane position="right"/>
+                </constraints>
+                <properties>
+                  <background color="-1644826"/>
+                  <editable value="false"/>
+                  <highlightCurrentLine value="false"/>
+                  <preferredSize width="200" height="15"/>
+                </properties>
+              </component>
+            </children>
+          </splitpane>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

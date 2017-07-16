@@ -4,6 +4,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Created by florian on 7/12/17.
@@ -14,6 +15,7 @@ public class EditorBase {
     protected RSyntaxTextArea syntaxTextArea;
     protected RSyntaxTextArea outputTextArea;
     protected JButton evaluateButton;
+    protected JButton abortButton;
     protected JLabel statusLabel;
     protected Gutter gutter;
 
@@ -21,12 +23,13 @@ public class EditorBase {
     private void createUIComponents() {
         syntaxTextArea = new RSyntaxTextArea();
         syntaxTextArea.setCodeFoldingEnabled(true);
+
         Font defaultFont = new Font("Monospaced", Font.PLAIN, 12);
         gutter = new Gutter(syntaxTextArea);
         gutter.setLineNumberFont(defaultFont);
         gutter.setLineNumberColor(Color.GRAY);
         gutter.setBookmarkingEnabled(true);
-        scrollPane = new JScrollPane(syntaxTextArea);
+        scrollPane = new JScrollPane();
         scrollPane.setRowHeaderView(gutter);
     }
 
@@ -49,33 +52,38 @@ public class EditorBase {
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
         panel.setPreferredSize(new Dimension(600, 600));
-        scrollPane.setVerticalScrollBarPolicy(22);
-        panel.add(scrollPane, BorderLayout.CENTER);
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new BorderLayout(0, 0));
-        scrollPane.setViewportView(panel1);
-        outputTextArea = new RSyntaxTextArea();
-        outputTextArea.setBackground(new Color(-1644826));
-        outputTextArea.setEditable(false);
-        outputTextArea.setHighlightCurrentLine(false);
-        outputTextArea.setPreferredSize(new Dimension(200, 15));
-        panel1.add(outputTextArea, BorderLayout.EAST);
-        syntaxTextArea.setPaintMatchedBracketPair(true);
-        syntaxTextArea.setPaintTabLines(true);
-        syntaxTextArea.setTabsEmulated(true);
-        syntaxTextArea.setWhitespaceVisible(true);
-        panel1.add(syntaxTextArea, BorderLayout.CENTER);
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.SOUTH);
         statusLabel = new JLabel();
         toolBar1.add(statusLabel);
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridBagLayout());
-        toolBar1.add(panel2);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridBagLayout());
+        toolBar1.add(panel1);
         evaluateButton = new JButton();
         evaluateButton.setText("▶");
         toolBar1.add(evaluateButton);
+        abortButton = new JButton();
+        abortButton.setText("◼");
+        abortButton.setVisible(false);
+        toolBar1.add(abortButton);
+        panel.add(scrollPane, BorderLayout.CENTER);
+        final JSplitPane splitPane1 = new JSplitPane();
+        splitPane1.setContinuousLayout(true);
+        splitPane1.setDividerLocation(358);
+        splitPane1.setResizeWeight(0.618);
+        scrollPane.setViewportView(splitPane1);
+        syntaxTextArea.setPaintMatchedBracketPair(true);
+        syntaxTextArea.setPaintTabLines(true);
+        syntaxTextArea.setTabsEmulated(true);
+        syntaxTextArea.setWhitespaceVisible(true);
+        splitPane1.setLeftComponent(syntaxTextArea);
+        outputTextArea = new RSyntaxTextArea();
+        outputTextArea.setBackground(new Color(-1644826));
+        outputTextArea.setEditable(false);
+        outputTextArea.setHighlightCurrentLine(false);
+        outputTextArea.setPreferredSize(new Dimension(200, 15));
+        splitPane1.setRightComponent(outputTextArea);
     }
 
     /**
