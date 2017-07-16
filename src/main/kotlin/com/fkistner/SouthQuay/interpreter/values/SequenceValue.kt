@@ -15,10 +15,11 @@ abstract class SequenceValue<out T: Number> {
         val sizeIfKnown = stream().spliterator().exactSizeIfKnown
         if (sizeIfKnown < 0) throw IllegalStateException()
 
-        val displayStream = when (sizeIfKnown) {
-            in 0..5 -> asStringStream()
-            else -> Stream.concat(Stream.concat(asStringStream().limit(3), Stream.of("…")), asStringStream().skip(sizeIfKnown - 1))
+        val collector = Collectors.joining(", ")
+        val innerPart = when (sizeIfKnown) {
+            in 0..5 -> asStringStream().collect(collector)
+            else -> "${asStringStream().limit(3).collect(collector)}, …, ${asStringStream().last}"
         }
-        return "{${displayStream.collect(Collectors.joining(", "))}}"
+        return "{$innerPart}"
     }
 }

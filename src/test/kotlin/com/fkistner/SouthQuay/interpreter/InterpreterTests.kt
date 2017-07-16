@@ -3,6 +3,7 @@ package com.fkistner.SouthQuay.interpreter
 import com.fkistner.SouthQuay.parser.*
 import org.antlr.v4.runtime.CharStreams
 import org.junit.*
+import org.junit.rules.Timeout
 import java.io.StringReader
 
 
@@ -311,6 +312,29 @@ class InterpreterTests {
             override fun output(statement: Statement, string: String) {
                 Assert.assertEquals(1, statementCounter)
                 Assert.assertEquals("{1.25, 2.5, 3.75, 5.0, 6.25}", string)
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+            }
+        }
+        val interpreter = Interpreter(participant)
+        interpreter.execute(program)
+
+        Assert.assertEquals(1, participant.statementCounter)
+    }
+
+    @Test(timeout = 1000L)
+    fun mapLargeSequence() {
+        val (program, _) = ASTBuilder.parseText("out map({1, 1000000000}, i -> i+i)")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertEquals("{2, 4, 6, …, 2000000000}", string)
             }
 
             override fun statementExecuting(statement: Statement) {
