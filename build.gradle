@@ -70,6 +70,7 @@ assemble.dependsOn createAppZip
 
 
 macAppBundle {
+    appName = 'South Quay'
     bundleIdentifier = 'com.fkistner.SouthQuay'
     mainClassName = project.mainClassName
     volumeName = project.name
