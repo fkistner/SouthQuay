@@ -61,7 +61,8 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         val from = sequence.from.accept(this)
         val to = sequence.to.accept(this)
         if (from == null || to == null) return null
-        return IntSequenceValue { IntStream.rangeClosed(from as Int, to as Int) }
+        val fromInt = from as Int; val toInt = to as Int
+        return IntSequenceValue { IntStream.rangeClosed(fromInt, toInt) }
     }
 
     override fun visit(variableRef: VariableRef) = variableRef.declaration?.let { context.activeValues[it] }
