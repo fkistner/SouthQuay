@@ -116,6 +116,26 @@ class ASTTests {
     }
 
     @Test
+    fun outputPowOperation() {
+        val parser = parserForString("out 2^(-1)^4")
+
+        val ast = parser.toAST()
+
+        Assert.assertEquals(Program(listOf(
+                OutStatement(
+                        Pow(
+                                IntegerLiteral(2),
+                                Pow(
+                                        IntegerLiteral(-1),
+                                        IntegerLiteral(4)
+                                )
+                        )
+                )
+        )),
+                ast)
+    }
+
+    @Test
     fun newVariableFromMap() {
         val parser = parserForString("var i = map({1, 4}, n -> 2 * n)")
 

@@ -25,7 +25,7 @@ expression
     | fun=Identifier PAREN_LEFT arg+=expression
             (COMMA arg+=expression)* PAREN_RIGHT            # Fun
     | PAREN_LEFT expr=expression PAREN_RIGHT                # Paren
-    | left=expression op= POW           right=expression    # Pow
+    | <assoc=right> left=expression op=POW right=expression # Pow
     | left=expression op=(MUL  | DIV)   right=expression    # Mul
     | left=expression op=(PLUS | MINUS) right=expression    # Sum
     | SEQ_LEFT from=expression COMMA
