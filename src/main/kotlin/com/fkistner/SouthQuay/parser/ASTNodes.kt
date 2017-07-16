@@ -49,34 +49,6 @@ data class VarStatement(val declaration: VarDeclaration, val expression: Express
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
 
-sealed class Type {
-    interface Visitor<T> {
-        fun visitInteger(): T? = null
-        fun visitReal(): T? = null
-        fun visitSequence(innerType: Type): T? = null
-        fun visitLambda(): T? = null
-    }
-    open fun <T>accept(visitor: Visitor<T>): T? = null
-    object Error: Type() {
-        override fun toString(): String = "Error"
-    }
-    object Integer: Type() {
-        override fun <T>accept(visitor: Visitor<T>) = visitor.visitInteger()
-        override fun toString(): String = "Integer"
-    }
-    object Real: Type() {
-        override fun <T>accept(visitor: Visitor<T>) = visitor.visitReal()
-        override fun toString(): String = "Real"
-    }
-    data class Sequence(val innerType: Type): Type() {
-        override fun <T>accept(visitor: Visitor<T>) = visitor.visitSequence(innerType)
-        override fun toString(): String = "Sequence<$innerType>"
-    }
-    object Lambda : Type() {
-        override fun <T>accept(visitor: Visitor<T>) = visitor.visitLambda()
-        override fun toString(): String = "Lambda"
-    }
-}
 sealed class Expression : ASTNode() {
     abstract val type: Type
 }
@@ -134,11 +106,6 @@ data class Pow(override val left: Expression, override val right: Expression): B
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
 }
-
-interface Function {
-    fun resolve(invocation: FunctionInvoc): Type
-}
-data class FunctionSignature(val identifier: String, val argumentTypes: List<Type>)
 
 data class FunctionInvoc(val identifier: String, val args: List<Expression>): Expression() {
     var target: Function? = null
