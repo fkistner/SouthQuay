@@ -12,6 +12,7 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
         classpath "gradle.plugin.edu.sc.seis:macAppBundle:2.1.6"
         // classpath 'edu.sc.seis.gradle:launch4j:2.3.0'
     }
@@ -22,6 +23,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'antlr'
 apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'edu.sc.seis.macAppBundle'
 // apply plugin: 'edu.sc.seis.launch4j'
 
@@ -65,9 +67,16 @@ compileKotlin.dependsOn generateGrammarSource
 mainClassName = 'com.fkistner.SouthQuay.EntrypointKt'
 
 distTar.enabled = false
+distZip.enabled = false
+shadowDistTar.enabled = false
+shadowDistZip.enabled = false
 createDmg.enabled = false
 assemble.dependsOn createAppZip
 
+shadowJar {
+    classifier = null
+    destinationDir = distsDir
+}
 
 macAppBundle {
     appName = 'South Quay'
