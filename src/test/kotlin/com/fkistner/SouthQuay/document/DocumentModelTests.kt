@@ -218,4 +218,17 @@ class DocumentModelTests {
         documentModel.close()
         Assert.assertEquals("Untitled 2", documentModel.documentName)
     }
+
+    @Test
+    fun saveFileSuffix() {
+        val saveAsFile = File.createTempFile("SQTest", "").toURI().toURL()
+
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
+        documentModel.document.insertString(0, "Hello", null)
+        val file = documentModel.adaptPath(saveAsFile)
+        documentModel.save(file)
+
+        Assert.assertEquals(saveAsFile.toExternalForm()+".sq", documentModel.path?.toExternalForm())
+    }
 }

@@ -64,6 +64,6 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
     override fun fileSaveAs() { trySaveAs() }
 
     private fun trySave() = save(documentModel.path) || trySaveAs()
-    private fun trySaveAs() = save(dialog.saveFile())
+    private fun trySaveAs() = save(dialog.saveFile()?.let(documentModel::adaptPath))
     private fun save(file: URL?) = file?.let { documentModel.save(it) } != null
 }

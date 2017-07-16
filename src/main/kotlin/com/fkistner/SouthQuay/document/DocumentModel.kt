@@ -21,6 +21,11 @@ class DocumentModel(var path: URL? = null, val documentListener: Listener? = nul
     private fun getUntitledName() = "Untitled ${++untitledCounter}"
     private fun createNewDocument() = RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_NONE)
 
+    fun adaptPath(file: URL): URL = when {
+        file.path.endsWith(".sq") -> file
+        else -> Paths.get(file.path + ".sq").toUri().toURL()
+    }
+
     val text: String
         get() = document.getText(0, document.length)
 
