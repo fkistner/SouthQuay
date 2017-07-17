@@ -63,7 +63,7 @@ class DocumentModelTests {
         Assert.assertEquals(true, documentModel.isDirty)
 
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
-        Assert.assertEquals(138, documentModel.document.length)
+        Assert.assertEquals(140, documentModel.document.length)
     }
 
     @Test
@@ -88,7 +88,7 @@ class DocumentModelTests {
         Assert.assertEquals(true, documentModel.isDirty)
 
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
-        Assert.assertEquals(124, documentModel.document.length)
+        Assert.assertEquals(126, documentModel.document.length)
     }
 
     @Test
@@ -105,7 +105,7 @@ class DocumentModelTests {
         Assert.assertEquals(3, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
-        Assert.assertEquals(134, documentModel.document.length)
+        Assert.assertEquals(136, documentModel.document.length)
     }
 
     @Test
@@ -142,7 +142,7 @@ class DocumentModelTests {
         Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(saveAsFile.toExternalForm(), documentModel.path?.toExternalForm())
-        Assert.assertEquals(138, documentModel.document.length)
+        Assert.assertEquals(140, documentModel.document.length)
 
         val savedStream = saveAsFile.openStream()
         val insertedBytes = insertedString.toByteArray()
@@ -177,7 +177,7 @@ class DocumentModelTests {
         Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
-        Assert.assertEquals(138, documentModel.document.length)
+        Assert.assertEquals(140, documentModel.document.length)
 
         val savedStream = url.openStream()
         val insertedBytes = insertedString.toByteArray()
