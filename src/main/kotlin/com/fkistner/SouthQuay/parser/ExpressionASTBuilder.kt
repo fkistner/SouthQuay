@@ -5,34 +5,28 @@ import com.fkistner.SouthQuay.grammar.*
 class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
     override fun visitNumber(ctx: SQLangParser.NumberContext): Expression {
         ctx.integer?.let {
-            try {
+            return try {
                 val value = it.text.toInt()
-                return IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus())
             } catch (e: NumberFormatException) {
                 val literal = IntegerLiteral(Int.MIN_VALUE)
                 scope.errorContainer.add(TypeError("Number is not within value range [${Int.MIN_VALUE}, ${Int.MAX_VALUE}]", literal))
-                return literal
-            }
+                literal
+            }.also { it.span = ctx.toSpan() }
         }
         ctx.real.let {
-            try {
+            return try {
                 val value = it.text.toDouble()
-                return RealLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                RealLiteral(if (ctx.minus == null) value else value.unaryMinus())
             } catch (e: NumberFormatException) {
                 val literal = RealLiteral(Double.NaN)
                 scope.errorContainer.add(TypeError("Number is not within value range [${Double.MIN_VALUE}, ${Double.MAX_VALUE}]", literal))
-                return literal
-            }
+                literal
+            }.also { it.span = ctx.toSpan() }
         }
     }
 
-    fun checkBinaryOperation(op: BinaryOperation) {
-        if (op.left.type == Type.Error || op.right.type == Type.Error) return
-        if (op.type == Type.Error)
-            scope.errorContainer.add(TypeError("Incompatible arguments ${op.left.type} and ${op.right.type}", op))
-    }
-
-    override fun visitSeq(ctx: SQLangParser.SeqContext): Expression {
+    override fun visitSeq(ctx: SQLangParser.SeqContext): Sequence {
         val from = ctx.from.toAST(scope)
         val to = ctx.to.toAST(scope)
         when (from.type) {
@@ -43,56 +37,62 @@ class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
             Type.Error, Type.Integer -> {}
             else -> scope.errorContainer.add(TypeError("Illegal sequence end, expected Integer, found $to.type", to))
         }
-        return Sequence(from, to)
+        return Sequence(from, to).also { it.span = ctx.toSpan() }
     }
 
-    override fun visitMul(ctx: SQLangParser.MulContext): Expression {
+    fun checkBinaryOperation(op: BinaryOperation) {
+        if (op.left.type == Type.Error || op.right.type == Type.Error) return
+        if (op.type == Type.Error)
+            scope.errorContainer.add(TypeError("Incompatible arguments ${op.left.type} and ${op.right.type}", op))
+    }
+
+    override fun visitMul(ctx: SQLangParser.MulContext): BinaryOperation {
         val left = ctx.left.toAST(scope)
         val right = ctx.right.toAST(scope)
         val op = if (ctx.op.type == SQLangParser.MUL) Mul(left, right) else Div(left, right)
         checkBinaryOperation(op)
-        return op
+        return op.also { it.span = ctx.toSpan() }
     }
 
-    override fun visitPow(ctx: SQLangParser.PowContext): Expression {
-        val pow = Pow(ctx.left.toAST(scope), ctx.right.toAST(scope))
-        checkBinaryOperation(pow)
-        return pow
-    }
-
-    override fun visitSum(ctx: SQLangParser.SumContext): Expression {
+    override fun visitSum(ctx: SQLangParser.SumContext): BinaryOperation {
         val left = ctx.left.toAST(scope)
         val right = ctx.right.toAST(scope)
         val op = if (ctx.op.type == SQLangParser.PLUS) Sum(left, right) else Sub(left, right)
         checkBinaryOperation(op)
-        return op
+        return op.also { it.span = ctx.toSpan() }
+    }
+
+    override fun visitPow(ctx: SQLangParser.PowContext): Pow {
+        val pow = Pow(ctx.left.toAST(scope), ctx.right.toAST(scope))
+        checkBinaryOperation(pow)
+        return pow.also { it.span = ctx.toSpan() }
     }
 
     override fun visitParen(ctx: SQLangParser.ParenContext): Expression {
-        return ctx.expr.toAST(scope)
+        return ctx.expr.toAST(scope).also { it.span = ctx.toSpan() }
     }
 
-    override fun visitRef(ctx: SQLangParser.RefContext): Expression {
+    override fun visitRef(ctx: SQLangParser.RefContext): VariableRef {
         val identifier = ctx.ident.text
         val declaration = scope.variables[identifier]
         val variableRef = VariableRef(identifier, declaration)
         if (declaration == null) scope.errorContainer.add(TypeError("Unknown variable '$identifier'", variableRef))
-        return variableRef
+        return variableRef.also { it.span = ctx.toSpan() }
     }
 
-    override fun visitLam(ctx: SQLangParser.LamContext): Expression {
+    override fun visitLam(ctx: SQLangParser.LamContext): Lambda {
         val lambdaScope = Scope(scope)
-        val parameters = ctx.params.map { VarDeclaration(it.text, Type.Error) }
+        val parameters = ctx.params.map { param -> VarDeclaration(param.text, Type.Error).also { it.span = param.toSpan() } }
         parameters.map { lambdaScope.variables[it.identifier] = it }
-        return Lambda(parameters, ctx.body.toAST(lambdaScope))
+        return Lambda(parameters, ctx.body.toAST(lambdaScope)).also { it.span = ctx.toSpan() }
     }
 
-    override fun visitFun(ctx: SQLangParser.FunContext): Expression {
+    override fun visitFun(ctx: SQLangParser.FunContext): FunctionInvoc {
         val args = ctx.arg.map { it.toAST(scope) }
         val signature = FunctionSignature(ctx.`fun`.text, args.map { it.type })
         val target = scope.functions[signature]
         val functionInvoc = FunctionInvoc(signature.identifier, args, target)
         if (target == null) scope.errorContainer.add(TypeError("Function ${signature.identifier}(${signature.argumentTypes.joinToString()}) is not defined", functionInvoc))
-        return functionInvoc
+        return functionInvoc.also { it.span = ctx.toSpan() }
     }
 }

@@ -398,4 +398,153 @@ class ASTTests {
         Assert.assertEquals(1, errors.count())
         Assert.assertTrue("Overflow not detected.", errors[0].message!!.startsWith("Number is not within value range"))
     }
+
+    @Test
+    fun nodeTrace() {
+        val charStream = CharStreams.fromReader(StringReader("""var n = 500
+var sequence = map({0, n}, i -> (-1)^i / (2.0 * i + 1))
+out reduce(sequence, 0, x y -> x - y)
+ print "Hello""""))
+        val errors = mutableListOf<SQLangError>()
+
+        val tree = ASTBuilder.parseStream(charStream, errors)
+        tree!!.accept(object: CountingVisitor() {
+            override fun visit(program: Program) {
+                Assert.assertEquals(Span(Position(1, 0, 0), Position(4, 14, 120)), program.span)
+                Assert.assertEquals(1, ++visitCounter)
+                program.acceptChildren(this)
+            }
+
+            override fun visit(varStatement: VarStatement) {
+                when {
+                    varStatement.declaration.identifier == "n" -> {
+                        Assert.assertEquals(Span(Position(1, 0, 0),
+                                Position(1, 11, 11)), varStatement.span)
+                        Assert.assertEquals(2, ++visitCounter)
+                    }
+                    else -> {
+                        Assert.assertEquals(Span(Position(2, 0, 12), Position(2, 55, 67)),
+                                varStatement.span)
+                        Assert.assertEquals(3, ++visitCounter)
+                    }
+                }
+                varStatement.acceptChildren(this)
+            }
+
+            override fun visit(varDeclaration: VarDeclaration) {
+                when(varDeclaration.identifier) {
+                    "sequence" -> {
+                        Assert.assertEquals(Span(Position(2, 4, 16), Position(2, 12, 24)),
+                                varDeclaration.span)
+                        Assert.assertEquals(4, ++visitCounter)
+                    }
+                    "x" -> {
+                        Assert.assertEquals(Span(Position(3, 24, 92), Position(3, 25, 93)),
+                                varDeclaration.span)
+                        Assert.assertEquals(17, ++visitCounter)
+                    }
+                }
+            }
+
+            override fun visit(outStatement: OutStatement) {
+                Assert.assertEquals(Span(Position(3, 0, 68), Position(3, 37, 105)),
+                        outStatement.span)
+                Assert.assertEquals(13, ++visitCounter)
+                outStatement.acceptChildren(this)
+            }
+
+            override fun visit(functionInvoc: FunctionInvoc) {
+                when (functionInvoc.identifier) {
+                    "map" -> {
+                        Assert.assertEquals(Span(Position(2, 15, 27), Position(2, 55, 67)),
+                                functionInvoc.span)
+                        Assert.assertEquals(5, ++visitCounter)
+                    }
+                    "reduce" -> {
+                        Assert.assertEquals(Span(Position(3, 4, 72), Position(3, 37, 105)),
+                                functionInvoc.span)
+                        Assert.assertEquals(14, ++visitCounter)
+                    }
+                }
+                functionInvoc.acceptChildren(this)
+            }
+
+            override fun visit(lambda: Lambda) {
+                if (lambda.parameters[0].identifier == "x") {
+                    Assert.assertEquals(Span(Position(3, 24, 92), Position(3, 36, 104)),
+                            lambda.span)
+                    Assert.assertEquals(16, ++visitCounter)
+                }
+                lambda.acceptChildren(this)
+            }
+
+            override fun visit(printStatement: PrintStatement) {
+                Assert.assertEquals(Span(Position(4, 1, 107), Position(4, 14, 120)),
+                        printStatement.span)
+                Assert.assertEquals(19, ++visitCounter)
+            }
+
+            override fun visit(variableRef: VariableRef) {
+                if (variableRef.identifier == "sequence") {
+                    Assert.assertEquals(Span(Position(3, 11, 79), Position(3, 19, 87)),
+                            variableRef.span)
+                    Assert.assertEquals(15, ++visitCounter)
+                }
+            }
+
+            override fun visit(sum: Sum) {
+                Assert.assertEquals(Span(Position(2, 41, 53), Position(2, 54, 66)),
+                        sum.span)
+                Assert.assertEquals(10, ++visitCounter)
+                sum.acceptChildren(this)
+            }
+
+            override fun visit(sub: Sub) {
+                Assert.assertEquals(Span(Position(3, 31, 99), Position(3, 36, 104)),
+                        sub.span)
+                Assert.assertEquals(18, ++visitCounter)
+            }
+
+            override fun visit(mul: Mul) {
+                Assert.assertEquals(Span(Position(2, 42, 54), Position(2, 49, 61)),
+                        mul.span)
+                Assert.assertEquals(11, ++visitCounter)
+                mul.acceptChildren(this)
+            }
+
+            override fun visit(div: Div) {
+                Assert.assertEquals(Span(Position(2, 32, 44), Position(2, 54, 66)),
+                        div.span)
+                Assert.assertEquals(7, ++visitCounter)
+                div.acceptChildren(this)
+            }
+
+            override fun visit(pow: Pow) {
+                Assert.assertEquals(Span(Position(2, 32, 44), Position(2, 38, 50)),
+                        pow.span)
+                Assert.assertEquals(8, ++visitCounter)
+                pow.acceptChildren(this)
+            }
+
+            override fun visit(sequence: Sequence) {
+                Assert.assertEquals(Span(Position(2, 19, 31), Position(2, 25, 37)),
+                        sequence.span)
+                Assert.assertEquals(6, ++visitCounter)
+            }
+
+            override fun visit(realLiteral: RealLiteral) {
+                Assert.assertEquals(Span(Position(2, 42, 54), Position(2, 45, 57)),
+                        realLiteral.span)
+                Assert.assertEquals(12, ++visitCounter)
+            }
+
+            override fun visit(integerLiteral: IntegerLiteral) {
+                if (integerLiteral.value < 0) {
+                    Assert.assertEquals(Span(Position(2, 32, 44), Position(2, 36, 48)),
+                            integerLiteral.span)
+                    Assert.assertEquals(9, ++visitCounter)
+                }
+            }
+        })
+    }
 }

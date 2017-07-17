@@ -1,7 +1,10 @@
 package com.fkistner.SouthQuay.parser
 
+
 sealed class ASTNode {
     open val children: List<ASTNode> = emptyList()
+    var span: Span? = null
+
     fun <T>accept(visitor: ASTVisitor<T>): T? {
         val returnValue = visit(visitor)
         endVisit(visitor)
