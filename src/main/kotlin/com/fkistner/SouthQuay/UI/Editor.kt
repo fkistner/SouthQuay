@@ -15,6 +15,8 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
         evaluateButton.addActionListener { executionControl.run() }
         abortButton.addActionListener    { executionControl.abort() }
 
+        syntaxTextArea.addParser(ParserAdapter)
+
         frame.addWindowListener(object: WindowAdapter() {
             override fun windowClosing(e: WindowEvent) = fileClose()
         })
@@ -30,7 +32,6 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
     override fun newDocument(documentModel: DocumentModel) {
         syntaxTextArea.document = documentModel.document
         documentModel.document.setSyntaxStyle(SyntaxTokenMaker)
-        syntaxTextArea.addParser(ParserAdapter)
         syntaxTextArea.syntaxScheme = SyntaxColors
         infoChanged(documentModel)
     }
