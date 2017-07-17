@@ -16,11 +16,12 @@ fun SQLangParser.ExpressionContext.toAST(scope: Scope): Expression = this.accept
 
 fun Token.toSpan() = this.to(this).toSpan()
 
-fun ParserRuleContext.toSpan() = start.to(stop).toSpan()
+fun ParserRuleContext.toSpan(): Span = start.to(stop).toSpan()
 
 fun Pair<Token, Token>.toSpan(): Span {
     val (startToken, stopToken) = this
     val start = Position(startToken.line, startToken.charPositionInLine, startToken.startIndex)
     val stop = Position(stopToken.line, stopToken.charPositionInLine + stopToken.stopIndex - stopToken.startIndex + 1, stopToken.stopIndex + 1)
-    return Span(start, stop)
+    val span = Span(start, stop)
+    return span
 }

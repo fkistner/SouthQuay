@@ -1,6 +1,6 @@
 package com.fkistner.SouthQuay.UI;
 
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.*;
 import org.fife.ui.rtextarea.*;
 import javax.swing.*;
 import java.awt.*;
@@ -18,11 +18,14 @@ public class EditorBase {
     protected JButton abortButton;
     protected JLabel statusLabel;
     protected Gutter gutter;
+    protected ErrorStrip errorStrip;
 
 
     private void createUIComponents() {
         syntaxTextArea = new RSyntaxTextArea();
         syntaxTextArea.setCodeFoldingEnabled(true);
+
+        errorStrip = new ErrorStrip(syntaxTextArea);
 
         Font defaultFont = new Font("Monospaced", Font.PLAIN, 12);
         gutter = new Gutter(syntaxTextArea);
@@ -70,7 +73,7 @@ public class EditorBase {
         panel.add(scrollPane, BorderLayout.CENTER);
         final JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setContinuousLayout(true);
-        splitPane1.setDividerLocation(358);
+        splitPane1.setDividerLocation(352);
         splitPane1.setResizeWeight(0.618);
         scrollPane.setViewportView(splitPane1);
         syntaxTextArea.setCurrentLineHighlightColor(new Color(-328966));
@@ -85,6 +88,9 @@ public class EditorBase {
         outputTextArea.setHighlightCurrentLine(false);
         outputTextArea.setPreferredSize(new Dimension(200, 15));
         splitPane1.setRightComponent(outputTextArea);
+        errorStrip.setShowMarkAll(true);
+        errorStrip.setShowMarkedOccurrences(true);
+        panel.add(errorStrip, BorderLayout.EAST);
     }
 
     /**

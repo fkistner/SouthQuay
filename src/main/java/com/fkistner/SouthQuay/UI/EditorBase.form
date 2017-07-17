@@ -50,7 +50,7 @@
             <constraints/>
             <properties>
               <continuousLayout value="true"/>
-              <dividerLocation value="358"/>
+              <dividerLocation value="352"/>
               <resizeWeight value="0.618"/>
             </properties>
             <border type="none"/>
@@ -82,6 +82,13 @@
           </splitpane>
         </children>
       </scrollpane>
+      <component id="28a77" class="org.fife.ui.rsyntaxtextarea.ErrorStrip" binding="errorStrip" custom-create="true">
+        <constraints border-constraint="East"/>
+        <properties>
+          <showMarkAll value="true"/>
+          <showMarkedOccurrences value="true"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

@@ -26,9 +26,6 @@ class DocumentModel(var path: URL? = null, val documentListener: Listener? = nul
         else -> Paths.get(file.path + ".sq").toUri().toURL()
     }
 
-    val text: String
-        get() = document.getText(0, document.length)
-
     init {
         documentName = path.let {
             when (it) {

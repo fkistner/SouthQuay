@@ -1,7 +1,8 @@
 package com.fkistner.SouthQuay.UI
 
+import com.fkistner.SouthQuay.document.text
 import com.fkistner.SouthQuay.parser.*
-import java.util.concurrent.*
+import java.util.concurrent.CancellationException
 import javax.swing.SwingUtilities
 
 

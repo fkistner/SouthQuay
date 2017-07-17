@@ -30,6 +30,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
     override fun newDocument(documentModel: DocumentModel) {
         syntaxTextArea.document = documentModel.document
         documentModel.document.setSyntaxStyle(SyntaxTokenMaker)
+        syntaxTextArea.addParser(ParserAdapter)
         syntaxTextArea.syntaxScheme = SyntaxColors
         infoChanged(documentModel)
     }
@@ -41,9 +42,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
         frame.rootPane.putClientProperty("Window.documentModified", documentModel.isDirty)
     }
 
-    override fun textChanged(documentModel: DocumentModel) {
-        executionControl.run()
-    }
+    override fun textChanged(documentModel: DocumentModel) = executionControl.run()
 
     override fun fileNew() { Editor() }
     override fun fileOpen() {

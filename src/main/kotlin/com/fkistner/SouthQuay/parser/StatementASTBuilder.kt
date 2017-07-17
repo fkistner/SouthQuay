@@ -11,9 +11,9 @@ class StatementASTBuilder(val scope: Scope): SQLangBaseVisitor<Statement>() {
         val identifier = ctx.ident.text
         val expression = ctx.expr.toAST(scope)
         val varDeclaration = VarDeclaration(identifier, expression.type).also { it.span = ctx.ident.toSpan() }
-        val varStatement = VarStatement(varDeclaration, expression)
+        val varStatement = VarStatement(varDeclaration, expression).also { it.span = ctx.toSpan() }
         if (scope.variables.containsKey(identifier)) scope.errorContainer.add(TypeError("Variable '$identifier' redeclared", varStatement))
         scope.variables[identifier] = varDeclaration
-        return varStatement.also { it.span = ctx.toSpan() }
+        return varStatement
     }
 }

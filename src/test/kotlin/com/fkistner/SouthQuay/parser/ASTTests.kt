@@ -159,8 +159,7 @@ class ASTTests {
 
         Assert.assertEquals(1, errors.count())
         val error = errors[0]
-        Assert.assertEquals(1, error.line)
-        Assert.assertEquals(0, error.column)
+        Assert.assertEquals(Span(Position(1, 0, 0), 1), error.span)
         Assert.assertTrue("Extraneous input not detected.", error.message?.startsWith("extraneous input '#'") == true)
     }
 
@@ -173,8 +172,7 @@ class ASTTests {
 
         Assert.assertEquals(1, errors.count())
         val error = errors[0]
-        Assert.assertEquals(1, error.line)
-        Assert.assertEquals(4, error.column)
+        Assert.assertEquals(Span(Position(1, 4, 4), 1), error.span)
         Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input '\"'") == true)
     }
 
@@ -187,8 +185,7 @@ class ASTTests {
 
         Assert.assertEquals(1, errors.count())
         val error = errors[0]
-        Assert.assertEquals(1, error.line)
-        Assert.assertEquals(6, error.column)
+        Assert.assertEquals(Span(Position(1, 6, 6), Position(1, 22, 22)), error.span)
         Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("""mismatched input '"Test\nout {3, 6}'""") == true)
     }
 
@@ -201,8 +198,7 @@ class ASTTests {
 
         Assert.assertEquals(1, errors.count())
         val error = errors[0]
-        Assert.assertEquals(1, error.line)
-        Assert.assertEquals(4, error.column)
+        Assert.assertEquals(Span(Position(1, 4, 4), 5), error.span)
         Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input 'print'") == true)
     }
 
@@ -215,13 +211,24 @@ class ASTTests {
 
         Assert.assertEquals(2, errors.count())
         val errorA = errors[0]
-        Assert.assertEquals(1, errorA.line)
-        Assert.assertEquals(4, errorA.column)
+        Assert.assertEquals(Span(Position(1, 4, 4), 5), errorA.span)
         Assert.assertTrue("Mismatched input not detected.", errorA.message?.startsWith("mismatched input 'print'") == true)
         val errorB = errors[1]
-        Assert.assertEquals(2, errorB.line)
-        Assert.assertEquals(5, errorB.column)
+        Assert.assertEquals(Span(Position(2, 5, 22), 7), errorB.span)
         Assert.assertTrue("Mismatched input not detected.", errorB.message?.startsWith("mismatched input '\"Hello\"'") == true)
+    }
+
+    @Test
+    fun unexpectedEOF() {
+        val charStream = CharStreams.fromReader(StringReader(" out \n   "))
+        val errors = mutableListOf<SQLangError>()
+
+        ASTBuilder.parseStream(charStream, errors)
+
+        Assert.assertEquals(1, errors.count())
+        val error = errors[0]
+        Assert.assertEquals(Span(Position(1, 1, 1), Position(2, 3, 9)), error.span)
+        Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input '<EOF>'") == true)
     }
 
     @Test

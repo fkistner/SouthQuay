@@ -7,10 +7,19 @@ import java.io.StringReader
 
 object ASTBuilder {
     fun parseStream(charStream: CharStream, errorContainer: MutableList<SQLangError>): Program? {
-        val errorListener = object : BaseErrorListener() {
-            override fun syntaxError(recognizer: Recognizer<*, *>?, offendingSymbol: Any?, line: Int,
+        val errorListener = object: BaseErrorListener() {
+            override fun syntaxError(recognizer: Recognizer<*, *>, offendingSymbol: Any?, line: Int,
                                      charPositionInLine: Int, msg: String?, e: RecognitionException?) {
-                errorContainer.add(SyntaxError(msg, offendingSymbol, line, charPositionInLine))
+                val offendingToken = offendingSymbol as Token
+                var span = offendingToken.toSpan()
+                if (span.length == 0 && recognizer is Parser) {
+                    var context: ParserRuleContext? = recognizer.context
+                    while (context != null && context.start == offendingToken) {
+                        context = context.getParent()
+                    }
+                    context?.let { span = it.start.to(offendingToken).toSpan() }
+                }
+                errorContainer.add(SyntaxError(msg, offendingSymbol, span))
             }
         }
 

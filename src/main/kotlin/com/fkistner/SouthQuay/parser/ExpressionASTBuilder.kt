@@ -7,22 +7,22 @@ class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
         ctx.integer?.let {
             return try {
                 val value = it.text.toInt()
-                IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                IntegerLiteral(if (ctx.minus == null) value else value.unaryMinus()).also { it.span = ctx.toSpan() }
             } catch (e: NumberFormatException) {
-                val literal = IntegerLiteral(Int.MIN_VALUE)
+                val literal = IntegerLiteral(Int.MIN_VALUE).also { it.span = ctx.toSpan() }
                 scope.errorContainer.add(TypeError("Number is not within value range [${Int.MIN_VALUE}, ${Int.MAX_VALUE}]", literal))
                 literal
-            }.also { it.span = ctx.toSpan() }
+            }
         }
         ctx.real.let {
             return try {
                 val value = it.text.toDouble()
-                RealLiteral(if (ctx.minus == null) value else value.unaryMinus())
+                RealLiteral(if (ctx.minus == null) value else value.unaryMinus()).also { it.span = ctx.toSpan() }
             } catch (e: NumberFormatException) {
-                val literal = RealLiteral(Double.NaN)
+                val literal = RealLiteral(Double.NaN).also { it.span = ctx.toSpan() }
                 scope.errorContainer.add(TypeError("Number is not within value range [${Double.MIN_VALUE}, ${Double.MAX_VALUE}]", literal))
                 literal
-            }.also { it.span = ctx.toSpan() }
+            }
         }
     }
 
@@ -49,23 +49,23 @@ class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
     override fun visitMul(ctx: SQLangParser.MulContext): BinaryOperation {
         val left = ctx.left.toAST(scope)
         val right = ctx.right.toAST(scope)
-        val op = if (ctx.op.type == SQLangParser.MUL) Mul(left, right) else Div(left, right)
+        val op = (if (ctx.op.type == SQLangParser.MUL) Mul(left, right) else Div(left, right)).also { it.span = ctx.toSpan() }
         checkBinaryOperation(op)
-        return op.also { it.span = ctx.toSpan() }
+        return op
     }
 
     override fun visitSum(ctx: SQLangParser.SumContext): BinaryOperation {
         val left = ctx.left.toAST(scope)
         val right = ctx.right.toAST(scope)
-        val op = if (ctx.op.type == SQLangParser.PLUS) Sum(left, right) else Sub(left, right)
+        val op = (if (ctx.op.type == SQLangParser.PLUS) Sum(left, right) else Sub(left, right)).also { it.span = ctx.toSpan() }
         checkBinaryOperation(op)
-        return op.also { it.span = ctx.toSpan() }
+        return op
     }
 
     override fun visitPow(ctx: SQLangParser.PowContext): Pow {
-        val pow = Pow(ctx.left.toAST(scope), ctx.right.toAST(scope))
+        val pow = Pow(ctx.left.toAST(scope), ctx.right.toAST(scope)).also { it.span = ctx.toSpan() }
         checkBinaryOperation(pow)
-        return pow.also { it.span = ctx.toSpan() }
+        return pow
     }
 
     override fun visitParen(ctx: SQLangParser.ParenContext): Expression {
@@ -75,9 +75,9 @@ class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
     override fun visitRef(ctx: SQLangParser.RefContext): VariableRef {
         val identifier = ctx.ident.text
         val declaration = scope.variables[identifier]
-        val variableRef = VariableRef(identifier, declaration)
+        val variableRef = VariableRef(identifier, declaration).also { it.span = ctx.toSpan() }
         if (declaration == null) scope.errorContainer.add(TypeError("Unknown variable '$identifier'", variableRef))
-        return variableRef.also { it.span = ctx.toSpan() }
+        return variableRef
     }
 
     override fun visitLam(ctx: SQLangParser.LamContext): Lambda {
@@ -91,8 +91,8 @@ class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
         val args = ctx.arg.map { it.toAST(scope) }
         val signature = FunctionSignature(ctx.`fun`.text, args.map { it.type })
         val target = scope.functions[signature]
-        val functionInvoc = FunctionInvoc(signature.identifier, args, target)
+        val functionInvoc = FunctionInvoc(signature.identifier, args, target).also { it.span = ctx.toSpan() }
         if (target == null) scope.errorContainer.add(TypeError("Function ${signature.identifier}(${signature.argumentTypes.joinToString()}) is not defined", functionInvoc))
-        return functionInvoc.also { it.span = ctx.toSpan() }
+        return functionInvoc
     }
 }
