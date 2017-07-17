@@ -74,16 +74,18 @@ class DocumentModel(var path: URL? = null, val documentListener: Listener? = nul
     }
 
     override fun changedUpdate(e: DocumentEvent?) = Unit
-    override fun insertUpdate(e: DocumentEvent?) = flagDirty()
-    override fun removeUpdate(e: DocumentEvent?) = flagDirty()
+    override fun insertUpdate(e: DocumentEvent?) = recordChange()
+    override fun removeUpdate(e: DocumentEvent?) = recordChange()
 
-    private fun flagDirty() = isDirty.let { wasDirty ->
+    private fun recordChange(): Unit = isDirty.let { wasDirty ->
         isDirty = true
         if (!wasDirty) documentListener?.infoChanged(this)
+        documentListener?.textChanged(this)
     }
 
     interface Listener {
         fun newDocument(documentModel: DocumentModel) = Unit
         fun infoChanged(documentModel: DocumentModel) = Unit
+        fun textChanged(documentModel: DocumentModel) = Unit
     }
 }

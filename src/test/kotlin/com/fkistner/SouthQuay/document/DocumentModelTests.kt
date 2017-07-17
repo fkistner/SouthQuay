@@ -231,4 +231,30 @@ class DocumentModelTests {
 
         Assert.assertEquals(saveAsFile.toExternalForm()+".sq", documentModel.path?.toExternalForm())
     }
+
+    @Test
+    fun textChanged() {
+        val saveAsFile = File.createTempFile("SQTest", ".sq").toURI().toURL()
+
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(0, listener.textChanged)
+
+        documentModel.document.insertString(0, "Hello", null)
+        Assert.assertEquals(true, documentModel.isDirty)
+        Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(1, listener.textChanged)
+
+        documentModel.document.insertString(5, " World", null)
+        Assert.assertEquals(true, documentModel.isDirty)
+        Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(2, listener.textChanged)
+
+        documentModel.save(saveAsFile)
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(2, listener.infoChanged)
+        Assert.assertEquals(2, listener.textChanged)
+    }
 }

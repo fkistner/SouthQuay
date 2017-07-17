@@ -21,6 +21,8 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
             future.thenRun { SwingUtilities.invokeLater(this@ExecutionControl::finish) }
         }
 
+        var rerun = false
+
         fun checkState() { if (state != this) throw CancellationException() }
         fun checkStateAndSwingInvokeLater(action: () -> Unit) {
             checkState()
@@ -45,13 +47,20 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
 
         override fun statementExecuting(statement: Statement) = checkState()
 
-        override fun run() = this
+        override fun run() = this.also { it.rerun = true }
         override fun abort(): IdleState {
             future.cancel(true)
-            return finish()
+            return complete()
         }
 
-        override fun finish(): IdleState {
+        override fun finish() = complete().let {
+            when {
+                rerun -> it.run()
+                else -> it
+            }
+        }
+
+        private fun complete(): IdleState {
             with(editor) {
                 evaluateButton.isVisible = true
                 abortButton.isVisible = false
