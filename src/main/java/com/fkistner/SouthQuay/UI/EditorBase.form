@@ -60,6 +60,7 @@
                   <splitpane position="left"/>
                 </constraints>
                 <properties>
+                  <currentLineHighlightColor color="-328966"/>
                   <paintMatchedBracketPair value="true"/>
                   <paintTabLines value="true"/>
                   <tabsEmulated value="true"/>

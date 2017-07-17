@@ -189,7 +189,7 @@ class ASTTests {
         val error = errors[0]
         Assert.assertEquals(1, error.line)
         Assert.assertEquals(6, error.column)
-        Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("mismatched input '\"'") == true)
+        Assert.assertTrue("Mismatched input not detected.", error.message?.startsWith("""mismatched input '"Test\nout {3, 6}'""") == true)
     }
 
     @Test

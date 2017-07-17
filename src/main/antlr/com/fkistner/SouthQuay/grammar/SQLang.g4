@@ -58,6 +58,7 @@ SEQ_RIGHT: '}';
 COMMA: ',';
 
 // Literals
+UnmatchedString: '"' (~["])* -> type(Error);
 String: '"' (~["])* '"';
 Integer: Digit+;
 Real:    Digit+ '.' Digit+;
@@ -74,5 +75,5 @@ fragment
 Special: '_';
 
 // Special
-Whitespace: [ \t\r\n]+ -> skip;
+Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 Error: .;

@@ -2,6 +2,7 @@ package com.fkistner.SouthQuay.UI
 
 import com.fkistner.SouthQuay.ApplicationName
 import com.fkistner.SouthQuay.document.DocumentModel
+import java.awt.Window
 import java.awt.event.*
 import java.net.URL
 import javax.swing.JFrame
@@ -9,9 +10,6 @@ import javax.swing.JFrame
 class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListener {
     val frame = JFrame(ApplicationName).also { it.jMenuBar = Menu.create(this) }
     val dialog = Dialogs(frame)
-
-    val documentModel = DocumentModel(path, this)
-    val executionControl = ExecutionControl(this)
 
     init {
         evaluateButton.addActionListener { executionControl.run() }
@@ -26,8 +24,13 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
         frame.isVisible = true
     }
 
+    val documentModel = DocumentModel(path, this)
+    val executionControl = ExecutionControl(this)
+
     override fun newDocument(documentModel: DocumentModel) {
         syntaxTextArea.document = documentModel.document
+        documentModel.document.setSyntaxStyle(SyntaxTokenMaker)
+        syntaxTextArea.syntaxScheme = SyntaxColors
         infoChanged(documentModel)
     }
 
@@ -57,11 +60,12 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
             when (dialog.shouldSaveFile(documentModel.documentName)) {
                 true -> if (!trySave()) return
                 null -> return
-                else -> {}
+                false -> documentModel.close()
             }
         }
         frame.isVisible = false
         frame.dispose()
+        if (Window.getWindows().none { it.isVisible }) System.exit(0)
     }
 
     override fun fileSave() { trySave() }

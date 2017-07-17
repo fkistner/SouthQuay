@@ -73,6 +73,7 @@ public class EditorBase {
         splitPane1.setDividerLocation(358);
         splitPane1.setResizeWeight(0.618);
         scrollPane.setViewportView(splitPane1);
+        syntaxTextArea.setCurrentLineHighlightColor(new Color(-328966));
         syntaxTextArea.setPaintMatchedBracketPair(true);
         syntaxTextArea.setPaintTabLines(true);
         syntaxTextArea.setTabsEmulated(true);
