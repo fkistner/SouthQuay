@@ -151,6 +151,28 @@ class ASTTests {
     }
 
     @Test
+    fun nestedSequence() {
+        val (ast, errors) = ASTBuilder.parseText("out map({1,10}, c -> reduce(map({1, 10}, i -> i^2), c*2, x y -> x+y))")
+
+        Assert.assertEquals(Program(listOf(
+                    OutStatement(FunctionInvoc("map", listOf(
+                            Sequence(IntegerLiteral(1), IntegerLiteral(10)),
+                            Lambda(listOf(VarDeclaration("c", Type.Integer)), FunctionInvoc("reduce", listOf(
+                                    FunctionInvoc("map", listOf(
+                                            Sequence(IntegerLiteral(1), IntegerLiteral(10)),
+                                            Lambda(listOf(VarDeclaration("i", Type.Integer)), Pow(VariableRef("i"), IntegerLiteral(2)))
+                                    )),
+                                    Mul(VariableRef("c"), IntegerLiteral(2)),
+                                    Lambda(listOf(VarDeclaration("x", Type.Integer), VarDeclaration("y", Type.Integer)), Sum(VariableRef("x"), VariableRef("y")))
+                            )))
+                    )))
+                )),
+                ast)
+
+        Assert.assertEquals(emptyList<SQLangError>(), errors)
+    }
+
+    @Test
     fun invalidToken() {
         val charStream = CharStreams.fromReader(StringReader("#"))
         val errors = mutableListOf<SQLangError>()
