@@ -20,6 +20,12 @@ sealed class ASTNode {
 }
 
 data class Program(val statements: List<Statement> = listOf()): ASTNode() {
+    lateinit var scope: Scope
+
+    constructor(statements: List<Statement>, scope: Scope): this(statements) {
+        this.scope = scope
+    }
+
     override val children get() = statements
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)
@@ -128,6 +134,12 @@ data class FunctionInvoc(val identifier: String, val args: List<Expression>): Ex
 }
 
 data class Lambda(val parameters: List<VarDeclaration>, val body: Expression): Expression() {
+    lateinit var scope: Scope
+
+    constructor(parameters: List<VarDeclaration>, body: Expression, scope: Scope): this(parameters, body) {
+        this.scope = scope
+    }
+
     override val type get() = Type.Lambda
     override val children get() = parameters + listOf(body)
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)

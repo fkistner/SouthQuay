@@ -7,7 +7,7 @@ fun SQLangParser.toAST(errorContainer: MutableList<SQLangError> = mutableListOf(
 
 fun SQLangParser.ProgramContext.toAST(errorContainer: MutableList<SQLangError> = mutableListOf()): Program {
     val scope = Scope(errorContainer)
-    return Program(statement().map { it.toAST(scope) }).also { it.span = toSpan() }
+    return Program(statement().map { it.toAST(scope) }, scope).also { it.span = toSpan() }
 }
 
 fun SQLangParser.StatementContext.toAST(scope: Scope) = accept(StatementASTBuilder(scope))

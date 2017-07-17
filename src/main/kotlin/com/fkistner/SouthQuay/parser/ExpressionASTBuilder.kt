@@ -84,7 +84,7 @@ class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
         val lambdaScope = Scope(scope)
         val parameters = ctx.params.map { param -> VarDeclaration(param.text, Type.Error).also { it.span = param.toSpan() } }
         parameters.map { lambdaScope.variables[it.identifier] = it }
-        return Lambda(parameters, ctx.body.toAST(lambdaScope)).also { it.span = ctx.toSpan() }
+        return Lambda(parameters, ctx.body.toAST(lambdaScope), lambdaScope).also { it.span = ctx.toSpan() }
     }
 
     override fun visitFun(ctx: SQLangParser.FunContext): FunctionInvoc {
