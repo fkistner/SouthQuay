@@ -1,18 +1,16 @@
 package com.fkistner.SouthQuay.parser
 
-import com.fkistner.SouthQuay.grammar.parserForString
 import com.fkistner.SouthQuay.interpreter.functions.*
 import org.antlr.v4.runtime.CharStreams
 import org.junit.*
 import java.io.StringReader
 
 class ASTTests {
+    fun Pair<Program?, MutableList<SQLangError>>.toAST() = first
 
     @Test
     fun empty() {
-        val parser = parserForString("")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("")
 
         Assert.assertEquals(Program(),
                 ast)
@@ -20,9 +18,7 @@ class ASTTests {
 
     @Test
     fun printStatement() {
-        val parser = parserForString("print \"a\"")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("print \"a\"")
 
         Assert.assertEquals(
                 Program(listOf(
@@ -33,9 +29,7 @@ class ASTTests {
 
     @Test
     fun outputInteger() {
-        val parser = parserForString("out 10")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("out 10")
 
         Assert.assertEquals(Program(listOf(
                     OutStatement(IntegerLiteral(10))
@@ -45,9 +39,7 @@ class ASTTests {
 
     @Test
     fun outputNegativeInteger() {
-        val parser = parserForString("out -10")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("out -10")
 
         Assert.assertEquals(Program(listOf(
                     OutStatement(IntegerLiteral(-10))
@@ -57,9 +49,7 @@ class ASTTests {
 
     @Test
     fun outputReal() {
-        val parser = parserForString("out 10.123")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("out 10.123")
 
         Assert.assertEquals(Program(listOf(
                     OutStatement(RealLiteral(10.123))
@@ -69,9 +59,7 @@ class ASTTests {
 
     @Test
     fun outputNegativeReal() {
-        val parser = parserForString("out -10.123")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("out -10.123")
 
         Assert.assertEquals(Program(listOf(
                     OutStatement(RealLiteral(-10.123))
@@ -81,9 +69,7 @@ class ASTTests {
 
     @Test
     fun newVariableFromSequence() {
-        val parser = parserForString("var myVar1 = {3, 10}")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("var myVar1 = {3, 10}")
 
         Assert.assertEquals(Program(listOf(
                     VarStatement(VarDeclaration("myVar1", Type.Sequence(Type.Integer)),
@@ -94,9 +80,7 @@ class ASTTests {
 
     @Test
     fun outputMathOperation() {
-        val parser = parserForString("out 2*(1+2-3*4/5^6)")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("out 2*(1+2-3*4/5^6)")
 
         Assert.assertEquals(Program(listOf(
                     OutStatement(
@@ -117,9 +101,7 @@ class ASTTests {
 
     @Test
     fun outputPowOperation() {
-        val parser = parserForString("out 2^(-1)^4")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("out 2^(-1)^4")
 
         Assert.assertEquals(Program(listOf(
                 OutStatement(
@@ -137,9 +119,7 @@ class ASTTests {
 
     @Test
     fun newVariableFromMap() {
-        val parser = parserForString("var i = map({1, 4}, n -> 2 * n)")
-
-        val ast = parser.toAST()
+        val (ast, _) = ASTBuilder.parseText("var i = map({1, 4}, n -> 2 * n)")
 
         Assert.assertEquals(Program(listOf(
                     VarStatement(VarDeclaration("i", Type.Sequence(Type.Integer)), FunctionInvoc("map", listOf(
@@ -405,8 +385,8 @@ class ASTTests {
 
     @Test
     fun undefinedFunction() {
-        for ((case, input) in mapOf(Pair("map(Sequence<Integer>, Lambda, Lambda)", "out map({3,5}, i -> i * 2.0, i -> i / 4)"),
-                Pair("reduce(Sequence<Integer>, Real, Real, Lambda)", "out reduce({3,5}, 2.0, 4.2, x y -> x + y)"))) {
+        for ((case, input) in mapOf(Pair("map(…, …, …)", "out map({3,5}, i -> i * 2.0, i -> i / 4)"),
+                Pair("reduce(…, …, …, …)", "out reduce({3,5}, 2.0, 4.2, x y -> x + y)"))) {
             val charStream = CharStreams.fromReader(StringReader(input))
             val errors = mutableListOf<SQLangError>()
 
@@ -414,6 +394,20 @@ class ASTTests {
 
             Assert.assertEquals(1, errors.count())
             Assert.assertTrue("Undefined function not detected.", errors[0].message!!.startsWith("Function $case is not defined"))
+        }
+    }
+
+    @Test
+    fun badFunctionArgTypes() {
+        for ((case, input) in mapOf(Pair("map(Real, Lambda)", "out map(3.0, i -> i * 2.0)"),
+                Pair("reduce(Sequence<Integer>, Real, Sequence<Integer>)", "out reduce({3,5}, 2.0, {3,5})"))) {
+            val charStream = CharStreams.fromReader(StringReader(input))
+            val errors = mutableListOf<SQLangError>()
+
+            ASTBuilder.parseStream(charStream, errors)
+
+            Assert.assertEquals(1, errors.count())
+            Assert.assertTrue("Undefined function not detected.", errors[0].message!!.startsWith("Incompatible arguments $case for function"))
         }
     }
 

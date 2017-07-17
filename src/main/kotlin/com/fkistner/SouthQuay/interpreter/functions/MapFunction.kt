@@ -4,12 +4,17 @@ import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
 
 object MapFunction : TypedInvocableFunction {
+    override val signature = FunctionSignature("map", 2)
+
     override fun resolve(invocation: FunctionInvoc): Type {
-        val sequence = invocation.args[0] as Sequence
-        val lambda = invocation.args[1] as Lambda
-        lambda.parameters[0].type = sequence.type.innerType
-        return Type.Sequence(lambda.body.type)
+        (invocation.args[1] as? Lambda)?.let { (parameters, body) ->
+            parameters[0].type = (invocation.args[0].type as? Type.Sequence)?.innerType ?: Type.Error
+            return Type.Sequence(body.type)
+        }
+        return Type.Error
     }
+
+    override fun verify(argumentTypes: List<Type>) = argumentTypes[0] is Type.Sequence && argumentTypes[1] == Type.Lambda
 
     override fun invoke(invocation: FunctionInvoc, args: List<Any?>): Any? {
         val sequence = args[0] as SequenceValue<Number>?

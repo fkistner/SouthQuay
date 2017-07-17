@@ -5,4 +5,6 @@ import com.fkistner.SouthQuay.parser.Function
 
 interface InvocableLambda: (List<Any?>) -> Any?
 interface InvocableFunction: (FunctionInvoc, List<Any?>) -> Any?
-interface TypedInvocableFunction: InvocableFunction, Function
+interface TypedInvocableFunction: InvocableFunction, Function {
+    val signature: FunctionSignature
+}

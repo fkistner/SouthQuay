@@ -4,12 +4,18 @@ import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
 
 object ReduceFunction: TypedInvocableFunction {
+    override val signature = FunctionSignature("reduce", 3)
+
     override fun resolve(invocation: FunctionInvoc): Type {
-        val lambda = invocation.args[2] as Lambda
-        lambda.parameters[0].type = invocation.args[1].type
-        lambda.parameters[1].type = (invocation.args[0].type as Type.Sequence).innerType
-        return lambda.body.type
+        (invocation.args[2] as? Lambda)?.let { (parameters, body) ->
+            parameters[0].type = invocation.args[1].type
+            parameters[1].type = (invocation.args[0].type as? Type.Sequence)?.innerType ?: Type.Error
+            return body.type
+        }
+        return Type.Error
     }
+
+    override fun verify(argumentTypes: List<Type>) = (argumentTypes[0] as? Type.Sequence)?.innerType == argumentTypes[1]
 
     override fun invoke(invocation: FunctionInvoc, args: List<Any?>): Any? {
         val sequence = args[0] as SequenceValue<Number>?
