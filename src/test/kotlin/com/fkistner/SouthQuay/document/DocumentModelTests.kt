@@ -18,6 +18,8 @@ class DocumentModelTests {
         val listener = CountingDocumentListener()
         val documentModel = DocumentModel(documentListener = listener)
         Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(0, listener.textChanged)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(null, documentModel.path)
         Assert.assertEquals(0, documentModel.document.length)
@@ -33,6 +35,8 @@ class DocumentModelTests {
         documentModel.open(url)
 
         Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(1, listener.textChanged)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(url.toExternalForm(), documentModel.path?.toExternalForm())
         Assert.assertEquals(url.readText(), documentModel.document.getText(0, documentModel.document.length))
