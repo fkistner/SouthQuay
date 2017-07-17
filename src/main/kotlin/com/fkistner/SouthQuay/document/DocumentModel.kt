@@ -50,6 +50,7 @@ class DocumentModel(var path: URL? = null, val documentListener: Listener? = nul
         resetInfo(file)
         file?.let(this::read)
         initNewDocument()
+        file?.let { documentListener?.textChanged(this) }
     }
 
     private fun initNewDocument() {
