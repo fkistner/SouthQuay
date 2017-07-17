@@ -45,6 +45,7 @@ dependencies {
     antlr "org.antlr:antlr4:4.7"
     compile "org.antlr:antlr4-runtime:4.7"
     compile "com.fifesoft:rsyntaxtextarea:2.6.1"
+    compile "com.fifesoft:autocomplete:2.6.1"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 
     testCompile 'junit:junit:4.12'

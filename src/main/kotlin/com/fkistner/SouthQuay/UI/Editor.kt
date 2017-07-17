@@ -2,6 +2,7 @@ package com.fkistner.SouthQuay.UI
 
 import com.fkistner.SouthQuay.ApplicationName
 import com.fkistner.SouthQuay.document.DocumentModel
+import org.fife.ui.autocomplete.AutoCompletion
 import java.awt.Window
 import java.awt.event.*
 import java.net.URL
@@ -10,6 +11,10 @@ import javax.swing.JFrame
 class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListener {
     val frame = JFrame(ApplicationName).also { it.jMenuBar = Menu.create(this) }
     val dialog = Dialogs(frame)
+
+    val autoCompletion = AutoCompletion(CompletionProposalGenerator).also {
+        it.install(syntaxTextArea)
+    }
 
     init {
         evaluateButton.addActionListener { executionControl.run() }
