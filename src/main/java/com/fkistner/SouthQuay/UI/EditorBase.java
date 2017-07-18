@@ -54,7 +54,7 @@ public class EditorBase {
         createUIComponents();
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
-        panel.setPreferredSize(new Dimension(600, 600));
+        panel.setPreferredSize(new Dimension(800, 800));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel.add(toolBar1, BorderLayout.SOUTH);
@@ -70,11 +70,12 @@ public class EditorBase {
         abortButton.setText("◼");
         abortButton.setVisible(false);
         toolBar1.add(abortButton);
+        scrollPane.setVerticalScrollBarPolicy(22);
         panel.add(scrollPane, BorderLayout.CENTER);
         final JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setContinuousLayout(true);
-        splitPane1.setDividerLocation(352);
-        splitPane1.setResizeWeight(0.618);
+        splitPane1.setDividerLocation(482);
+        splitPane1.setResizeWeight(1.0);
         scrollPane.setViewportView(splitPane1);
         syntaxTextArea.setCurrentLineHighlightColor(new Color(-328966));
         syntaxTextArea.setPaintMatchedBracketPair(true);

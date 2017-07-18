@@ -24,6 +24,7 @@ class Interpreter(val executionParticipant: InterpreterParticipant): ASTVisitor<
         val expressionVisitor = ExpressionVisitor(context)
         val result = varStatement.expression.accept(expressionVisitor)
         context.activeValues[varStatement.declaration] = result
+        executionParticipant.newValue(varStatement.declaration, result.toString())
     }
 
     fun execute(program: Program, errorContainer: MutableList<SQLangError>? = null) {
