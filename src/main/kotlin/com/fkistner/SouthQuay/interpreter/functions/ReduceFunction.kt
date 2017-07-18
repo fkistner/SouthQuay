@@ -15,7 +15,9 @@ object ReduceFunction: TypedInvocableFunction {
         return Type.Error
     }
 
-    override fun verify(argumentTypes: List<Type>) = (argumentTypes[0] as? Type.Sequence)?.innerType == argumentTypes[1]
+    override fun verify(argumentTypes: List<Type>) = argumentTypes[0] is Type.Sequence
+            && (argumentTypes[1] == Type.Integer || argumentTypes[1] == Type.Real)
+            && argumentTypes[2] == Type.Lambda
 
     override fun invoke(invocation: FunctionInvoc, args: List<Any?>): Any? {
         val sequence = args[0] as SequenceValue<Number>?
