@@ -7,7 +7,7 @@ import org.fife.ui.rsyntaxtextarea.parser.*
 import kotlin.system.measureTimeMillis
 
 
-object ParserAdapter: AbstractParser() {
+class ParserAdapter: AbstractParser() {
     var additionalErrors = mutableListOf<SQLangError>()
 
     override fun parse(doc: RSyntaxDocument, style: String): ParseResult {

@@ -12,6 +12,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
     val frame = JFrame(ApplicationName).also { it.jMenuBar = Menu.create(this) }
     val dialog = Dialogs(frame)
 
+    val parserAdapter = ParserAdapter()
     val autoCompletion = AutoCompletion(CompletionProposalGenerator).also {
         it.install(syntaxTextArea)
     }
@@ -20,7 +21,8 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
         evaluateButton.addActionListener { executionControl.run() }
         abortButton.addActionListener    { executionControl.abort() }
 
-        syntaxTextArea.addParser(ParserAdapter)
+        syntaxTextArea.addParser(parserAdapter)
+        syntaxTextArea.syntaxScheme = SyntaxColors
         outputTextArea.editorKit = OutputEditorKit
 
         frame.addWindowListener(object: WindowAdapter() {
@@ -37,8 +39,8 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
 
     override fun newDocument(documentModel: DocumentModel) {
         syntaxTextArea.document = documentModel.document
+        syntaxTextArea.forceReparsing(parserAdapter)
         documentModel.document.setSyntaxStyle(SyntaxTokenMaker)
-        syntaxTextArea.syntaxScheme = SyntaxColors
         infoChanged(documentModel)
     }
 
