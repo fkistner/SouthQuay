@@ -9,7 +9,7 @@ import java.awt.*
 object SyntaxColors: SyntaxScheme(true) {
     val defaultStyle = Style()
 
-    val SecondaryColor  = Color.GRAY
+    val SecondaryColor: Color = Color.GRAY
 
     val KeywordColor    = Color(117,170,86) // green
     val OperatorColor   = Color(190,114,57) // orange

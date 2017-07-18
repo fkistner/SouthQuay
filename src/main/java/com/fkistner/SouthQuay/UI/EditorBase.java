@@ -5,9 +5,7 @@ import org.fife.ui.rtextarea.*;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by florian on 7/12/17.
- */
+
 public class EditorBase {
     protected JPanel panel;
     protected JScrollPane scrollPane;
@@ -32,8 +30,7 @@ public class EditorBase {
 
         gutter = new Gutter(syntaxTextArea);
         gutter.setLineNumberFont(font);
-        gutter.setLineNumberColor(Color.GRAY);
-        gutter.setBookmarkingEnabled(true);
+        gutter.setLineNumberColor(SyntaxColors.INSTANCE.getSecondaryColor());
         scrollPane = new JScrollPane();
         scrollPane.setRowHeaderView(gutter);
     }
