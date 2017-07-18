@@ -16,38 +16,36 @@ class Executor(val executionParticipant: ExecutionParticipant) {
     }
 
     private fun execute(interpreter: Interpreter, text: String) {
-        var status: String = ""
-        var errors: List<SQLangError> = emptyList()
-        var parseDuration: Double? = null
-        var program: Program? = null
-
-
         try {
-            with(measurePerformance(text, ASTBuilder::parseText)) {
-                with(first) { program = first; errors = second }
-                parseDuration = second
-            }
-        } finally {
-            parseDuration?.let {
-                status = "Parse time %.4fs".format(it)
+            var status: String
+            var errors: List<SQLangError> = emptyList()
+            var program: Program? = null
+
+            try {
+                val parseDuration = with(measurePerformance(text, ASTBuilder::parseText)) {
+                    with(first) { program = first; errors = second }
+                    second
+                }
+                status = "Parse time %.4fs".format(parseDuration)
                 executionParticipant.statusInfo(status)
+            } finally {
+                if (errors.isNotEmpty()) executionParticipant.error(errors)
             }
-            if (errors.isNotEmpty()) executionParticipant.error(errors)
-        }
 
-        var executionDuration: Double? = null
-
-        try {
-            executionDuration = program?.let { measurePerformance(it, interpreter::execute).second }
+            program?.let {
+                val runtimeErrors = mutableListOf<SQLangError>()
+                try {
+                    val executionDuration = measurePerformance(it) { interpreter.execute(it, runtimeErrors) }
+                    status += ", execution time %.4fs".format(executionDuration)
+                    executionParticipant.statusInfo(status)
+                } finally {
+                    if (runtimeErrors.isNotEmpty()) executionParticipant.error(runtimeErrors)
+                }
+            }
         } catch (t: Throwable) {
             val writer = StringWriter()
             t.printStackTrace(PrintWriter(writer))
             executionParticipant.exception(writer.buffer.toString())
-        } finally {
-            executionDuration?.let {
-                status += ", execution time %.4fs".format(it)
-                executionParticipant.statusInfo(status)
-            }
         }
     }
 }

@@ -13,3 +13,9 @@ class TypeError(message: String, val offendingNode: ASTNode): SQLangError(messag
         return "TypeError(message='$message', offendingNode=$offendingNode)"
     }
 }
+
+class RuntimeError(message: String, val offendingNode: ASTNode): SQLangError(message, offendingNode.span) {
+    override fun toString(): String {
+        return "RuntimeError(message='$message', offendingNode=$offendingNode)"
+    }
+}

@@ -39,11 +39,12 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
         }
 
         override fun error(errors: List<SQLangError>) = checkStateAndSwingInvokeLater {
+            ParserAdapter.additionalErrors.addAll(errors)
             errors.forEach { editor.outputTextArea.append("ERROR: $it\n") }
         }
 
         override fun exception(message: String) = checkStateAndSwingInvokeLater {
-            editor.outputTextArea.append("EXCEPTION: $message\n")
+            editor.outputTextArea.text = "EXCEPTION: $message"
         }
 
         override fun statementExecuting(statement: Statement) = checkState()
@@ -72,6 +73,7 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
 
     private inner class IdleState: ExecutionControl.State {
         override fun run(): RunningState {
+            ParserAdapter.additionalErrors.clear()
             with(editor) {
                 evaluateButton.isVisible = false
                 abortButton.isVisible = true

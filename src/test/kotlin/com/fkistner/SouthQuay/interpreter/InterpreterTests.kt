@@ -371,4 +371,81 @@ class InterpreterTests {
 
         Assert.assertEquals(1, participant.statementCounter)
     }
+
+    @Test(expected = ArithmeticException::class)
+    fun arithmeticError() {
+        val (program, _) = ASTBuilder.parseText("out 1/0")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.fail("Should not be called.")
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+            }
+        }
+        val interpreter = Interpreter(participant)
+
+        try {
+            interpreter.execute(program)
+        } finally {
+            Assert.assertEquals(1, participant.statementCounter)
+        }
+    }
+
+    @Test()
+    fun arithmeticErrorWithErrorContainer() {
+        val (program, _) = ASTBuilder.parseText("out 1/0")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.fail("Should not be called.")
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+            }
+        }
+        val interpreter = Interpreter(participant)
+        val errors = mutableListOf<SQLangError>()
+        interpreter.execute(program, errors)
+
+        Assert.assertEquals(1, participant.statementCounter)
+        Assert.assertEquals(1, errors.count())
+        Assert.assertEquals(Span(Position(1, 4, 4), 3), errors[0].span)
+        Assert.assertTrue("Exception not recorded.", errors[0].message!!.startsWith("/ by zero"))
+    }
+
+    @Test()
+    fun arithmeticErrorInLambdaWithErrorContainer() {
+        val (program, _) = ASTBuilder.parseText("out map({1, 10}, i -> i/0)")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.fail("Should not be called.")
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+            }
+        }
+        val interpreter = Interpreter(participant)
+        val errors = mutableListOf<SQLangError>()
+        interpreter.execute(program, errors)
+
+        Assert.assertEquals(1, participant.statementCounter)
+        Assert.assertEquals(1, errors.count())
+        Assert.assertEquals(Span(Position(1, 22, 22), 3), errors[0].span)
+        Assert.assertTrue("Exception not recorded.", errors[0].message!!.startsWith("/ by zero"))
+    }
 }

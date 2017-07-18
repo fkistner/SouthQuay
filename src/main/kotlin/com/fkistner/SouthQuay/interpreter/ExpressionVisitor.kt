@@ -6,11 +6,11 @@ import com.fkistner.SouthQuay.parser.*
 import java.util.stream.IntStream
 
 
-class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
+class ExpressionVisitor(override val context: ExecutionContext): ASTVisitor<Any>, ContextualInterpreter {
     override fun visit(integerLiteral: IntegerLiteral) = integerLiteral.value
     override fun visit(realLiteral: RealLiteral) = realLiteral.value
 
-    private inline fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Number?): Number? {
+    private inline fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Number?): Number? = trackError(binaryOperation) {
         val left  = binaryOperation.left.accept(this)
         val right = binaryOperation.right.accept(this)
         if (left == null || right == null) return null
@@ -57,7 +57,7 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         }
     }
 
-    override fun visit(sequence: Sequence): SequenceValue<Number>? {
+    override fun visit(sequence: Sequence): SequenceValue<Number>? = trackError(sequence) {
         val from = sequence.from.accept(this)
         val to = sequence.to.accept(this)
         if (from == null || to == null) return null
@@ -65,9 +65,11 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
         return IntSequenceValue { IntStream.rangeClosed(fromInt, toInt) }
     }
 
-    override fun visit(variableRef: VariableRef) = variableRef.declaration?.let { context.activeValues[it] }
+    override fun visit(variableRef: VariableRef) = trackError(variableRef) {
+        variableRef.declaration?.let { context.activeValues[it] }
+    }
 
-    override fun visit(functionInvoc: FunctionInvoc): Any? {
+    override fun visit(functionInvoc: FunctionInvoc): Any? = trackError(functionInvoc) {
         val args = functionInvoc.args.map { it.accept(this) }
         return (functionInvoc.target as? InvocableFunction)?.invoke(functionInvoc, args)
     }
@@ -79,7 +81,12 @@ class ExpressionVisitor(val context: ExecutionContext): ASTVisitor<Any> {
                 innerContext.activeValues[lambda.parameters[idx]] = value
             }
             val visitor = ExpressionVisitor(innerContext)
-            return lambda.body.accept(visitor)
+            try {
+                return lambda.body.accept(visitor)
+            } finally {
+                if (context.runtimeError == null)
+                    context.runtimeError = innerContext.runtimeError
+            }
         }
     }
 }
