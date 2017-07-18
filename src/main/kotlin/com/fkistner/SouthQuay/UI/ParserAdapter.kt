@@ -17,14 +17,11 @@ class ParserAdapter: AbstractParser() {
         result.parseTime = measureTimeMillis {
             parseResult = ASTBuilder.parseText(doc.text)
         }
-        val (program, errors) = parseResult!!
+        val (_, errors) = parseResult!!
         errors.map(this::toNotice).forEach(result::addNotice)
         additionalErrors.map(this::toNotice).forEach(result::addNotice)
 
-        program?.let {
-            result.setParsedLines(it.span.start.line, it.span.end.line)
-        }
-
+        result.setParsedLines(0, doc.defaultRootElement.elementCount)
         return result
     }
 

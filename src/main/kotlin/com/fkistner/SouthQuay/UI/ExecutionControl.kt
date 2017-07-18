@@ -50,6 +50,7 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
                 styledDocument.insertString(styledDocument.length, message, attributes)
                 lastLine = line
             }
+            editor.outputTextArea.invalidate()
         }
 
         fun prepareOutput(span: Span, string: String, color: Color? = null) {

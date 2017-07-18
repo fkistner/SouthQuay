@@ -4,7 +4,7 @@ import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
 
 object MapFunction : TypedInvocableFunction {
-    override val signature = FunctionSignature("map", 2)
+    override val signature = FunctionSignature("map", listOf("sequence", "lambda"))
 
     override fun resolve(invocation: FunctionInvoc): Type {
         (invocation.args[1] as? Lambda)?.let { (parameters, body) ->

@@ -4,9 +4,19 @@ import com.fkistner.SouthQuay.grammar.SQLangParser
 import org.antlr.v4.runtime.*
 
 
+internal fun ParserRuleContext.getExceptionsRecursive(): RecognitionException? {
+    return exception ?: children.asSequence()
+            .mapNotNull { it as? ParserRuleContext }
+            .mapNotNull { it.getExceptionsRecursive() }
+            .firstOrNull()
+}
+
 internal fun SQLangParser.ProgramContext.toAST(errorContainer: MutableList<SQLangError> = mutableListOf()): Program {
     val scope = Scope(errorContainer)
-    return Program(statement().map { it.toAST(scope) }, scope).also { it.span = toSpan() }
+    return Program(statement().asSequence()
+            .filter { it.getExceptionsRecursive() == null }
+            .map { it.toAST(scope) }
+            .toList(), scope).also { it.span = toSpan() }
 }
 
 internal fun SQLangParser.StatementContext .toAST(scope: Scope): Statement  = accept(StatementASTBuilder(scope))

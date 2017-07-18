@@ -3,7 +3,7 @@ package com.fkistner.SouthQuay.interpreter.functions
 import com.fkistner.SouthQuay.parser.*
 
 object ApplyFunction : TypedInvocableFunction {
-    override val signature = FunctionSignature("apply", 2)
+    override val signature = FunctionSignature("apply", listOf("number", "lambda"))
 
     override fun resolve(invocation: FunctionInvoc): Type {
         (invocation.args[1] as? Lambda)?.let { (parameters, body) ->

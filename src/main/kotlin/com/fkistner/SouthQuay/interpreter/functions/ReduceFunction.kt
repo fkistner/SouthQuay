@@ -4,7 +4,7 @@ import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
 
 object ReduceFunction: TypedInvocableFunction {
-    override val signature = FunctionSignature("reduce", 3)
+    override val signature = FunctionSignature("reduce", listOf("sequence", "neutral", "lambda"))
 
     override fun resolve(invocation: FunctionInvoc): Type {
         (invocation.args[2] as? Lambda)?.let { (parameters, body) ->

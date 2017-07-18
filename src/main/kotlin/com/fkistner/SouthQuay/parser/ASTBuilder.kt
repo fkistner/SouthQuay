@@ -29,9 +29,7 @@ object ASTBuilder {
         parser.addErrorListener(errorListener)
 
         val program = parser.program()
-
-        return if (errorContainer.count() > 0) null
-        else program.toAST(errorContainer).also { it.verify() }
+        return program.toAST(errorContainer).also { it.verify() }
     }
 
     fun parseStream(charStream: CharStream): Pair<Program?, MutableList<SQLangError>> {

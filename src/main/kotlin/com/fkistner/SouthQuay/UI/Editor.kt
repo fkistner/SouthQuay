@@ -13,9 +13,9 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
     val dialog = Dialogs(frame)
 
     val parserAdapter = ParserAdapter()
-    val autoCompletion = AutoCompletion(CompletionProposalGenerator).also {
-        it.install(syntaxTextArea)
-    }
+    val autoCompletion = AutoCompletion(CompletionProposalGenerator().also {
+        it.setAutoActivationRules(true, " ,=({")
+    })
 
     init {
         evaluateButton.addActionListener { executionControl.run() }
@@ -23,6 +23,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
 
         syntaxTextArea.addParser(parserAdapter)
         syntaxTextArea.syntaxScheme = SyntaxColors
+        autoCompletion.autoCompleteSingleChoices = false
         outputTextArea.editorKit = OutputEditorKit
 
         frame.addWindowListener(object: WindowAdapter() {
@@ -41,6 +42,11 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
         syntaxTextArea.document = documentModel.document
         syntaxTextArea.forceReparsing(parserAdapter)
         documentModel.document.setSyntaxStyle(SyntaxTokenMaker)
+
+        autoCompletion.uninstall()
+        autoCompletion.install(syntaxTextArea)
+        autoCompletion.isAutoActivationEnabled = true
+
         infoChanged(documentModel)
     }
 
