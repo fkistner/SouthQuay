@@ -4,7 +4,6 @@ import org.fife.ui.rsyntaxtextarea.*;
 import org.fife.ui.rtextarea.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Created by florian on 7/12/17.
@@ -13,7 +12,7 @@ public class EditorBase {
     protected JPanel panel;
     protected JScrollPane scrollPane;
     protected RSyntaxTextArea syntaxTextArea;
-    protected RSyntaxTextArea outputTextArea;
+    protected JTextPane outputTextArea;
     protected JButton evaluateButton;
     protected JButton abortButton;
     protected JLabel statusLabel;
@@ -24,12 +23,15 @@ public class EditorBase {
     private void createUIComponents() {
         syntaxTextArea = new RSyntaxTextArea();
         syntaxTextArea.setCodeFoldingEnabled(true);
+        Font font = syntaxTextArea.getFont();
+
+        outputTextArea = new JTextPane();
+        outputTextArea.setFont(font);
 
         errorStrip = new ErrorStrip(syntaxTextArea);
 
-        Font defaultFont = new Font("Monospaced", Font.PLAIN, 12);
         gutter = new Gutter(syntaxTextArea);
-        gutter.setLineNumberFont(defaultFont);
+        gutter.setLineNumberFont(font);
         gutter.setLineNumberColor(Color.GRAY);
         gutter.setBookmarkingEnabled(true);
         scrollPane = new JScrollPane();
@@ -70,6 +72,7 @@ public class EditorBase {
         abortButton.setText("◼");
         abortButton.setVisible(false);
         toolBar1.add(abortButton);
+        scrollPane.setHorizontalScrollBarPolicy(31);
         scrollPane.setVerticalScrollBarPolicy(22);
         panel.add(scrollPane, BorderLayout.CENTER);
         final JSplitPane splitPane1 = new JSplitPane();
@@ -77,18 +80,24 @@ public class EditorBase {
         splitPane1.setDividerLocation(482);
         splitPane1.setResizeWeight(1.0);
         scrollPane.setViewportView(splitPane1);
+        splitPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        scrollPane1.setVerticalScrollBarPolicy(21);
+        splitPane1.setLeftComponent(scrollPane1);
+        scrollPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
         syntaxTextArea.setCurrentLineHighlightColor(new Color(-328966));
         syntaxTextArea.setPaintMatchedBracketPair(true);
         syntaxTextArea.setPaintTabLines(true);
         syntaxTextArea.setTabsEmulated(true);
         syntaxTextArea.setWhitespaceVisible(true);
-        splitPane1.setLeftComponent(syntaxTextArea);
-        outputTextArea = new RSyntaxTextArea();
+        scrollPane1.setViewportView(syntaxTextArea);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        scrollPane2.setVerticalScrollBarPolicy(21);
+        splitPane1.setRightComponent(scrollPane2);
+        scrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
         outputTextArea.setBackground(new Color(-1644826));
         outputTextArea.setEditable(false);
-        outputTextArea.setHighlightCurrentLine(false);
-        outputTextArea.setPreferredSize(new Dimension(200, 15));
-        splitPane1.setRightComponent(outputTextArea);
+        scrollPane2.setViewportView(outputTextArea);
         errorStrip.setShowMarkAll(true);
         errorStrip.setShowMarkedOccurrences(true);
         panel.add(errorStrip, BorderLayout.EAST);

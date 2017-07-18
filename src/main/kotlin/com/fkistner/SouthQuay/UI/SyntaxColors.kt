@@ -9,29 +9,36 @@ import java.awt.*
 object SyntaxColors: SyntaxScheme(true) {
     val defaultStyle = Style()
 
+    val SecondaryColor  = Color.GRAY
+
+    val KeywordColor    = Color(117,170,86) // green
+    val OperatorColor   = Color(190,114,57) // orange
+    val LiteralColor    = Color(59,167,229) // blue
+    val IdentifierColor = Color(130,91,179) // purple
+    val ErrorColor      = Color(185,76,117) // red
+
+    val KeywordStyle    = Style(KeywordColor)
+    val OperatorStyle   = Style(OperatorColor)
+    val LiteralStyle    = Style(LiteralColor)
+    val IdentifierStyle = Style(IdentifierColor)
+    val WhitespaceStyle = Style(SecondaryColor)
+    val ErrorStyle      = Style(ErrorColor)
+
     init {
         val styleArray = arrayOfNulls<Style>(VOCABULARY.maxTokenType + 1)
 
-        val keyword = Style(Color(117,170,86)) // green
         for (t in arrayOf(PRINT, OUT, VAR))
-            styleArray[t] = keyword
+            styleArray[t] = KeywordStyle
 
-        val ops = Style(Color(190,114,57)) // orange
         for (t in arrayOf(PLUS, MINUS, MUL, DIV, POW, EQ, LAM))
-            styleArray[t] = ops
+            styleArray[t] = OperatorStyle
 
-        val literal = Style(Color(59,167,229)) // blue
         for (t in arrayOf(SQLangLexer.String, Integer, Real))
-            styleArray[t] = literal
+            styleArray[t] = LiteralStyle
 
-        val identifier = Style(Color(130,91,179)) // purple
-        styleArray[Identifier] = identifier
-
-        val whitespace = Style(Color.GRAY)
-        styleArray[Whitespace] = whitespace
-
-        val error = Style(Color(185,76,117)) // red
-        styleArray[Error] = error
+        styleArray[Identifier] = IdentifierStyle
+        styleArray[Whitespace] = WhitespaceStyle
+        styleArray[Error]      = ErrorStyle
 
         styles = styleArray
     }

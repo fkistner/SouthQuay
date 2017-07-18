@@ -21,6 +21,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModel.Listener, MenuListe
         abortButton.addActionListener    { executionControl.abort() }
 
         syntaxTextArea.addParser(ParserAdapter)
+        outputTextArea.editorKit = OutputEditorKit
 
         frame.addWindowListener(object: WindowAdapter() {
             override fun windowClosing(e: WindowEvent) = fileClose()

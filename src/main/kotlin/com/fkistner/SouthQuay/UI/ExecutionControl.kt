@@ -2,9 +2,11 @@ package com.fkistner.SouthQuay.UI
 
 import com.fkistner.SouthQuay.document.text
 import com.fkistner.SouthQuay.parser.*
+import java.awt.Color
 import java.util.*
 import java.util.concurrent.CancellationException
 import javax.swing.SwingUtilities
+import javax.swing.text.*
 
 
 class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
@@ -31,23 +33,28 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
             SwingUtilities.invokeLater(action)
         }
 
-        val lines = TreeMap<Int, String>()
+        val lines = TreeMap<Int, Pair<String, AttributeSet?>>()
 
-        fun updateOutput() {
-            var buffer = ""
-            var lastLine = 1
-            for ((line,message) in lines) {
-                buffer += "\n".repeat(line - lastLine)
-                buffer += message
-                lastLine = line
-            }
-            editor.outputTextArea.text = buffer
-            editor.outputTextArea.revalidate()
+        fun Color.asForeground(): AttributeSet {
+            return StyleContext.getDefaultStyleContext()
+                    .addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, this)
         }
 
-        fun prepareOutput(span: Span, string: String) {
+        fun updateOutput() {
+            var lastLine = 1
+            val styledDocument = editor.outputTextArea.styledDocument
+            styledDocument.remove(0, styledDocument.length)
+            for ((line, pair) in lines) {
+                val (message, attributes) = pair
+                styledDocument.insertString(styledDocument.length, "\n".repeat(line - lastLine), null)
+                styledDocument.insertString(styledDocument.length, message, attributes)
+                lastLine = line
+            }
+        }
+
+        fun prepareOutput(span: Span, string: String, color: Color? = null) {
             val line = span.start.line
-            if (line !in lines) lines.put(line, string)
+            if (line !in lines) lines.put(line, string.to(color?.asForeground()))
         }
 
         override fun output(statement: Statement, string: String) = checkStateAndSwingInvokeLater {
@@ -56,7 +63,7 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
         }
 
         override fun newValue(declaration: VarDeclaration, string: String) = checkStateAndSwingInvokeLater {
-            prepareOutput(declaration.span, "${declaration.identifier} = $string")
+            prepareOutput(declaration.span, "${declaration.identifier} = $string", SyntaxColors.SecondaryColor)
             updateOutput()
         }
 
@@ -66,12 +73,14 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
 
         override fun error(errors: List<SQLangError>) = checkStateAndSwingInvokeLater {
             ParserAdapter.additionalErrors.addAll(errors)
-            errors.forEach { prepareOutput(it.span, "ERROR: ${it.message}") }
+            errors.forEach { prepareOutput(it.span, "ERROR: ${it.message}", SyntaxColors.ErrorColor) }
             updateOutput()
         }
 
         override fun exception(message: String) = checkStateAndSwingInvokeLater {
-            editor.outputTextArea.text = "EXCEPTION: $message"
+            val styledDocument = editor.outputTextArea.styledDocument
+            styledDocument.remove(0, styledDocument.length)
+            styledDocument.insertString(styledDocument.length, "EXCEPTION: $message", SyntaxColors.ErrorColor.asForeground())
         }
 
         override fun statementExecuting(statement: Statement) = checkState()
