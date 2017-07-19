@@ -73,7 +73,7 @@ class CompletionTests {
         textArea.caretPosition = 24
         val completions = completionProposalGenerator.getCompletions(textArea)
 
-        Assert.assertEquals(listOf("apply( - apply(number, lambda) function", "hello - Sequence<Integer> variable",
+        Assert.assertEquals(listOf("hello - Sequence<Integer> variable", "apply( - apply(number, lambda) function",
                 "map( - map(sequence, lambda) function", "reduce( - reduce(sequence, neutral, lambda) function",
                 "(", "-", "{"),
                 completions.map { it.toString() })
@@ -126,8 +126,8 @@ class CompletionTests {
         textArea.caretPosition = 18
         val completions = completionProposalGenerator.getCompletions(textArea)
 
-        Assert.assertEquals(listOf("apply( - apply(number, lambda) function", "map( - map(sequence, lambda) function",
-                "n - Integer variable", "reduce( - reduce(sequence, neutral, lambda) function", "(", "-", "{"),
+        Assert.assertEquals(listOf("n - Integer variable", "apply( - apply(number, lambda) function",
+                "map( - map(sequence, lambda) function", "reduce( - reduce(sequence, neutral, lambda) function", "(", "-", "{"),
                 completions.map { it.toString() })
     }
 
@@ -159,6 +159,27 @@ class CompletionTests {
         val completions = completionProposalGenerator.getCompletions(textArea)
 
         Assert.assertEquals(listOf("}"),
+                completions.map { it.toString() })
+    }
+
+    @Test
+    fun completeInLambda() {
+        textArea.text = "var n = 2*20 var s10 = map({i10, 10*i10}, i -> i*i)"
+        textArea.caretPosition = 47
+        val completions = completionProposalGenerator.getCompletions(textArea)
+
+        Assert.assertEquals(listOf("i - lambda parameter", "apply( - apply(number, lambda) function",
+                "map( - map(sequence, lambda) function", "reduce( - reduce(sequence, neutral, lambda) function", "(", "-", "{"),
+                completions.map { it.toString() })
+    }
+
+    @Test
+    fun completeInLambdaMissingParam() {
+        textArea.text = "var n = 2*20 var s10 = map({i10, 10*i10}, -> i*i)"
+        textArea.caretPosition = 45
+        val completions = completionProposalGenerator.getCompletions(textArea)
+
+        Assert.assertEquals(emptyList<String>(),
                 completions.map { it.toString() })
     }
 }

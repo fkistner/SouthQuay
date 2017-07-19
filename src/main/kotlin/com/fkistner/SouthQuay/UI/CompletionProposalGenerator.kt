@@ -86,26 +86,31 @@ class CompletionProposalGenerator : DefaultCompletionProvider() {
     }
 
     /**
-     * Creates a completion model object for a referencing a variable.
-     * @param completionProvider The completion provider this suggestion stems from
+     * Creates a completion model object for referencing a lambda parameter.
+     * @param token The token that declared the lambda parameter
+     * @return Completion for the lambda parameter
+     */
+    fun lambdaCompletion(token: Token) = BasicCompletion(this, token.text, "lambda parameter")
+
+    /**
+     * Creates a completion model object for referencing a variable.
      * @param declaration The node that declared the variable
      * @return Completion for the variable
      */
-    fun variableCompletion(completionProvider: CompletionProvider, declaration: VarDeclaration) =
-            BasicCompletion(completionProvider, declaration.identifier, "${declaration.type} variable")
+    fun variableCompletion(declaration: VarDeclaration) =
+            BasicCompletion(this, declaration.identifier, "${declaration.type} variable")
 
     /**
-     * Creates a completion model object for a invoking a function.
-     * @param completionProvider The completion provider this suggestion stems from
+     * Creates a completion model object for invoking a function.
      * @param signature The signature of the function
      * @return Completion for the function
      */
-    fun functionCompletion(completionProvider: CompletionProvider, signature: FunctionSignature) =
-            BasicCompletion(completionProvider, "${signature.identifier}(",
+    fun functionCompletion(signature: FunctionSignature) =
+            BasicCompletion(this, "${signature.identifier}(",
                     "${signature.identifier}(${signature.argumentNames.joinToString()}) function")
 
     /**
-     * Determines which variables and functions can be referenced at the current position and creates corresponding completions.
+     * Determines which variables, parameters, and functions can be referenced at the current position and creates corresponding completions.
      * @param program The partial abstract syntax tree recovered from the source up to the [caretPosition]
      * @param ruleContext Current rule context of the parser
      * @param caretPosition Position of the user's caret
@@ -114,13 +119,21 @@ class CompletionProposalGenerator : DefaultCompletionProvider() {
     fun getIdentifierCompletion(program: Program, ruleContext: ParserRuleContext, caretPosition: Int): Sequence<BasicCompletion> {
         if (ruleContext is SQLangParser.VarContext) return emptySequence()
 
+        val lambdaCompletions = generateSequence(ruleContext, ParserRuleContext::getParent)
+                .mapNotNull { it as? SQLangParser.LamContext }
+                .firstOrNull()?.let {
+                    it.params?.asSequence()
+                            ?.map(this::lambdaCompletion)
+                                    ?: emptySequence()
+                }
         val variableCompletions = program.scope.variables.values.asSequence()
                 .filter { it.span.end.index <= caretPosition }
-                .map { variableCompletion(this, it) }
+                .map(this::variableCompletion)
         val functionCompletions = program.scope.functions.keys.asSequence()
-                .map { functionCompletion(this, it) }
+                .map(this::functionCompletion)
 
-        return (variableCompletions + functionCompletions).onEach { it.relevance = 1 }
+        return (lambdaCompletions ?: variableCompletions).onEach { it.relevance = 2 } +
+                functionCompletions.onEach { it.relevance = 1 }
     }
 
     /**
