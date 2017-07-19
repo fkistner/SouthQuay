@@ -27,16 +27,16 @@ object MapFunction : TypedInvocableFunction {
         if (lambda == null || sequence == null) return null
 
         val type = (invocation.type as Type.Sequence).innerType
-        return type.accept(object: Type.Visitor<SequenceValue<Number>> {
-            override fun visitInteger(): SequenceValue<Number> {
+        return when(type) {
+            Type.Integer -> {
                 val mapper = { n: Number -> lambda(listOf(n)) as Int }
-                return sequence.map(mapper)
+                sequence.map(mapper)
             }
-
-            override fun visitReal(): SequenceValue<Number> {
+            Type.Real -> {
                 val mapper = { n: Number -> lambda(listOf(n)) as Double }
-                return sequence.map(mapper)
+                sequence.map(mapper)
             }
-        })
+            else -> throw IllegalStateException()
+        }
     }
 }

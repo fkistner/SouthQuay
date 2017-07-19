@@ -26,18 +26,14 @@ object ReduceFunction: TypedInvocableFunction {
 
     override fun invoke(invocation: FunctionInvoc, args: List<Any?>): Any? {
         val sequence = args[0] as SequenceValue<Number>?
-        val initial = args[1] as Number?
+        val neutral = args[1] as Number?
         val lambda = args[2] as InvocableLambda?
-        if (lambda == null || initial == null || sequence == null) return null
+        if (lambda == null || neutral == null || sequence == null) return null
 
-        return invocation.type.accept(object: Type.Visitor<Number> {
-            override fun visitInteger(): Number {
-                return sequence.reduce(initial as Int) { state,n -> lambda(listOf(state, n)) as Int }
-            }
-
-            override fun visitReal(): Number {
-                return sequence.reduce(initial.toDouble()) { state,n -> lambda(listOf(state, n)) as Double }
-            }
-        })
+        return when(invocation.type) {
+            Type.Integer -> sequence.reduce(neutral as Int)     { state,n -> lambda(listOf(state, n)) as Int }
+            Type.Real    -> sequence.reduce(neutral.toDouble()) { state,n -> lambda(listOf(state, n)) as Double }
+            else -> throw IllegalStateException()
+        }
     }
 }

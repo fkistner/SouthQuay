@@ -271,7 +271,7 @@ data class FunctionInvoc(val identifier: String, val args: List<Expression>): Ex
     var target: Function? = null
         set(value) {
             field = value
-            value?.let { type = it.resolve(this) }
+            value?.resolve(this)
         }
 
     /**
@@ -286,7 +286,7 @@ data class FunctionInvoc(val identifier: String, val args: List<Expression>): Ex
         this.target = target
     }
 
-    override var type: Type = Type.Error
+    override val type     get() = target?.resolve(this) ?: Type.Error
     override val children get() = args
     override fun <T>   visit(visitor: ASTVisitor<T>) = visitor.visit(this)
     override fun <T>endVisit(visitor: ASTVisitor<T>) = visitor.endVisit(this)

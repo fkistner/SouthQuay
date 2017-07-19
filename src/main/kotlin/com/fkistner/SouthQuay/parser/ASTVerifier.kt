@@ -6,7 +6,14 @@ package com.fkistner.SouthQuay.parser
  * @param scope Current visibility scope
  */
 class ASTVerifier(val scope: Scope): ASTVisitor<Unit> {
-    override fun visit(lambda: Lambda) = lambda.verify()
+    override fun visit(lambda: Lambda) {
+        lambda.verify()
+        when (lambda.body.type) {
+            Type.Real, Type.Integer, Type.Error -> {}
+            else -> scope.errorContainer.add(TypeError("Invalid return type ${lambda.body.type} for lambda", lambda.body))
+        }
+    }
+
     override fun visit(functionInvoc: FunctionInvoc) {
         functionInvoc.acceptChildren(this)
         functionInvoc.target?.let { target ->

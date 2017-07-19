@@ -427,6 +427,7 @@ class ASTTests {
 
             ASTBuilder.parseStream(charStream, errors)
 
+            println(errors)
             Assert.assertEquals(1, errors.count())
             Assert.assertTrue("Undefined function not detected.", errors[0].message!!.startsWith("Incompatible arguments $case for function"))
         }
@@ -454,6 +455,16 @@ class ASTTests {
 
         Assert.assertEquals(1, errors.count())
         Assert.assertTrue("Overflow not detected.", errors[0].message!!.startsWith("Number is not within value range"))
+    }
+
+    @Test
+    fun sequenceOfSequences() {
+        val (program, errors) = ASTBuilder.parseText("out map({1,10}, c -> {1,c})")
+        program!!
+
+        Assert.assertEquals(1, errors.count())
+        Assert.assertEquals(Span(Position(1, 21, 21), 5), errors[0].span)
+        Assert.assertTrue("Exception not recorded.", errors[0].message!!.startsWith("Invalid return type Sequence<Integer> for lambda"))
     }
 
     @Test

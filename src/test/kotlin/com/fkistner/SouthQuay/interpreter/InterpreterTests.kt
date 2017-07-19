@@ -394,7 +394,7 @@ class InterpreterTests {
         }
     }
 
-    @Test()
+    @Test
     fun arithmeticErrorWithErrorContainer() {
         val (program, _) = ASTBuilder.parseText("out 1/0")
         program!!
@@ -420,7 +420,7 @@ class InterpreterTests {
         Assert.assertTrue("Exception not recorded.", errors[0].message!!.startsWith("/ by zero"))
     }
 
-    @Test()
+    @Test
     fun arithmeticErrorInLambdaWithErrorContainer() {
         val (program, _) = ASTBuilder.parseText("out map({1, 10}, i -> i/0)")
         program!!
@@ -444,5 +444,30 @@ class InterpreterTests {
         Assert.assertEquals(1, errors.count())
         Assert.assertEquals(Span(Position(1, 22, 22), 3), errors[0].span)
         Assert.assertTrue("Exception not recorded.", errors[0].message!!.startsWith("/ by zero"))
+    }
+
+    @Test
+    fun nestedSequences() {
+        val (program, _) = ASTBuilder.parseText("out map({1,10}, c -> reduce({1,c}, 0, a b -> a+b))")
+        program!!
+
+        val participant = object : CountingParticipant() {
+            override fun output(statement: Statement, string: String) {
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertEquals("{1, 3, 6, …, 55}", string)
+            }
+
+            override fun statementExecuting(statement: Statement) {
+                super.statementExecuting(statement)
+                Assert.assertEquals(1, statementCounter)
+                Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
+            }
+        }
+        val interpreter = StatementInterpreter(participant)
+        val errors = mutableListOf<SQLangError>()
+        interpreter.execute(program, errors)
+
+        Assert.assertEquals(1, participant.statementCounter)
+        Assert.assertEquals(0, errors.count())
     }
 }
