@@ -371,7 +371,7 @@ class InterpreterTests {
 
     @Test(expected = ArithmeticException::class)
     fun arithmeticError() {
-        val (program, errors) = ASTBuilder.parseText("out 1/0")
+        val (program, _) = ASTBuilder.parseText("out 1/0")
         program!!
 
         val participant = object : CountingParticipant() {
