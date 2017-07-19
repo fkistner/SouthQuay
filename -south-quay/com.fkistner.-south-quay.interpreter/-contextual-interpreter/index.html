@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ContextualInterpreter - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter</a>&nbsp;/&nbsp;<a href=".">ContextualInterpreter</a><br/>
+<br/>
+<h1>ContextualInterpreter</h1>
+<code><span class="keyword">interface </span><span class="identifier">ContextualInterpreter</span></code>
+<p>Interface for an interpreter implementation that is dependent on the execution context.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="context.html">context</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="../-execution-context/index.html"><span class="identifier">ExecutionContext</span></a></code>
+<p>Current execution context.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-expression-interpreter/index.html">ExpressionInterpreter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExpressionInterpreter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier">ContextualInterpreter</span></code>
+<p>Evaluates expressions by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-statement-interpreter/index.html">StatementInterpreter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StatementInterpreter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier">ContextualInterpreter</span></code>
+<p>Evaluates program statements by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.fkistner.SouthQuay.grammar - SouthQuay</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href=".">com.fkistner.SouthQuay.grammar</a><br/>
+<br/>
+<h2>Package com.fkistner.SouthQuay.grammar</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-s-q-lang-base-visitor/index.html">SQLangBaseVisitor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SQLangBaseVisitor</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractParseTreeVisitor</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="-s-q-lang-visitor/index.html"><span class="identifier">SQLangVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>This class provides an empty implementation of SQLangVisitor, which can be extended to create a visitor which only needs to handle a subset of the available methods.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-q-lang-lexer/index.html">SQLangLexer</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SQLangLexer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Lexer</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-q-lang-parser/index.html">SQLangParser</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SQLangParser</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Parser</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-q-lang-visitor/index.html">SQLangVisitor</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">SQLangVisitor</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ParseTreeVisitor</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>This interface defines a complete generic visitor for a parse tree produced by SQLangParser.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

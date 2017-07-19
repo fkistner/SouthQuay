@@ -1,0 +1,160 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Expression - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">Expression</a><br/>
+<br/>
+<h1>Expression</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Expression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a></code>
+<p>Super class of all expression nodes.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">type</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Type the expression evaluates to.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a><span class="symbol">&gt;</span></code>
+<p>List of child AST nodes, by default empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/span.html">span</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">span</span><span class="symbol">: </span><a href="../-span/index.html"><span class="identifier">Span</span></a></code>
+<p>Source span node was created from.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/accept.html">accept</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">accept</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$accept(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.accept.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Accepts an AST visitor, initiates visitation, and returns provided value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/accept-children.html">acceptChildren</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">acceptChildren</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$acceptChildren(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.acceptChildren.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Accepts an AST visitor for all children.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$endVisit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.endVisit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Dispatches end of visit notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$visit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.visit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Dispatches visitation with concrete type, and returns provided value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-binary-operation/index.html">BinaryOperation</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">BinaryOperation</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Super class of all binary operation expressions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-function-invoc/index.html">FunctionInvoc</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">FunctionInvoc</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Function invocation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-integer-literal/index.html">IntegerLiteral</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">IntegerLiteral</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Integer literal expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-lambda/index.html">Lambda</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Lambda</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Lambda function expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-real-literal/index.html">RealLiteral</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RealLiteral</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Real literal expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-sequence/index.html">Sequence</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sequence</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Sequence literal expression representing an inclusive number sequence.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-variable-ref/index.html">VariableRef</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VariableRef</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Expression</span></code>
+<p>Variable reference expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>VariableRef - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">VariableRef</a><br/>
+<br/>
+<h1>VariableRef</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VariableRef</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Variable reference expression.</p>
+<p><code>x</code></p>
+<h3>Parameters</h3>
+<p><a name="identifier"></a>
+<code>identifier</code> - Identifier of the variable</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">VariableRef</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VariableRef$<init>(kotlin.String, com.fkistner.SouthQuay.parser.VarDeclaration)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.VariableRef$<init>(kotlin.String, com.fkistner.SouthQuay.parser.VarDeclaration)/declaration">declaration</span><span class="symbol">:</span>&nbsp;<a href="../-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">?</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">VariableRef</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VariableRef$<init>(kotlin.String)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code>
+<p>Variable reference expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="declaration.html">declaration</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">declaration</span><span class="symbol">: </span><a href="../-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">?</span></code>
+<p>Variable declaration this reference refers to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="identifier.html">identifier</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">identifier</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">type</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Type the expression evaluates to.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VariableRef$endVisit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.VariableRef.endVisit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Dispatches end of visit notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VariableRef$visit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.VariableRef.visit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Dispatches visitation with concrete type, and returns provided value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

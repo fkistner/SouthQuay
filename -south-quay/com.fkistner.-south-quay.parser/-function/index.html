@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Function - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">Function</a><br/>
+<br/>
+<h1>Function</h1>
+<code><span class="keyword">interface </span><span class="identifier">Function</span></code>
+<p>Interface function implementation that provides information to the type system.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="resolve.html">resolve</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">resolve</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Function$resolve(com.fkistner.SouthQuay.parser.FunctionInvoc)/invocation">invocation</span><span class="symbol">:</span>&nbsp;<a href="../-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Determine type the function invocation resolves to based on its arguments.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="verify.html">verify</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">verify</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Function$verify(kotlin.collections.List((com.fkistner.SouthQuay.parser.Type)))/argumentTypes">argumentTypes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-type/index.html"><span class="identifier">Type</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Verifies that the types of the arguments match the function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.interpreter.functions/-typed-invocable-function/index.html">TypedInvocableFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">TypedInvocableFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.interpreter.functions/-invocable-function.html"><span class="identifier">InvocableFunction</span></a><span class="symbol">, </span><span class="identifier">Function</span></code>
+<p>Interface for a function that can be invoked with its call site and a list of parameters,
+and can provide type information and its signature.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

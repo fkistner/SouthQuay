@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CompletionProposalGenerator.getTokenCompletion - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.UI</a>&nbsp;/&nbsp;<a href="index.html">CompletionProposalGenerator</a>&nbsp;/&nbsp;<a href=".">getTokenCompletion</a><br/>
+<br/>
+<h1>getTokenCompletion</h1>
+<a name="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">getTokenCompletion</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/program">program</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-program/index.html"><span class="identifier">Program</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/ruleContext">ruleContext</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParserRuleContext</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/caretPosition">caretPosition</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">&lt;</span><span class="identifier">BasicCompletion</span><span class="symbol">&gt;</span></code>
+<p>Creates completions for the expected parser <a href="get-token-completion.html#com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/token">token</a>.</p>
+<h3>Parameters</h3>
+<p><a name="program"></a>
+<code>program</code> - The partial abstract syntax tree recovered from the source up to the <a href="get-token-completion.html#com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/caretPosition">caretPosition</a></p>
+<p><a name="ruleContext"></a>
+<code>ruleContext</code> - Current rule context of the parser</p>
+<p><a name="caretPosition"></a>
+<code>caretPosition</code> - Position of the user's caret</p>
+<p><a name="token"></a>
+<code>token</code> - Token expected to succeed the caret</p>
+<p><strong>Return</strong><br/>
+Sequence of completions for valid identifiers at this point</p>
+</BODY>
+</HTML>

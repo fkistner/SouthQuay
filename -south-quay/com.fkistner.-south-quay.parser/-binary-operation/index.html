@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BinaryOperation - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">BinaryOperation</a><br/>
+<br/>
+<h1>BinaryOperation</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">BinaryOperation</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Super class of all binary operation expressions.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">&gt;</span></code>
+<p>List of child AST nodes, by default empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="left.html">left</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">left</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Left operand</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="right.html">right</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">right</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Right operand</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">type</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Type the expression evaluates to.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="resolve.html">resolve</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">resolve</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.BinaryOperation$resolve(com.fkistner.SouthQuay.parser.Expression, com.fkistner.SouthQuay.parser.Expression)/left">left</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.BinaryOperation$resolve(com.fkistner.SouthQuay.parser.Expression, com.fkistner.SouthQuay.parser.Expression)/right">right</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Resolves the type the binary operation evaluates to.
+If one of the operands is of <a href="../-type/-real/index.html">Type.Real</a>, <a href="../-type/-integer/index.html">Type.Integer</a> to <a href="../-type/-real/index.html">Type.Real</a> promotion will be applied.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-div/index.html">Div</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Div</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BinaryOperation</span></code>
+<p>Divide binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-mul/index.html">Mul</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Mul</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BinaryOperation</span></code>
+<p>Multiply binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-pow/index.html">Pow</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Pow</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BinaryOperation</span></code>
+<p>Power binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-sub/index.html">Sub</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sub</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BinaryOperation</span></code>
+<p>Subtract binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-sum/index.html">Sum</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sum</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BinaryOperation</span></code>
+<p>Sum binary operation expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

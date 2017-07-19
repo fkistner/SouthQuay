@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ExecutionParticipant - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter</a>&nbsp;/&nbsp;<a href=".">ExecutionParticipant</a><br/>
+<br/>
+<h1>ExecutionParticipant</h1>
+<code><span class="keyword">interface </span><span class="identifier">ExecutionParticipant</span></code>
+<p>Interface for an observer that participates in the script execution.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="error.html">error</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">error</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$error(kotlin.collections.List((com.fkistner.SouthQuay.parser.SQLangError)))/errors">errors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.fkistner.-south-quay.parser/-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about new errors encountered during parsing or execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="exception.html">exception</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">exception</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$exception(kotlin.Throwable)/throwable">throwable</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html"><span class="identifier">Throwable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about an unexpected, fatal exception.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="new-value.html">newValue</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">newValue</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$newValue(com.fkistner.SouthQuay.parser.VarDeclaration, kotlin.Any)/declaration">declaration</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$newValue(com.fkistner.SouthQuay.parser.VarDeclaration, kotlin.Any)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about a new active value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="output.html">output</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">output</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$output(com.fkistner.SouthQuay.parser.Statement, kotlin.String)/statement">statement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-statement.html"><span class="identifier">Statement</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$output(com.fkistner.SouthQuay.parser.Statement, kotlin.String)/string">string</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about script output.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="parse-time-diagnostics.html">parseTimeDiagnostics</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">parseTimeDiagnostics</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$parseTimeDiagnostics(kotlin.Double)/parseTime">parseTime</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about elapsed time during parsing.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="runtime-diagnostics.html">runtimeDiagnostics</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">runtimeDiagnostics</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$runtimeDiagnostics(kotlin.Double)/runtime">runtime</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about elapsed time during execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="statement-executing.html">statementExecuting</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">statementExecuting</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExecutionParticipant$statementExecuting(com.fkistner.SouthQuay.parser.Statement)/statement">statement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-statement.html"><span class="identifier">Statement</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies about start of statement execution.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

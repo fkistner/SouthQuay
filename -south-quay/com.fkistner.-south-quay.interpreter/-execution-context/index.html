@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ExecutionContext - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter</a>&nbsp;/&nbsp;<a href=".">ExecutionContext</a><br/>
+<br/>
+<h1>ExecutionContext</h1>
+<code><span class="keyword">class </span><span class="identifier">ExecutionContext</span></code>
+<p>Context that holds all active values and error information.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ExecutionContext</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Context that holds all active values and error information.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="active-values.html">activeValues</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">activeValues</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="../../com.fkistner.-south-quay.parser/-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Values that have been stored by variable declarations or parameter instantiations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="runtime-error.html">runtimeError</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">runtimeError</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.parser/-runtime-error/index.html"><span class="identifier">RuntimeError</span></a><span class="symbol">?</span></code>
+<p>Runtime errors that has occurred during execution.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

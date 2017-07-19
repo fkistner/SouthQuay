@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.fkistner.SouthQuay.UI - SouthQuay</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href=".">com.fkistner.SouthQuay.UI</a><br/>
+<br/>
+<h2>Package com.fkistner.SouthQuay.UI</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-background-executor/index.html">BackgroundExecutor</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BackgroundExecutor</span></code>
+<p>Provides background execution of the interpreter using a worker thread.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-completion-proposal-generator/index.html">CompletionProposalGenerator</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">CompletionProposalGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">DefaultCompletionProvider</span></code>
+<p>Generates auto completion proposals based on parser state at the caret position and correctly parsed statements
+to be displayed in the UI by an <a href="#">AutoCompletion</a> controller.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-dialogs/index.html">Dialogs</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Dialogs</span></code>
+<p>Controller for displaying file open/save dialogs and asking about unsaved changes in files.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-editor/index.html">Editor</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Editor</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-editor-base/index.html"><span class="identifier">EditorBase</span></a><span class="symbol">, </span><a href="../com.fkistner.-south-quay.document/-document-model-listener/index.html"><span class="identifier">DocumentModelListener</span></a><span class="symbol">, </span><a href="-menu-listener/index.html"><span class="identifier">MenuListener</span></a></code>
+<p>Main editor view controller that manages editing and execution of a script document.
+Connects all functionality to the UI.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-editor-base/index.html">EditorBase</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">EditorBase</span></code>
+<p>UI builder designed super class of the Editor controller.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-execution-control/index.html">ExecutionControl</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExecutionControl</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-execution-state/index.html"><span class="identifier">ExecutionState</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span></code>
+<p>State machine for the script execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-execution-state/index.html">ExecutionState</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ExecutionState</span><span class="symbol">&lt;</span><span class="keyword">out</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Interface for an implementation that reacts and potentially responds to script execution requests/stimuli.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-menu/index.html">Menu</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">Menu</span></code>
+<p>Creator of the menu bar of the script editor.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-menu-listener/index.html">MenuListener</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">MenuListener</span></code>
+<p>Listener for file menu actions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-non-resizing-scroll-pane/index.html">NonResizingScrollPane</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">NonResizingScrollPane</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/JScrollPane.html"><span class="identifier">JScrollPane</span></a></code>
+<p>Scroll pane which does adjust its preferred size according to its children.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-output-editor-kit/index.html">OutputEditorKit</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">OutputEditorKit</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/text/StyledEditorKit.html"><span class="identifier">StyledEditorKit</span></a></code>
+<p>Provides customization of the <a href="#">Editor.outputTextPane</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-parser-adapter/index.html">ParserAdapter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ParserAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractParser</span></code>
+<p>Provides code validation for <a href="#">RSyntaxDocument</a>s to be display in the code editor.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-syntax-colors/index.html">SyntaxColors</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">SyntaxColors</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SyntaxScheme</span></code>
+<p>Syntax scheme for South Quay and color provider.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-syntax-token-adapter/index.html">SyntaxTokenAdapter</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">SyntaxTokenAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">TokenMakerBase</span></code>
+<p>Provides tokenization for syntax highlighting in the code editor.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

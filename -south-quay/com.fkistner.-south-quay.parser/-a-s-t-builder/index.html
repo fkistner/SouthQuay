@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ASTBuilder - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">ASTBuilder</a><br/>
+<br/>
+<h1>ASTBuilder</h1>
+<code><span class="keyword">object </span><span class="identifier">ASTBuilder</span></code>
+<p>Provides a facade for the parsing of the program text into the abstract syntax tree.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="parse-stream.html">parseStream</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">parseStream</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTBuilder$parseStream(org.antlr.v4.runtime.CharStream, kotlin.collections.MutableList((com.fkistner.SouthQuay.parser.SQLangError)))/charStream">charStream</span><span class="symbol">:</span>&nbsp;<span class="identifier">CharStream</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTBuilder$parseStream(org.antlr.v4.runtime.CharStream, kotlin.collections.MutableList((com.fkistner.SouthQuay.parser.SQLangError)))/errorContainer">errorContainer</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-program/index.html"><span class="identifier">Program</span></a><span class="symbol">?</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">parseStream</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTBuilder$parseStream(org.antlr.v4.runtime.CharStream)/charStream">charStream</span><span class="symbol">:</span>&nbsp;<span class="identifier">CharStream</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../-program/index.html"><span class="identifier">Program</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Parses the program and provides information about parsing errors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="parse-text.html">parseText</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">parseText</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTBuilder$parseText(kotlin.String)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../-program/index.html"><span class="identifier">Program</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Parses the program and provides information about parsing errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

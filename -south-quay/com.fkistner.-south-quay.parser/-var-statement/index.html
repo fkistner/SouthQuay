@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>VarStatement - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">VarStatement</a><br/>
+<br/>
+<h1>VarStatement</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VarStatement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-statement.html"><span class="identifier">Statement</span></a></code>
+<p>Var statement.</p>
+<p><code>var identifier = </code><em><code>&lt;expression&gt;</code></em></p>
+<h3>Parameters</h3>
+<p><a name="stringLiteral"></a>
+<code>stringLiteral</code> - String literal</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">VarStatement</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarStatement$<init>(com.fkistner.SouthQuay.parser.VarDeclaration, com.fkistner.SouthQuay.parser.Expression)/declaration">declaration</span><span class="symbol">:</span>&nbsp;<a href="../-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarStatement$<init>(com.fkistner.SouthQuay.parser.VarDeclaration, com.fkistner.SouthQuay.parser.Expression)/expression">expression</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">)</span></code>
+<p>Var statement.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a><span class="symbol">&gt;</span></code>
+<p>List of child AST nodes, by default empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="declaration.html">declaration</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">declaration</span><span class="symbol">: </span><a href="../-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="expression.html">expression</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">expression</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarStatement$endVisit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.VarStatement.endVisit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Dispatches end of visit notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarStatement$visit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.VarStatement.visit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Dispatches visitation with concrete type, and returns provided value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

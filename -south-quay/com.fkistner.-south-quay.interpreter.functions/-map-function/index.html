@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MapFunction - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter.functions</a>&nbsp;/&nbsp;<a href=".">MapFunction</a><br/>
+<br/>
+<h1>MapFunction</h1>
+<code><span class="keyword">object </span><span class="identifier">MapFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-typed-invocable-function/index.html"><span class="identifier">TypedInvocableFunction</span></a></code>
+<p>Implementation of the <code>map</code> function, that allows applying a lambda function to the values of a sequence.</p>
+<p><code>map({1, 10}, i -&gt; i*i)</code></p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="signature.html">signature</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">signature</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.parser/-function-signature/index.html"><span class="identifier">FunctionSignature</span></a></code>
+<p>Signature of the function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="invoke.html">invoke</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">invoke</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.functions.MapFunction$invoke(com.fkistner.SouthQuay.parser.FunctionInvoc, kotlin.collections.List((kotlin.Any)))/invocation">invocation</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.functions.MapFunction$invoke(com.fkistner.SouthQuay.parser.FunctionInvoc, kotlin.collections.List((kotlin.Any)))/args">args</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="resolve.html">resolve</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">resolve</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.functions.MapFunction$resolve(com.fkistner.SouthQuay.parser.FunctionInvoc)/invocation">invocation</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.parser/-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Determine type the function invocation resolves to based on its arguments.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="verify.html">verify</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">verify</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.functions.MapFunction$verify(kotlin.collections.List((com.fkistner.SouthQuay.parser.Type)))/argumentTypes">argumentTypes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.fkistner.-south-quay.parser/-type/index.html"><span class="identifier">Type</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Verifies that the types of the arguments match the function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:com.fkistner.SouthQuay.document$fileName#java.net.URLcom.fkistner.-south-quay.document/java.net.-u-r-l/file-name.html
+$dokka.location:com.fkistner.SouthQuay.document$text#javax.swing.text.PlainDocumentcom.fkistner.-south-quay.document/javax.swing.text.-plain-document/text.html
+$dokka.location:com.fkistner.SouthQuay.interpreter.values$last#java.util.stream.BaseStream((com.fkistner.SouthQuay.interpreter.values.last.T, com.fkistner.SouthQuay.interpreter.values.last.S))com.fkistner.-south-quay.interpreter.values/java.util.stream.-base-stream/last.html
+$dokka.location:com.fkistner.SouthQuay.parser$toSpan(kotlin.Pair((org.antlr.v4.runtime.Token, )))com.fkistner.-south-quay.parser/kotlin.-pair/to-span.html
+$dokka.location:com.fkistner.SouthQuay.parser$toSpan(org.antlr.v4.runtime.ParserRuleContext)com.fkistner.-south-quay.parser/org.antlr.v4.runtime.-parser-rule-context/to-span.html
+$dokka.location:com.fkistner.SouthQuay.parser$toSpan(org.antlr.v4.runtime.Token)com.fkistner.-south-quay.parser/org.antlr.v4.runtime.-token/to-span.html
+com.fkistner.SouthQuay
+com.fkistner.SouthQuay.UI
+com.fkistner.SouthQuay.document
+com.fkistner.SouthQuay.grammar
+com.fkistner.SouthQuay.interpreter
+com.fkistner.SouthQuay.interpreter.functions
+com.fkistner.SouthQuay.interpreter.values
+com.fkistner.SouthQuay.parser

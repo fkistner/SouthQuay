@@ -1,0 +1,374 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.fkistner.SouthQuay.parser - SouthQuay</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href=".">com.fkistner.SouthQuay.parser</a><br/>
+<br/>
+<h2>Package com.fkistner.SouthQuay.parser</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-a-s-t-builder/index.html">ASTBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">ASTBuilder</span></code>
+<p>Provides a facade for the parsing of the program text into the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-a-s-t-node/index.html">ASTNode</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ASTNode</span></code>
+<p>Abstract syntax tree node.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-a-s-t-verifier/index.html">ASTVerifier</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ASTVerifier</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span></code>
+<p>Checks for type errors and records them in the error container of the <a href="-a-s-t-verifier/scope.html">scope</a> by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-a-s-t-visitor/index.html">ASTVisitor</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ASTVisitor</span><span class="symbol">&lt;</span><span class="keyword">out</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Interface for visitors of the abstract syntax tree. Implementations may return and thereby pass back values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-binary-operation/index.html">BinaryOperation</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">BinaryOperation</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Super class of all binary operation expressions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-div/index.html">Div</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Div</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code>
+<p>Divide binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-expression/index.html">Expression</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Expression</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a></code>
+<p>Super class of all expression nodes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-expression-a-s-t-builder/index.html">ExpressionASTBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExpressionASTBuilder</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/index.html"><span class="identifier">SQLangBaseVisitor</span></a><span class="symbol">&lt;</span><a href="-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">&gt;</span></code>
+<p>Recursively translates expression parser rules to <a href="-expression/index.html">Expression</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-function/index.html">Function</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Function</span></code>
+<p>Interface function implementation that provides information to the type system.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-function-invoc/index.html">FunctionInvoc</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">FunctionInvoc</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Function invocation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-function-signature/index.html">FunctionSignature</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">FunctionSignature</span></code>
+<p>Function signature used to resolve function invocation targets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-integer-literal/index.html">IntegerLiteral</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">IntegerLiteral</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Integer literal expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-lambda/index.html">Lambda</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Lambda</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Lambda function expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-mul/index.html">Mul</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Mul</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code>
+<p>Multiply binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-out-statement/index.html">OutStatement</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">OutStatement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-statement.html"><span class="identifier">Statement</span></a></code>
+<p>Out statement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-position/index.html">Position</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Position</span></code>
+<p>Position in source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-pow/index.html">Pow</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Pow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code>
+<p>Power binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-print-statement/index.html">PrintStatement</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">PrintStatement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-statement.html"><span class="identifier">Statement</span></a></code>
+<p>Print statement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-program/index.html">Program</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Program</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a></code>
+<p>Root AST node presenting an entire program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-real-literal/index.html">RealLiteral</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RealLiteral</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Real literal expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-runtime-error/index.html">RuntimeError</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">RuntimeError</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a></code>
+<p>Error occurred during the Runtime of the program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-q-lang-error/index.html">SQLangError</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">SQLangError</span></code>
+<p>Super class for parsing, type, and runtime errors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-scope/index.html">Scope</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Scope</span></code>
+<p>Variable and function scope that determines visibility of identifiers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sequence/index.html">Sequence</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sequence</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Sequence literal expression representing an inclusive number sequence.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-span/index.html">Span</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Span</span></code>
+<p>Span of text in source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-statement.html">Statement</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Statement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a></code>
+<p>Super class of all statement nodes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-statement-a-s-t-builder/index.html">StatementASTBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StatementASTBuilder</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/index.html"><span class="identifier">SQLangBaseVisitor</span></a><span class="symbol">&lt;</span><a href="-statement.html"><span class="identifier">Statement</span></a><span class="symbol">&gt;</span></code>
+<p>Translates statement parser rules to <a href="-statement.html">Statement</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sub/index.html">Sub</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sub</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code>
+<p>Subtract binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sum/index.html">Sum</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sum</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code>
+<p>Sum binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-syntax-error/index.html">SyntaxError</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">SyntaxError</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a></code>
+<p>Error occurred during parsing of the program text.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-type/index.html">Type</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Type</span></code>
+<p>Super class for all types expression can resolve to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-type-error/index.html">TypeError</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">TypeError</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-s-q-lang-error/index.html"><span class="identifier">SQLangError</span></a></code>
+<p>Error occurred during the AST construction or AST verification of the program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-var-declaration/index.html">VarDeclaration</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VarDeclaration</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a></code>
+<p>Variable/parameter declaration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-var-statement/index.html">VarStatement</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VarStatement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-statement.html"><span class="identifier">Statement</span></a></code>
+<p>Var statement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-variable-ref/index.html">VariableRef</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VariableRef</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Variable reference expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extensions for External Classes</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="kotlin.-pair/index.html">kotlin.Pair</a></p>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="org.antlr.v4.runtime.-parser-rule-context/index.html">org.antlr.v4.runtime.ParserRuleContext</a></p>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="org.antlr.v4.runtime.-token/index.html">org.antlr.v4.runtime.Token</a></p>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="verify.html">verify</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-program/index.html"><span class="identifier">Program</span></a><span class="symbol">.</span><span class="identifier">verify</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Verifies the program abstract syntax tree using the <a href="-a-s-t-verifier/index.html">ASTVerifier</a>.</p>
+<code><span class="keyword">fun </span><a href="-lambda/index.html"><span class="identifier">Lambda</span></a><span class="symbol">.</span><span class="identifier">verify</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Verifies the lambda abstract syntax tree using the <a href="-a-s-t-verifier/index.html">ASTVerifier</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

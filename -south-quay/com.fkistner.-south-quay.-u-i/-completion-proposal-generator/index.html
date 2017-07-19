@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CompletionProposalGenerator - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.UI</a>&nbsp;/&nbsp;<a href=".">CompletionProposalGenerator</a><br/>
+<br/>
+<h1>CompletionProposalGenerator</h1>
+<code><span class="keyword">class </span><span class="identifier">CompletionProposalGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">DefaultCompletionProvider</span></code>
+<p>Generates auto completion proposals based on parser state at the caret position and correctly parsed statements
+to be displayed in the UI by an <a href="#">AutoCompletion</a> controller.</p>
+<p>Instances are not shared between editors.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-caret-aware-lexer/index.html">CaretAwareLexer</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">CaretAwareLexer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/index.html"><span class="identifier">SQLangLexer</span></a></code>
+<p>Special purpose lexer that inserts a special caret token to avoid matching EOF as valid token.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">CompletionProposalGenerator</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Generates auto completion proposals based on parser state at the caret position and correctly parsed statements
+to be displayed in the UI by an <a href="#">AutoCompletion</a> controller.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="function-completion.html">functionCompletion</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">functionCompletion</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$functionCompletion(org.fife.ui.autocomplete.CompletionProvider, com.fkistner.SouthQuay.parser.FunctionSignature)/completionProvider">completionProvider</span><span class="symbol">:</span>&nbsp;<span class="identifier">CompletionProvider</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$functionCompletion(org.fife.ui.autocomplete.CompletionProvider, com.fkistner.SouthQuay.parser.FunctionSignature)/signature">signature</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-function-signature/index.html"><span class="identifier">FunctionSignature</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">BasicCompletion</span></code>
+<p>Creates a completion model object for a invoking a function.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-completions-impl.html">getCompletionsImpl</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getCompletionsImpl</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getCompletionsImpl(javax.swing.text.JTextComponent)/comp">comp</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/text/JTextComponent.html"><span class="identifier">JTextComponent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><span class="identifier">Completion</span><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-identifier-completion.html">getIdentifierCompletion</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getIdentifierCompletion</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getIdentifierCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int)/program">program</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-program/index.html"><span class="identifier">Program</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getIdentifierCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int)/ruleContext">ruleContext</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParserRuleContext</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getIdentifierCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int)/caretPosition">caretPosition</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">&lt;</span><span class="identifier">BasicCompletion</span><span class="symbol">&gt;</span></code>
+<p>Determines which variables and functions can be referenced at the current position and creates corresponding completions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-token-completion.html">getTokenCompletion</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getTokenCompletion</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/program">program</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-program/index.html"><span class="identifier">Program</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/ruleContext">ruleContext</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParserRuleContext</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/caretPosition">caretPosition</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">&lt;</span><span class="identifier">BasicCompletion</span><span class="symbol">&gt;</span></code>
+<p>Creates completions for the expected parser <a href="get-token-completion.html#com.fkistner.SouthQuay.UI.CompletionProposalGenerator$getTokenCompletion(com.fkistner.SouthQuay.parser.Program, org.antlr.v4.runtime.ParserRuleContext, kotlin.Int, kotlin.Int)/token">token</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="variable-completion.html">variableCompletion</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">variableCompletion</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$variableCompletion(org.fife.ui.autocomplete.CompletionProvider, com.fkistner.SouthQuay.parser.VarDeclaration)/completionProvider">completionProvider</span><span class="symbol">:</span>&nbsp;<span class="identifier">CompletionProvider</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator$variableCompletion(org.fife.ui.autocomplete.CompletionProvider, com.fkistner.SouthQuay.parser.VarDeclaration)/declaration">declaration</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">BasicCompletion</span></code>
+<p>Creates a completion model object for a referencing a variable.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

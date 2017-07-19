@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>VarDeclaration - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">VarDeclaration</a><br/>
+<br/>
+<h1>VarDeclaration</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VarDeclaration</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a></code>
+<p>Variable/parameter declaration.</p>
+<p><code>var identifier</code> or <code>identifier -&gt;</code></p>
+<h3>Parameters</h3>
+<p><a name="identifier"></a>
+<code>identifier</code> - Identifier declared</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">VarDeclaration</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarDeclaration$<init>(kotlin.String, com.fkistner.SouthQuay.parser.Type)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarDeclaration$<init>(kotlin.String, com.fkistner.SouthQuay.parser.Type)/type">type</span><span class="symbol">:</span>&nbsp;<a href="../-type/index.html"><span class="identifier">Type</span></a><span class="symbol">)</span></code><br/>
+<code><span class="identifier">VarDeclaration</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarDeclaration$<init>(kotlin.String)/identifier">identifier</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code>
+<p>Variable/parameter declaration.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="identifier.html">identifier</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">identifier</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">type</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Type of the variable/parameter</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-a-s-t-node/index.html"><span class="identifier">ASTNode</span></a><span class="symbol">&gt;</span></code>
+<p>List of child AST nodes, by default empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/span.html">span</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">span</span><span class="symbol">: </span><a href="../-span/index.html"><span class="identifier">Span</span></a></code>
+<p>Source span node was created from.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarDeclaration$endVisit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.VarDeclaration.endVisit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Dispatches end of visit notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.VarDeclaration$visit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.VarDeclaration.visit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Dispatches visitation with concrete type, and returns provided value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/accept.html">accept</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">accept</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$accept(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.accept.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Accepts an AST visitor, initiates visitation, and returns provided value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-a-s-t-node/accept-children.html">acceptChildren</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">acceptChildren</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$acceptChildren(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.acceptChildren.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Accepts an AST visitor for all children.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

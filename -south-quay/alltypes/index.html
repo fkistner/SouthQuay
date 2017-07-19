@@ -1,0 +1,541 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>alltypes - SouthQuay</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<h3>All Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-a-s-t-builder/index.html">com.fkistner.SouthQuay.parser.ASTBuilder</a></td>
+<td>
+<p>Provides a facade for the parsing of the program text into the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-a-s-t-node/index.html">com.fkistner.SouthQuay.parser.ASTNode</a></td>
+<td>
+<p>Abstract syntax tree node.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-a-s-t-verifier/index.html">com.fkistner.SouthQuay.parser.ASTVerifier</a></td>
+<td>
+<p>Checks for type errors and records them in the error container of the <a href="../com.fkistner.-south-quay.parser/-a-s-t-verifier/scope.html">scope</a> by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-a-s-t-visitor/index.html">com.fkistner.SouthQuay.parser.ASTVisitor</a></td>
+<td>
+<p>Interface for visitors of the abstract syntax tree. Implementations may return and thereby pass back values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.functions/-apply-function/index.html">com.fkistner.SouthQuay.interpreter.functions.ApplyFunction</a></td>
+<td>
+<p>Implementation of the <code>apply</code> function, that allows applying a lambda function to values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-background-executor/index.html">com.fkistner.SouthQuay.UI.BackgroundExecutor</a></td>
+<td>
+<p>Provides background execution of the interpreter using a worker thread.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.values/java.util.stream.-base-stream/index.html">java.util.stream.BaseStream</a> (extensions in package com.fkistner.SouthQuay.interpreter.values)</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-binary-operation/index.html">com.fkistner.SouthQuay.parser.BinaryOperation</a></td>
+<td>
+<p>Super class of all binary operation expressions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-completion-proposal-generator/index.html">com.fkistner.SouthQuay.UI.CompletionProposalGenerator</a></td>
+<td>
+<p>Generates auto completion proposals based on parser state at the caret position and correctly parsed statements
+to be displayed in the UI by an <a href="#">AutoCompletion</a> controller.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter/-contextual-interpreter/index.html">com.fkistner.SouthQuay.interpreter.ContextualInterpreter</a></td>
+<td>
+<p>Interface for an interpreter implementation that is dependent on the execution context.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-dialogs/index.html">com.fkistner.SouthQuay.UI.Dialogs</a></td>
+<td>
+<p>Controller for displaying file open/save dialogs and asking about unsaved changes in files.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-div/index.html">com.fkistner.SouthQuay.parser.Div</a></td>
+<td>
+<p>Divide binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.document/-document-model/index.html">com.fkistner.SouthQuay.document.DocumentModel</a></td>
+<td>
+<p>Model that manages the document state, such as the untitled numbering and whether the document buffer is dirty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.document/-document-model-listener/index.html">com.fkistner.SouthQuay.document.DocumentModelListener</a></td>
+<td>
+<p>Interface for listeners of document events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-editor/index.html">com.fkistner.SouthQuay.UI.Editor</a></td>
+<td>
+<p>Main editor view controller that manages editing and execution of a script document.
+Connects all functionality to the UI.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-editor-base/index.html">com.fkistner.SouthQuay.UI.EditorBase</a></td>
+<td>
+<p>UI builder designed super class of the Editor controller.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter/-execution-context/index.html">com.fkistner.SouthQuay.interpreter.ExecutionContext</a></td>
+<td>
+<p>Context that holds all active values and error information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-execution-control/index.html">com.fkistner.SouthQuay.UI.ExecutionControl</a></td>
+<td>
+<p>State machine for the script execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter/-execution-participant/index.html">com.fkistner.SouthQuay.interpreter.ExecutionParticipant</a></td>
+<td>
+<p>Interface for an observer that participates in the script execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-execution-state/index.html">com.fkistner.SouthQuay.UI.ExecutionState</a></td>
+<td>
+<p>Interface for an implementation that reacts and potentially responds to script execution requests/stimuli.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-expression/index.html">com.fkistner.SouthQuay.parser.Expression</a></td>
+<td>
+<p>Super class of all expression nodes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-expression-a-s-t-builder/index.html">com.fkistner.SouthQuay.parser.ExpressionASTBuilder</a></td>
+<td>
+<p>Recursively translates expression parser rules to <a href="../com.fkistner.-south-quay.parser/-expression/index.html">Expression</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter/-expression-interpreter/index.html">com.fkistner.SouthQuay.interpreter.ExpressionInterpreter</a></td>
+<td>
+<p>Evaluates expressions by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-function/index.html">com.fkistner.SouthQuay.parser.Function</a></td>
+<td>
+<p>Interface function implementation that provides information to the type system.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-function-invoc/index.html">com.fkistner.SouthQuay.parser.FunctionInvoc</a></td>
+<td>
+<p>Function invocation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter/-function-registry/index.html">com.fkistner.SouthQuay.interpreter.FunctionRegistry</a></td>
+<td>
+<p>Registry for all invocable functions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-function-signature/index.html">com.fkistner.SouthQuay.parser.FunctionSignature</a></td>
+<td>
+<p>Function signature used to resolve function invocation targets.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.values/-int-sequence-value/index.html">com.fkistner.SouthQuay.interpreter.values.IntSequenceValue</a></td>
+<td>
+<p>Integer sequence value container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-integer-literal/index.html">com.fkistner.SouthQuay.parser.IntegerLiteral</a></td>
+<td>
+<p>Integer literal expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.functions/-invocable-function.html">com.fkistner.SouthQuay.interpreter.functions.InvocableFunction</a></td>
+<td>
+<p>Interface for a function that can be invoked with its call site and a list of parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.functions/-invocable-lambda.html">com.fkistner.SouthQuay.interpreter.functions.InvocableLambda</a></td>
+<td>
+<p>Interface for a lambda that can be invoked with a list of parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-lambda/index.html">com.fkistner.SouthQuay.parser.Lambda</a></td>
+<td>
+<p>Lambda function expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.functions/-map-function/index.html">com.fkistner.SouthQuay.interpreter.functions.MapFunction</a></td>
+<td>
+<p>Implementation of the <code>map</code> function, that allows applying a lambda function to the values of a sequence.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-menu/index.html">com.fkistner.SouthQuay.UI.Menu</a></td>
+<td>
+<p>Creator of the menu bar of the script editor.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-menu-listener/index.html">com.fkistner.SouthQuay.UI.MenuListener</a></td>
+<td>
+<p>Listener for file menu actions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-mul/index.html">com.fkistner.SouthQuay.parser.Mul</a></td>
+<td>
+<p>Multiply binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-non-resizing-scroll-pane/index.html">com.fkistner.SouthQuay.UI.NonResizingScrollPane</a></td>
+<td>
+<p>Scroll pane which does adjust its preferred size according to its children.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-out-statement/index.html">com.fkistner.SouthQuay.parser.OutStatement</a></td>
+<td>
+<p>Out statement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-output-editor-kit/index.html">com.fkistner.SouthQuay.UI.OutputEditorKit</a></td>
+<td>
+<p>Provides customization of the <a href="#">Editor.outputTextPane</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/kotlin.-pair/index.html">kotlin.Pair</a> (extensions in package com.fkistner.SouthQuay.parser)</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-parser-adapter/index.html">com.fkistner.SouthQuay.UI.ParserAdapter</a></td>
+<td>
+<p>Provides code validation for <a href="#">RSyntaxDocument</a>s to be display in the code editor.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/org.antlr.v4.runtime.-parser-rule-context/index.html">org.antlr.v4.runtime.ParserRuleContext</a> (extensions in package com.fkistner.SouthQuay.parser)</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.document/javax.swing.text.-plain-document/index.html">javax.swing.text.PlainDocument</a> (extensions in package com.fkistner.SouthQuay.document)</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-position/index.html">com.fkistner.SouthQuay.parser.Position</a></td>
+<td>
+<p>Position in source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-pow/index.html">com.fkistner.SouthQuay.parser.Pow</a></td>
+<td>
+<p>Power binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-print-statement/index.html">com.fkistner.SouthQuay.parser.PrintStatement</a></td>
+<td>
+<p>Print statement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-program/index.html">com.fkistner.SouthQuay.parser.Program</a></td>
+<td>
+<p>Root AST node presenting an entire program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-real-literal/index.html">com.fkistner.SouthQuay.parser.RealLiteral</a></td>
+<td>
+<p>Real literal expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.values/-real-sequence-value/index.html">com.fkistner.SouthQuay.interpreter.values.RealSequenceValue</a></td>
+<td>
+<p>Real sequence value container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.functions/-reduce-function/index.html">com.fkistner.SouthQuay.interpreter.functions.ReduceFunction</a></td>
+<td>
+<p>Implementation of the <code>reduce</code> function, that allows recursively combining values of a sequence using a lambda function.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-runtime-error/index.html">com.fkistner.SouthQuay.parser.RuntimeError</a></td>
+<td>
+<p>Error occurred during the Runtime of the program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/index.html">com.fkistner.SouthQuay.grammar.SQLangBaseVisitor</a></td>
+<td>
+<p>This class provides an empty implementation of SQLangVisitor, which can be extended to create a visitor which only needs to handle a subset of the available methods.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-s-q-lang-error/index.html">com.fkistner.SouthQuay.parser.SQLangError</a></td>
+<td>
+<p>Super class for parsing, type, and runtime errors.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/index.html">com.fkistner.SouthQuay.grammar.SQLangLexer</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.grammar/-s-q-lang-parser/index.html">com.fkistner.SouthQuay.grammar.SQLangParser</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.grammar/-s-q-lang-visitor/index.html">com.fkistner.SouthQuay.grammar.SQLangVisitor</a></td>
+<td>
+<p>This interface defines a complete generic visitor for a parse tree produced by SQLangParser.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-scope/index.html">com.fkistner.SouthQuay.parser.Scope</a></td>
+<td>
+<p>Variable and function scope that determines visibility of identifiers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-sequence/index.html">com.fkistner.SouthQuay.parser.Sequence</a></td>
+<td>
+<p>Sequence literal expression representing an inclusive number sequence.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.values/-sequence-value/index.html">com.fkistner.SouthQuay.interpreter.values.SequenceValue</a></td>
+<td>
+<p>Super class for all sequence value containers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-span/index.html">com.fkistner.SouthQuay.parser.Span</a></td>
+<td>
+<p>Span of text in source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-statement.html">com.fkistner.SouthQuay.parser.Statement</a></td>
+<td>
+<p>Super class of all statement nodes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-statement-a-s-t-builder/index.html">com.fkistner.SouthQuay.parser.StatementASTBuilder</a></td>
+<td>
+<p>Translates statement parser rules to <a href="../com.fkistner.-south-quay.parser/-statement.html">Statement</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter/-statement-interpreter/index.html">com.fkistner.SouthQuay.interpreter.StatementInterpreter</a></td>
+<td>
+<p>Evaluates program statements by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-sub/index.html">com.fkistner.SouthQuay.parser.Sub</a></td>
+<td>
+<p>Subtract binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-sum/index.html">com.fkistner.SouthQuay.parser.Sum</a></td>
+<td>
+<p>Sum binary operation expression.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-syntax-colors/index.html">com.fkistner.SouthQuay.UI.SyntaxColors</a></td>
+<td>
+<p>Syntax scheme for South Quay and color provider.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-syntax-error/index.html">com.fkistner.SouthQuay.parser.SyntaxError</a></td>
+<td>
+<p>Error occurred during parsing of the program text.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.-u-i/-syntax-token-adapter/index.html">com.fkistner.SouthQuay.UI.SyntaxTokenAdapter</a></td>
+<td>
+<p>Provides tokenization for syntax highlighting in the code editor.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/org.antlr.v4.runtime.-token/index.html">org.antlr.v4.runtime.Token</a> (extensions in package com.fkistner.SouthQuay.parser)</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-type/index.html">com.fkistner.SouthQuay.parser.Type</a></td>
+<td>
+<p>Super class for all types expression can resolve to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-type-error/index.html">com.fkistner.SouthQuay.parser.TypeError</a></td>
+<td>
+<p>Error occurred during the AST construction or AST verification of the program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.interpreter.functions/-typed-invocable-function/index.html">com.fkistner.SouthQuay.interpreter.functions.TypedInvocableFunction</a></td>
+<td>
+<p>Interface for a function that can be invoked with its call site and a list of parameters,
+and can provide type information and its signature.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.document/java.net.-u-r-l/index.html">java.net.URL</a> (extensions in package com.fkistner.SouthQuay.document)</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-var-declaration/index.html">com.fkistner.SouthQuay.parser.VarDeclaration</a></td>
+<td>
+<p>Variable/parameter declaration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-var-statement/index.html">com.fkistner.SouthQuay.parser.VarStatement</a></td>
+<td>
+<p>Var statement.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.fkistner.-south-quay.parser/-variable-ref/index.html">com.fkistner.SouthQuay.parser.VariableRef</a></td>
+<td>
+<p>Variable reference expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

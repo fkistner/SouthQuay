@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CompletionProposalGenerator.CaretAwareLexer - SouthQuay</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../../index.html">com.fkistner.SouthQuay.UI</a>&nbsp;/&nbsp;<a href="../index.html">CompletionProposalGenerator</a>&nbsp;/&nbsp;<a href=".">CaretAwareLexer</a><br/>
+<br/>
+<h1>CaretAwareLexer</h1>
+<code><span class="keyword">class </span><span class="identifier">CaretAwareLexer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/index.html"><span class="identifier">SQLangLexer</span></a></code>
+<p>Special purpose lexer that inserts a special caret token to avoid matching EOF as valid token.</p>
+<p>Necessary to get parser information if <a href="caret-position.html">caretPosition</a> is a statement boundary.</p>
+<h3>Parameters</h3>
+<p><a name="charStream"></a>
+<code>charStream</code> - Character stream of the program up until <a href="caret-position.html">caretPosition</a></p>
+<p><a name="caretPosition"></a>
+<code>caretPosition</code> - Position of the caret</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">CaretAwareLexer</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator.CaretAwareLexer$<init>(org.antlr.v4.runtime.CodePointCharStream, kotlin.Int)/charStream">charStream</span><span class="symbol">:</span>&nbsp;<span class="identifier">CodePointCharStream</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator.CaretAwareLexer$<init>(org.antlr.v4.runtime.CodePointCharStream, kotlin.Int)/caretPosition">caretPosition</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
+<p>Special purpose lexer that inserts a special caret token to avoid matching EOF as valid token.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="caret-position.html">caretPosition</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">caretPosition</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="eof-token.html">eofToken</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">eofToken</span><span class="symbol">: </span><span class="identifier">Token</span><span class="symbol">?</span></code>
+<p>Cache for EOF token while caret token is returned</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="next-token.html">nextToken</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">nextToken</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Token</span><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-a-t-n.html">getATN</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getATN</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ATN</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-channel-names.html">getChannelNames</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getChannelNames</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-grammar-file-name.html">getGrammarFileName</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getGrammarFileName</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-mode-names.html">getModeNames</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getModeNames</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-rule-names.html">getRuleNames</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getRuleNames</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-serialized-a-t-n.html">getSerializedATN</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getSerializedATN</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-token-names.html">getTokenNames</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><s><span class="identifier">getTokenNames</span></s><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/get-vocabulary.html">getVocabulary</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getVocabulary</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Vocabulary</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

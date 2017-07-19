@@ -1,0 +1,140 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ExpressionInterpreter - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter</a>&nbsp;/&nbsp;<a href=".">ExpressionInterpreter</a><br/>
+<br/>
+<h1>ExpressionInterpreter</h1>
+<code><span class="keyword">class </span><span class="identifier">ExpressionInterpreter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-contextual-interpreter/index.html"><span class="identifier">ContextualInterpreter</span></a></code>
+<p>Evaluates expressions by visiting the abstract syntax tree.</p>
+<h3>Parameters</h3>
+<p><a name="context"></a>
+<code>context</code> - Execution context tracking active values and error source</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ExpressionInterpreter</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$<init>(com.fkistner.SouthQuay.interpreter.ExecutionContext)/context">context</span><span class="symbol">:</span>&nbsp;<a href="../-execution-context/index.html"><span class="identifier">ExecutionContext</span></a><span class="symbol">)</span></code>
+<p>Evaluates expressions by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="context.html">context</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="../-execution-context/index.html"><span class="identifier">ExecutionContext</span></a></code>
+<p>Current execution context.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.IntegerLiteral)/integerLiteral">integerLiteral</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-integer-literal/index.html"><span class="identifier">IntegerLiteral</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Visits IntegerLiteral expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.RealLiteral)/realLiteral">realLiteral</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-real-literal/index.html"><span class="identifier">RealLiteral</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>Visits RealLiteral expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Sum)/sum">sum</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-sum/index.html"><span class="identifier">Sum</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-number/index.html"><span class="identifier">Number</span></a><span class="symbol">?</span></code>
+<p>Visits Sum expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Sub)/sub">sub</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-sub/index.html"><span class="identifier">Sub</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-number/index.html"><span class="identifier">Number</span></a><span class="symbol">?</span></code>
+<p>Visits Sub expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Mul)/mul">mul</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-mul/index.html"><span class="identifier">Mul</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-number/index.html"><span class="identifier">Number</span></a><span class="symbol">?</span></code>
+<p>Visits Mul expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Div)/div">div</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-div/index.html"><span class="identifier">Div</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-number/index.html"><span class="identifier">Number</span></a><span class="symbol">?</span></code>
+<p>Visits Div expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Pow)/pow">pow</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-pow/index.html"><span class="identifier">Pow</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-number/index.html"><span class="identifier">Number</span></a><span class="symbol">?</span></code>
+<p>Visits Pow expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Sequence)/sequence">sequence</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.interpreter.values/-sequence-value/index.html"><span class="identifier">SequenceValue</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-number/index.html"><span class="identifier">Number</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>Visits Sequence expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.VariableRef)/variableRef">variableRef</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-variable-ref/index.html"><span class="identifier">VariableRef</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span></code>
+<p>Visits VariableRef expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.FunctionInvoc)/functionInvoc">functionInvoc</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span></code>
+<p>Visits FunctionInvoc expression.</p>
+<code><span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.interpreter.ExpressionInterpreter$visit(com.fkistner.SouthQuay.parser.Lambda)/lambda">lambda</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-lambda/index.html"><span class="identifier">Lambda</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.interpreter.functions/-invocable-lambda.html"><span class="identifier">InvocableLambda</span></a></code>
+<p>Visits Lambda expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.parser/-a-s-t-visitor/end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.FunctionInvoc)/functionInvoc">functionInvoc</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of FunctionInvoc expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.VariableRef)/variableRef">variableRef</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-variable-ref/index.html"><span class="identifier">VariableRef</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of VariableRef expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Sum)/sum">sum</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-sum/index.html"><span class="identifier">Sum</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Sum expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Sequence)/sequence">sequence</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Sequence expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.VarDeclaration)/varDeclaration">varDeclaration</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of VarDeclaration visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Mul)/mul">mul</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-mul/index.html"><span class="identifier">Mul</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Mul expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Sub)/sub">sub</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-sub/index.html"><span class="identifier">Sub</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Sub expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.VarStatement)/varStatement">varStatement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-var-statement/index.html"><span class="identifier">VarStatement</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of VarStatement visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Pow)/pow">pow</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-pow/index.html"><span class="identifier">Pow</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Pow expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.OutStatement)/outStatement">outStatement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-out-statement/index.html"><span class="identifier">OutStatement</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of OutStatement visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.RealLiteral)/realLiteral">realLiteral</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-real-literal/index.html"><span class="identifier">RealLiteral</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of RealLiteral expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Program)/program">program</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-program/index.html"><span class="identifier">Program</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Program visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Div)/div">div</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-div/index.html"><span class="identifier">Div</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Div expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.Lambda)/lambda">lambda</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-lambda/index.html"><span class="identifier">Lambda</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of Lambda expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.IntegerLiteral)/integerLiteral">integerLiteral</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-integer-literal/index.html"><span class="identifier">IntegerLiteral</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of IntegerLiteral expression visit.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$endVisit(com.fkistner.SouthQuay.parser.PrintStatement)/printStatement">printStatement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-print-statement/index.html"><span class="identifier">PrintStatement</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Notifies of end of PrintStatement visit.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.parser/-a-s-t-visitor/visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$visit(com.fkistner.SouthQuay.parser.Program)/program">program</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-program/index.html"><span class="identifier">Program</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Visits Program expression.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$visit(com.fkistner.SouthQuay.parser.VarStatement)/varStatement">varStatement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-var-statement/index.html"><span class="identifier">VarStatement</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Visits VarStatement.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$visit(com.fkistner.SouthQuay.parser.VarDeclaration)/varDeclaration">varDeclaration</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-var-declaration/index.html"><span class="identifier">VarDeclaration</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Visits VarDeclaration.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$visit(com.fkistner.SouthQuay.parser.PrintStatement)/printStatement">printStatement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-print-statement/index.html"><span class="identifier">PrintStatement</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Visits PrintStatement.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTVisitor$visit(com.fkistner.SouthQuay.parser.OutStatement)/outStatement">outStatement</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-out-statement/index.html"><span class="identifier">OutStatement</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Visits OutStatement.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.fkistner.SouthQuay.interpreter - SouthQuay</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href=".">com.fkistner.SouthQuay.interpreter</a><br/>
+<br/>
+<h2>Package com.fkistner.SouthQuay.interpreter</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-contextual-interpreter/index.html">ContextualInterpreter</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ContextualInterpreter</span></code>
+<p>Interface for an interpreter implementation that is dependent on the execution context.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-execution-context/index.html">ExecutionContext</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExecutionContext</span></code>
+<p>Context that holds all active values and error information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-execution-participant/index.html">ExecutionParticipant</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ExecutionParticipant</span></code>
+<p>Interface for an observer that participates in the script execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-expression-interpreter/index.html">ExpressionInterpreter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExpressionInterpreter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.fkistner.-south-quay.parser/-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="-contextual-interpreter/index.html"><span class="identifier">ContextualInterpreter</span></a></code>
+<p>Evaluates expressions by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-function-registry/index.html">FunctionRegistry</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">FunctionRegistry</span></code>
+<p>Registry for all invocable functions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-statement-interpreter/index.html">StatementInterpreter</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StatementInterpreter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.fkistner.-south-quay.parser/-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="-contextual-interpreter/index.html"><span class="identifier">ContextualInterpreter</span></a></code>
+<p>Evaluates program statements by visiting the abstract syntax tree.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,167 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ExpressionASTBuilder - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">ExpressionASTBuilder</a><br/>
+<br/>
+<h1>ExpressionASTBuilder</h1>
+<code><span class="keyword">class </span><span class="identifier">ExpressionASTBuilder</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/index.html"><span class="identifier">SQLangBaseVisitor</span></a><span class="symbol">&lt;</span><a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">&gt;</span></code>
+<p>Recursively translates expression parser rules to <a href="../-expression/index.html">Expression</a>s by visiting the parse tree.</p>
+<h3>Parameters</h3>
+<p><a name="scope"></a>
+<code>scope</code> - Current visibility scope</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ExpressionASTBuilder</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$<init>(com.fkistner.SouthQuay.parser.Scope)/scope">scope</span><span class="symbol">:</span>&nbsp;<a href="../-scope/index.html"><span class="identifier">Scope</span></a><span class="symbol">)</span></code>
+<p>Recursively translates expression parser rules to <a href="../-expression/index.html">Expression</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="scope.html">scope</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">scope</span><span class="symbol">: </span><a href="../-scope/index.html"><span class="identifier">Scope</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="to-a-s-t.html">toAST</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-expression-context/index.html"><span class="identifier">ExpressionContext</span></a><span class="symbol">.</span><span class="identifier">toAST</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-fun.html">visitFun</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitFun</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitFun(com.fkistner.SouthQuay.grammar.SQLangParser.FunContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-fun-context/index.html"><span class="identifier">FunContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-lam.html">visitLam</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitLam</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitLam(com.fkistner.SouthQuay.grammar.SQLangParser.LamContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-lam-context/index.html"><span class="identifier">LamContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-lambda/index.html"><span class="identifier">Lambda</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-mul.html">visitMul</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitMul</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitMul(com.fkistner.SouthQuay.grammar.SQLangParser.MulContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-mul-context/index.html"><span class="identifier">MulContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-number.html">visitNumber</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitNumber</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitNumber(com.fkistner.SouthQuay.grammar.SQLangParser.NumberContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-number-context/index.html"><span class="identifier">NumberContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-paren.html">visitParen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitParen</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitParen(com.fkistner.SouthQuay.grammar.SQLangParser.ParenContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-paren-context/index.html"><span class="identifier">ParenContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-pow.html">visitPow</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitPow</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitPow(com.fkistner.SouthQuay.grammar.SQLangParser.PowContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-pow-context/index.html"><span class="identifier">PowContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-pow/index.html"><span class="identifier">Pow</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-ref.html">visitRef</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitRef</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitRef(com.fkistner.SouthQuay.grammar.SQLangParser.RefContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-ref-context/index.html"><span class="identifier">RefContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-variable-ref/index.html"><span class="identifier">VariableRef</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-seq.html">visitSeq</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitSeq</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitSeq(com.fkistner.SouthQuay.grammar.SQLangParser.SeqContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-seq-context/index.html"><span class="identifier">SeqContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-sequence/index.html"><span class="identifier">Sequence</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-sum.html">visitSum</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">visitSum</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ExpressionASTBuilder$visitSum(com.fkistner.SouthQuay.grammar.SQLangParser.SumContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-sum-context/index.html"><span class="identifier">SumContext</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/visit-out.html">visitOut</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitOut</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitOut(com.fkistner.SouthQuay.grammar.SQLangParser.OutContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-out-context/index.html"><span class="identifier">OutContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/visit-print.html">visitPrint</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitPrint</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitPrint(com.fkistner.SouthQuay.grammar.SQLangParser.PrintContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-print-context/index.html"><span class="identifier">PrintContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/visit-program.html">visitProgram</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitProgram</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitProgram(com.fkistner.SouthQuay.grammar.SQLangParser.ProgramContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-program-context/index.html"><span class="identifier">ProgramContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-base-visitor/visit-var.html">visitVar</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitVar</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitVar(com.fkistner.SouthQuay.grammar.SQLangParser.VarContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.grammar/-s-q-lang-parser/-var-context/index.html"><span class="identifier">VarContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Dialogs - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.UI</a>&nbsp;/&nbsp;<a href=".">Dialogs</a><br/>
+<br/>
+<h1>Dialogs</h1>
+<code><span class="keyword">class </span><span class="identifier">Dialogs</span></code>
+<p>Controller for displaying file open/save dialogs and asking about unsaved changes in files.</p>
+<h3>Parameters</h3>
+<p><a name="frame"></a>
+<code>frame</code> - Frame the dialogs are to be attached to</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Dialogs</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.Dialogs$<init>(javax.swing.JFrame)/frame">frame</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html"><span class="identifier">JFrame</span></a><span class="symbol">)</span></code>
+<p>Controller for displaying file open/save dialogs and asking about unsaved changes in files.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="frame.html">frame</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">frame</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html"><span class="identifier">JFrame</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="open-file.html">openFile</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">openFile</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">?</span></code>
+<p>Presents an open file dialog for script file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="save-file.html">saveFile</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">saveFile</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">?</span></code>
+<p>Presents a save file dialog for script file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="should-save-file.html">shouldSaveFile</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">shouldSaveFile</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.Dialogs$shouldSaveFile(kotlin.String)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>Presents a dialog box to the user to confirm, whether to save unsaved changes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

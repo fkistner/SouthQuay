@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.fkistner.SouthQuay.interpreter.functions - SouthQuay</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href=".">com.fkistner.SouthQuay.interpreter.functions</a><br/>
+<br/>
+<h2>Package com.fkistner.SouthQuay.interpreter.functions</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-apply-function/index.html">ApplyFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">ApplyFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-typed-invocable-function/index.html"><span class="identifier">TypedInvocableFunction</span></a></code>
+<p>Implementation of the <code>apply</code> function, that allows applying a lambda function to values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-invocable-function.html">InvocableFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">InvocableFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../com.fkistner.-south-quay.parser/-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span></code>
+<p>Interface for a function that can be invoked with its call site and a list of parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-invocable-lambda.html">InvocableLambda</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">InvocableLambda</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span></code>
+<p>Interface for a lambda that can be invoked with a list of parameters.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-map-function/index.html">MapFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">MapFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-typed-invocable-function/index.html"><span class="identifier">TypedInvocableFunction</span></a></code>
+<p>Implementation of the <code>map</code> function, that allows applying a lambda function to the values of a sequence.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-reduce-function/index.html">ReduceFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">ReduceFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-typed-invocable-function/index.html"><span class="identifier">TypedInvocableFunction</span></a></code>
+<p>Implementation of the <code>reduce</code> function, that allows recursively combining values of a sequence using a lambda function.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-typed-invocable-function/index.html">TypedInvocableFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">TypedInvocableFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-invocable-function.html"><span class="identifier">InvocableFunction</span></a><span class="symbol">, </span><a href="../com.fkistner.-south-quay.parser/-function/index.html"><span class="identifier">Function</span></a></code>
+<p>Interface for a function that can be invoked with its call site and a list of parameters,
+and can provide type information and its signature.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

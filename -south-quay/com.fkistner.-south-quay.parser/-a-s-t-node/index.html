@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ASTNode - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">ASTNode</a><br/>
+<br/>
+<h1>ASTNode</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ASTNode</span></code>
+<p>Abstract syntax tree node.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">ASTNode</span><span class="symbol">&gt;</span></code>
+<p>List of child AST nodes, by default empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="span.html">span</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">span</span><span class="symbol">: </span><a href="../-span/index.html"><span class="identifier">Span</span></a></code>
+<p>Source span node was created from.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="accept.html">accept</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">accept</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$accept(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.accept.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Accepts an AST visitor, initiates visitation, and returns provided value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="accept-children.html">acceptChildren</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">acceptChildren</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$acceptChildren(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.acceptChildren.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Accepts an AST visitor for all children.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$endVisit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.endVisit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Dispatches end of visit notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.ASTNode$visit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.ASTNode.visit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Dispatches visitation with concrete type, and returns provided value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-expression/index.html">Expression</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Expression</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ASTNode</span></code>
+<p>Super class of all expression nodes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-program/index.html">Program</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Program</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ASTNode</span></code>
+<p>Root AST node presenting an entire program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-statement.html">Statement</a></p>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Statement</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ASTNode</span></code>
+<p>Super class of all statement nodes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-var-declaration/index.html">VarDeclaration</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">VarDeclaration</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ASTNode</span></code>
+<p>Variable/parameter declaration.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

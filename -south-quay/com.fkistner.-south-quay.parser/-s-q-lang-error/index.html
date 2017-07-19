@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SQLangError - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">SQLangError</a><br/>
+<br/>
+<h1>SQLangError</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">SQLangError</span></code>
+<p>Super class for parsing, type, and runtime errors.</p>
+<h3>Parameters</h3>
+<p><a name="message"></a>
+<code>message</code> - Error message</p>
+<p><a name="span"></a>
+<code>span</code> - Span in source the error originates from</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="message.html">message</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">message</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="span.html">span</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">span</span><span class="symbol">: </span><a href="../-span/index.html"><span class="identifier">Span</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-runtime-error/index.html">RuntimeError</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">RuntimeError</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SQLangError</span></code>
+<p>Error occurred during the Runtime of the program.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-syntax-error/index.html">SyntaxError</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">SyntaxError</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SQLangError</span></code>
+<p>Error occurred during parsing of the program text.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-type-error/index.html">TypeError</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">TypeError</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SQLangError</span></code>
+<p>Error occurred during the AST construction or AST verification of the program.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

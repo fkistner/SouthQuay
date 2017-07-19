@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>last - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter.values</a>&nbsp;/&nbsp;<a href="index.html">java.util.stream.BaseStream</a>&nbsp;/&nbsp;<a href=".">last</a><br/>
+<br/>
+<h1>last</h1>
+<a name="com.fkistner.SouthQuay.interpreter.values$last#java.util.stream.BaseStream((com.fkistner.SouthQuay.interpreter.values.last.T, com.fkistner.SouthQuay.interpreter.values.last.S))"></a>
+<code><span class="keyword">val </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">S</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/BaseStream.html"><span class="identifier">BaseStream</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">,</span>&nbsp;<span class="identifier">S</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/BaseStream.html"><span class="identifier">BaseStream</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">,</span>&nbsp;<span class="identifier">S</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">last</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Efficiently gets the last value of a stream by splitting its underlying spliterator
+until only one element (or close to) is left.</p>
+<p>The spliterator is required to be <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html#ORDERED">Spliterator.ORDERED</a>, <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html#SIZED">Spliterator.SIZED</a>, and <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html#SUBSIZED">Spliterator.SUBSIZED</a>.</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - Element type</p>
+<p><a name="S"></a>
+<code>S</code> - Stream type</p>
+<p><strong>Return</strong><br/>
+Last element, if spliterator fulfills requirements, otherwise <code>null</code></p>
+</BODY>
+</HTML>

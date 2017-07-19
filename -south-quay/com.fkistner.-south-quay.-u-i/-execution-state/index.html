@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ExecutionState - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.UI</a>&nbsp;/&nbsp;<a href=".">ExecutionState</a><br/>
+<br/>
+<h1>ExecutionState</h1>
+<code><span class="keyword">interface </span><span class="identifier">ExecutionState</span><span class="symbol">&lt;</span><span class="keyword">out</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Interface for an implementation that reacts and potentially responds to script execution requests/stimuli.</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - Type of the stimuli response.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="abort.html">abort</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">abort</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>Requests to abort the script execution (abort stimulus).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="finish.html">finish</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">finish</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>Signals that the script execution has finished (finish stimulus).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="run.html">run</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">run</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>Requests to start the script execution (run stimulus).</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-execution-control/index.html">ExecutionControl</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExecutionControl</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ExecutionState</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span></code>
+<p>State machine for the script execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-execution-control/-state.html">State</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">State</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ExecutionState</span><span class="symbol">&lt;</span><a href="../-execution-control/-state.html"><span class="identifier">State</span></a><span class="symbol">&gt;</span></code>
+<p>State of the script execution providing transitions to a new state upon stimuli.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

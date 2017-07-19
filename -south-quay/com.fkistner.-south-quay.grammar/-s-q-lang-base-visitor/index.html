@@ -1,0 +1,202 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SQLangBaseVisitor - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.grammar</a>&nbsp;/&nbsp;<a href=".">SQLangBaseVisitor</a><br/>
+<br/>
+<h1>SQLangBaseVisitor</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SQLangBaseVisitor</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractParseTreeVisitor</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-s-q-lang-visitor/index.html"><span class="identifier">SQLangVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>This class provides an empty implementation of SQLangVisitor, which can be extended to create a visitor which only needs to handle a subset of the available methods.</p>
+<h3>Parameters</h3>
+<p><a name="&lt;T&gt;"></a>
+<code><T></code> - The return type of the visit operation. Use Void for operations with no return type.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">SQLangBaseVisitor</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>This class provides an empty implementation of SQLangVisitor, which can be extended to create a visitor which only needs to handle a subset of the available methods.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="visit-fun.html">visitFun</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitFun</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitFun(com.fkistner.SouthQuay.grammar.SQLangParser.FunContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-fun-context/index.html"><span class="identifier">FunContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-lam.html">visitLam</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitLam</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitLam(com.fkistner.SouthQuay.grammar.SQLangParser.LamContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-lam-context/index.html"><span class="identifier">LamContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-mul.html">visitMul</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitMul</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitMul(com.fkistner.SouthQuay.grammar.SQLangParser.MulContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-mul-context/index.html"><span class="identifier">MulContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-number.html">visitNumber</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitNumber</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitNumber(com.fkistner.SouthQuay.grammar.SQLangParser.NumberContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-number-context/index.html"><span class="identifier">NumberContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-out.html">visitOut</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitOut</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitOut(com.fkistner.SouthQuay.grammar.SQLangParser.OutContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-out-context/index.html"><span class="identifier">OutContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-paren.html">visitParen</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitParen</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitParen(com.fkistner.SouthQuay.grammar.SQLangParser.ParenContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-paren-context/index.html"><span class="identifier">ParenContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-pow.html">visitPow</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitPow</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitPow(com.fkistner.SouthQuay.grammar.SQLangParser.PowContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-pow-context/index.html"><span class="identifier">PowContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-print.html">visitPrint</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitPrint</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitPrint(com.fkistner.SouthQuay.grammar.SQLangParser.PrintContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-print-context/index.html"><span class="identifier">PrintContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-program.html">visitProgram</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitProgram</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitProgram(com.fkistner.SouthQuay.grammar.SQLangParser.ProgramContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-program-context/index.html"><span class="identifier">ProgramContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-ref.html">visitRef</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitRef</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitRef(com.fkistner.SouthQuay.grammar.SQLangParser.RefContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-ref-context/index.html"><span class="identifier">RefContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-seq.html">visitSeq</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitSeq</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitSeq(com.fkistner.SouthQuay.grammar.SQLangParser.SeqContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-seq-context/index.html"><span class="identifier">SeqContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-sum.html">visitSum</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitSum</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitSum(com.fkistner.SouthQuay.grammar.SQLangParser.SumContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-sum-context/index.html"><span class="identifier">SumContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit-var.html">visitVar</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">visitVar</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.grammar.SQLangBaseVisitor$visitVar(com.fkistner.SouthQuay.grammar.SQLangParser.VarContext)/ctx">ctx</span><span class="symbol">:</span>&nbsp;<a href="../-s-q-lang-parser/-var-context/index.html"><span class="identifier">VarContext</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>{@inheritDoc} 
+<p>The default implementation returns the result of calling <code><a href="#">#visitChildren</a></code> on <code>ctx</code>.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.parser/-expression-a-s-t-builder/index.html">ExpressionASTBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ExpressionASTBuilder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SQLangBaseVisitor</span><span class="symbol">&lt;</span><a href="../../com.fkistner.-south-quay.parser/-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">&gt;</span></code>
+<p>Recursively translates expression parser rules to <a href="../../com.fkistner.-south-quay.parser/-expression/index.html">Expression</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.parser/-statement-a-s-t-builder/index.html">StatementASTBuilder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StatementASTBuilder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SQLangBaseVisitor</span><span class="symbol">&lt;</span><a href="../../com.fkistner.-south-quay.parser/-statement.html"><span class="identifier">Statement</span></a><span class="symbol">&gt;</span></code>
+<p>Translates statement parser rules to <a href="../../com.fkistner.-south-quay.parser/-statement.html">Statement</a>s by visiting the parse tree.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

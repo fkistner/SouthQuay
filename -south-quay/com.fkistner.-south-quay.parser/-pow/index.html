@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Pow - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.parser</a>&nbsp;/&nbsp;<a href=".">Pow</a><br/>
+<br/>
+<h1>Pow</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Pow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-binary-operation/index.html"><span class="identifier">BinaryOperation</span></a></code>
+<p>Power binary operation expression.</p>
+<p><code>17^2</code></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Pow</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Pow$<init>(com.fkistner.SouthQuay.parser.Expression, com.fkistner.SouthQuay.parser.Expression)/left">left</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.Pow$<init>(com.fkistner.SouthQuay.parser.Expression, com.fkistner.SouthQuay.parser.Expression)/right">right</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">)</span></code>
+<p>Power binary operation expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="left.html">left</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">left</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Left operand</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="right.html">right</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">right</span><span class="symbol">: </span><a href="../-expression/index.html"><span class="identifier">Expression</span></a></code>
+<p>Right operand</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-binary-operation/children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">&gt;</span></code>
+<p>List of child AST nodes, by default empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-binary-operation/type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">type</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Type the expression evaluates to.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="end-visit.html">endVisit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">endVisit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Pow$endVisit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.Pow.endVisit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Dispatches end of visit notification.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="visit.html">visit</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">visit</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Pow$visit(com.fkistner.SouthQuay.parser.ASTVisitor((com.fkistner.SouthQuay.parser.Pow.visit.T)))/visitor">visitor</span><span class="symbol">:</span>&nbsp;<a href="../-a-s-t-visitor/index.html"><span class="identifier">ASTVisitor</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span><span class="symbol">?</span></code>
+<p>Dispatches visitation with concrete type, and returns provided value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-binary-operation/resolve.html">resolve</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">resolve</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.BinaryOperation$resolve(com.fkistner.SouthQuay.parser.Expression, com.fkistner.SouthQuay.parser.Expression)/left">left</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.parser.BinaryOperation$resolve(com.fkistner.SouthQuay.parser.Expression, com.fkistner.SouthQuay.parser.Expression)/right">right</span><span class="symbol">:</span>&nbsp;<a href="../-expression/index.html"><span class="identifier">Expression</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Resolves the type the binary operation evaluates to.
+If one of the operands is of <a href="../-type/-real/index.html">Type.Real</a>, <a href="../-type/-integer/index.html">Type.Integer</a> to <a href="../-type/-real/index.html">Type.Real</a> promotion will be applied.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

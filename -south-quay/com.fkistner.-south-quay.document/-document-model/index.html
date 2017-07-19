@@ -1,0 +1,169 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DocumentModel - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.document</a>&nbsp;/&nbsp;<a href=".">DocumentModel</a><br/>
+<br/>
+<h1>DocumentModel</h1>
+<code><span class="keyword">class </span><span class="identifier">DocumentModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/event/DocumentListener.html"><span class="identifier">DocumentListener</span></a></code>
+<p>Model that manages the document state, such as the untitled numbering and whether the document buffer is dirty.</p>
+<h3>Parameters</h3>
+<p><a name="path"></a>
+<code>path</code> - URL to initial file to load</p>
+<p><a name="documentListener"></a>
+<code>documentListener</code> - Listener for document changes</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">DocumentModel</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$<init>(java.net.URL, com.fkistner.SouthQuay.document.DocumentModelListener)/path">path</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$<init>(java.net.URL, com.fkistner.SouthQuay.document.DocumentModelListener)/documentListener">documentListener</span><span class="symbol">:</span>&nbsp;<a href="../-document-model-listener/index.html"><span class="identifier">DocumentModelListener</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<p>Model that manages the document state, such as the untitled numbering and whether the document buffer is dirty.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="document.html">document</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">document</span><span class="symbol">: </span><span class="identifier">RSyntaxDocument</span></code>
+<p>The current document.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="document-listener.html">documentListener</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">documentListener</span><span class="symbol">: </span><a href="../-document-model-listener/index.html"><span class="identifier">DocumentModelListener</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="document-name.html">documentName</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">documentName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>The name of the current document.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-dirty.html">isDirty</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">isDirty</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Current dirty state of document, i.e. it contains unsaved changes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="path.html">path</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">path</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="adapt-path.html">adaptPath</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">adaptPath</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$adaptPath(java.net.URL)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a></code>
+<p>Adapts path to include <a href="../../com.fkistner.-south-quay/-file-type.html">FileType</a> suffix, if not already present.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="changed-update.html">changedUpdate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">changedUpdate</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$changedUpdate(javax.swing.event.DocumentEvent)/e">e</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/event/DocumentEvent.html"><span class="identifier">DocumentEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="close.html">close</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">close</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Closes the current file and creates new empty document.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert-update.html">insertUpdate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">insertUpdate</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$insertUpdate(javax.swing.event.DocumentEvent)/e">e</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/event/DocumentEvent.html"><span class="identifier">DocumentEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="open.html">open</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">open</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$open(java.net.URL)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Opens the provided file and sets it as the new document.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-update.html">removeUpdate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removeUpdate</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$removeUpdate(javax.swing.event.DocumentEvent)/e">e</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/event/DocumentEvent.html"><span class="identifier">DocumentEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="save.html">save</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">save</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$save(java.net.URL)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Saves the current file under the provided file path.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="untitled-counter.html">untitledCounter</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">untitledCounter</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of document that were assigned an untitled name.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../text.html">text</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">DocumentModel</span><span class="symbol">.</span><span class="identifier">text</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>All the text of the current document of the document model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

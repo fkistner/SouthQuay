@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TypedInvocableFunction - SouthQuay</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">SouthQuay</a>&nbsp;/&nbsp;<a href="../index.html">com.fkistner.SouthQuay.interpreter.functions</a>&nbsp;/&nbsp;<a href=".">TypedInvocableFunction</a><br/>
+<br/>
+<h1>TypedInvocableFunction</h1>
+<code><span class="keyword">interface </span><span class="identifier">TypedInvocableFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-invocable-function.html"><span class="identifier">InvocableFunction</span></a><span class="symbol">, </span><a href="../../com.fkistner.-south-quay.parser/-function/index.html"><span class="identifier">Function</span></a></code>
+<p>Interface for a function that can be invoked with its call site and a list of parameters,
+and can provide type information and its signature.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="signature.html">signature</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">signature</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.parser/-function-signature/index.html"><span class="identifier">FunctionSignature</span></a></code>
+<p>Signature of the function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.parser/-function/resolve.html">resolve</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">resolve</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Function$resolve(com.fkistner.SouthQuay.parser.FunctionInvoc)/invocation">invocation</span><span class="symbol">:</span>&nbsp;<a href="../../com.fkistner.-south-quay.parser/-function-invoc/index.html"><span class="identifier">FunctionInvoc</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.fkistner.-south-quay.parser/-type/index.html"><span class="identifier">Type</span></a></code>
+<p>Determine type the function invocation resolves to based on its arguments.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.fkistner.-south-quay.parser/-function/verify.html">verify</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">verify</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.parser.Function$verify(kotlin.collections.List((com.fkistner.SouthQuay.parser.Type)))/argumentTypes">argumentTypes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.fkistner.-south-quay.parser/-type/index.html"><span class="identifier">Type</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Verifies that the types of the arguments match the function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-apply-function/index.html">ApplyFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">ApplyFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">TypedInvocableFunction</span></code>
+<p>Implementation of the <code>apply</code> function, that allows applying a lambda function to values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-map-function/index.html">MapFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">MapFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">TypedInvocableFunction</span></code>
+<p>Implementation of the <code>map</code> function, that allows applying a lambda function to the values of a sequence.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-reduce-function/index.html">ReduceFunction</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">ReduceFunction</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">TypedInvocableFunction</span></code>
+<p>Implementation of the <code>reduce</code> function, that allows recursively combining values of a sequence using a lambda function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
