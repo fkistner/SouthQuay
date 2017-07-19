@@ -4,6 +4,15 @@ import java.util.*
 import java.util.stream.BaseStream
 
 
+/**
+ * Efficiently gets the last value of a stream by splitting its underlying spliterator
+ * until only one element (or close to) is left.
+ *
+ * The spliterator is required to be [Spliterator.ORDERED], [Spliterator.SIZED], and [Spliterator.SUBSIZED].
+ * @param T Element type
+ * @param S Stream type
+ * @return Last element, if spliterator fulfills requirements, otherwise `null`
+ */
 val <T, S: BaseStream<T, S>> BaseStream<T, S>.last: T?
     get() {
         // Spliterator might not allow splitting, if not in parallel mode

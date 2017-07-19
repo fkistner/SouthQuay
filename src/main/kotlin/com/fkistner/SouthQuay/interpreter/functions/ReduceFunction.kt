@@ -3,6 +3,11 @@ package com.fkistner.SouthQuay.interpreter.functions
 import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
 
+/**
+ * Implementation of the `reduce` function, that allows recursively combining values of a sequence using a lambda function.
+ *
+ * `reduce({1, 10}, 0, i -> i+i)`
+ */
 object ReduceFunction: TypedInvocableFunction {
     override val signature = FunctionSignature("reduce", listOf("sequence", "neutral", "lambda"))
 

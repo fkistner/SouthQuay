@@ -1,6 +1,10 @@
 package com.fkistner.SouthQuay.parser
 
 
+/**
+ * Checks for type errors and records them in the error container of the [scope] by visiting the abstract syntax tree.
+ * @param scope Current visibility scope
+ */
 class ASTVerifier(val scope: Scope): ASTVisitor<Unit> {
     override fun visit(lambda: Lambda) = lambda.verify()
     override fun visit(functionInvoc: FunctionInvoc) {
@@ -8,14 +12,17 @@ class ASTVerifier(val scope: Scope): ASTVisitor<Unit> {
         functionInvoc.target?.let { target ->
             val argumentTypes = functionInvoc.args.map(Expression::type)
             if (!target.verify(argumentTypes))
-                scope.errorContainer.add(TypeError("Incompatible arguments ${functionInvoc.identifier}(${argumentTypes.joinToString()}) for function", functionInvoc))
+                scope.errorContainer.add(TypeError("Incompatible arguments ${functionInvoc.identifier}(" +
+                        "${argumentTypes.joinToString()}) for function", functionInvoc))
         }
     }
 
+    /** Verifies the types of this binary operation. */
     fun BinaryOperation.checkBinaryOperation() {
         acceptChildren(this@ASTVerifier)
         if (left.type == Type.Error || right.type == Type.Error || type != Type.Error) return
-        scope.errorContainer.add(TypeError("Incompatible arguments ${left.type} and ${right.type} for operator", this))
+        scope.errorContainer.add(TypeError("Incompatible arguments ${left.type} and ${right.type} for operator",
+                this))
     }
 
     override fun visit(sum: Sum) = sum.checkBinaryOperation()
@@ -28,14 +35,14 @@ class ASTVerifier(val scope: Scope): ASTVisitor<Unit> {
         sequence.acceptChildren(this)
         with(sequence) {
             when (from.type) {
-                Type.Error, Type.Integer -> {
-                }
-                else -> scope.errorContainer.add(TypeError("Illegal sequence start, expected Integer, found $from.type", from))
+                Type.Error, Type.Integer -> {}
+                else -> scope.errorContainer.add(TypeError("Illegal sequence start, expected Integer, " +
+                        "found $from.type", from))
             }
             when (to.type) {
-                Type.Error, Type.Integer -> {
-                }
-                else -> scope.errorContainer.add(TypeError("Illegal sequence end, expected Integer, found $to.type", to))
+                Type.Error, Type.Integer -> {}
+                else -> scope.errorContainer.add(TypeError("Illegal sequence end, expected Integer, " +
+                        "found $to.type", to))
             }
         }
     }

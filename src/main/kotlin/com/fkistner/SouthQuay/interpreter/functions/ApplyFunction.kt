@@ -2,6 +2,11 @@ package com.fkistner.SouthQuay.interpreter.functions
 
 import com.fkistner.SouthQuay.parser.*
 
+/**
+ * Implementation of the `apply` function, that allows applying a lambda function to values.
+ *
+ * `apply(42, i -> i*i)`
+ */
 object ApplyFunction : TypedInvocableFunction {
     override val signature = FunctionSignature("apply", listOf("number", "lambda"))
 

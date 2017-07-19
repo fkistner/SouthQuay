@@ -5,26 +5,26 @@ import org.fife.ui.rtextarea.*;
 import javax.swing.*;
 import java.awt.*;
 
-
+/** UI builder designed super class of the Editor controller. */
 public class EditorBase {
-    protected JPanel panel;
+    protected JPanel rootPanel;
     protected JScrollPane scrollPane;
     protected RSyntaxTextArea syntaxTextArea;
-    protected JTextPane outputTextArea;
+    protected JTextPane outputTextPane;
     protected JButton evaluateButton;
     protected JButton abortButton;
     protected JLabel statusLabel;
     protected Gutter gutter;
     protected ErrorStrip errorStrip;
 
-
+    /** Creates some of the UI components using custom logic. */
     private void createUIComponents() {
         syntaxTextArea = new RSyntaxTextArea();
         syntaxTextArea.setCodeFoldingEnabled(true);
         Font font = syntaxTextArea.getFont();
 
-        outputTextArea = new JTextPane();
-        outputTextArea.setFont(font);
+        outputTextPane = new JTextPane();
+        outputTextPane.setFont(font);
 
         errorStrip = new ErrorStrip(syntaxTextArea);
 
@@ -51,12 +51,12 @@ public class EditorBase {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout(0, 0));
-        panel.setPreferredSize(new Dimension(800, 800));
+        rootPanel = new JPanel();
+        rootPanel.setLayout(new BorderLayout(0, 0));
+        rootPanel.setPreferredSize(new Dimension(800, 800));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
-        panel.add(toolBar1, BorderLayout.SOUTH);
+        rootPanel.add(toolBar1, BorderLayout.SOUTH);
         statusLabel = new JLabel();
         toolBar1.add(statusLabel);
         final JPanel panel1 = new JPanel();
@@ -71,7 +71,7 @@ public class EditorBase {
         toolBar1.add(abortButton);
         scrollPane.setHorizontalScrollBarPolicy(31);
         scrollPane.setVerticalScrollBarPolicy(22);
-        panel.add(scrollPane, BorderLayout.CENTER);
+        rootPanel.add(scrollPane, BorderLayout.CENTER);
         final JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setContinuousLayout(true);
         splitPane1.setDividerLocation(482);
@@ -92,18 +92,18 @@ public class EditorBase {
         scrollPane2.setVerticalScrollBarPolicy(21);
         splitPane1.setRightComponent(scrollPane2);
         scrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
-        outputTextArea.setBackground(new Color(-1644826));
-        outputTextArea.setEditable(false);
-        scrollPane2.setViewportView(outputTextArea);
+        outputTextPane.setBackground(new Color(-1644826));
+        outputTextPane.setEditable(false);
+        scrollPane2.setViewportView(outputTextPane);
         errorStrip.setShowMarkAll(true);
         errorStrip.setShowMarkedOccurrences(true);
-        panel.add(errorStrip, BorderLayout.EAST);
+        rootPanel.add(errorStrip, BorderLayout.EAST);
     }
 
     /**
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {
-        return panel;
+        return rootPanel;
     }
 }

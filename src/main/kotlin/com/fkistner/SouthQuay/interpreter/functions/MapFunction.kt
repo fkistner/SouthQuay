@@ -3,6 +3,11 @@ package com.fkistner.SouthQuay.interpreter.functions
 import com.fkistner.SouthQuay.interpreter.values.SequenceValue
 import com.fkistner.SouthQuay.parser.*
 
+/**
+ * Implementation of the `map` function, that allows applying a lambda function to the values of a sequence.
+ *
+ * `map({1, 10}, i -> i*i)`
+ */
 object MapFunction : TypedInvocableFunction {
     override val signature = FunctionSignature("map", listOf("sequence", "lambda"))
 

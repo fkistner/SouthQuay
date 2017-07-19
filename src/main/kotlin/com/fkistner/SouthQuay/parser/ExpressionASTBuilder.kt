@@ -2,6 +2,10 @@ package com.fkistner.SouthQuay.parser
 
 import com.fkistner.SouthQuay.grammar.*
 
+/**
+ * Recursively translates expression parser rules to [Expression]s by visiting the parse tree.
+ * @param scope Current visibility scope
+ */
 class ExpressionASTBuilder(val scope: Scope): SQLangBaseVisitor<Expression>() {
     fun SQLangParser.ExpressionContext.toAST(): Expression = accept(this@ExpressionASTBuilder)
 

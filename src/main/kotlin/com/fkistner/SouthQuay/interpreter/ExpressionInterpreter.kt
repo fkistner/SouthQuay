@@ -5,11 +5,20 @@ import com.fkistner.SouthQuay.interpreter.values.*
 import com.fkistner.SouthQuay.parser.*
 import java.util.stream.IntStream
 
-
-class ExpressionVisitor(override val context: ExecutionContext): ASTVisitor<Any>, ContextualInterpreter {
+/**
+ * Evaluates expressions by visiting the abstract syntax tree.
+ * @param context Execution context tracking active values and error source
+ */
+class ExpressionInterpreter(override val context: ExecutionContext): ASTVisitor<Any>, ContextualInterpreter {
     override fun visit(integerLiteral: IntegerLiteral) = integerLiteral.value
     override fun visit(realLiteral: RealLiteral) = realLiteral.value
 
+    /**
+     * Evaluates binary operation by applying function.
+     * @param binaryOperation Binary operation node
+     * @param op Function that applies operation
+     * @return Result of the computation
+     */
     private inline fun evaluate(binaryOperation: BinaryOperation, op: (Any, Any) -> Number?): Number? = trackError(binaryOperation) {
         val left  = binaryOperation.left.accept(this)
         val right = binaryOperation.right.accept(this)
@@ -80,7 +89,7 @@ class ExpressionVisitor(override val context: ExecutionContext): ASTVisitor<Any>
             for ((idx, value) in args.withIndex()) {
                 innerContext.activeValues[lambda.parameters[idx]] = value
             }
-            val visitor = ExpressionVisitor(innerContext)
+            val visitor = ExpressionInterpreter(innerContext)
             try {
                 return lambda.body.accept(visitor)
             } finally {

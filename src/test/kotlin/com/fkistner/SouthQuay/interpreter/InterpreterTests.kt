@@ -1,10 +1,7 @@
 package com.fkistner.SouthQuay.interpreter
 
 import com.fkistner.SouthQuay.parser.*
-import org.antlr.v4.runtime.CharStreams
 import org.junit.*
-import org.junit.rules.Timeout
-import java.io.StringReader
 
 
 class InterpreterTests {
@@ -26,7 +23,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -49,7 +46,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -72,7 +69,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -95,7 +92,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -118,7 +115,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -141,7 +138,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -164,7 +161,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -187,7 +184,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -219,7 +216,7 @@ class InterpreterTests {
 
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(2, participant.statementCounter)
@@ -251,7 +248,7 @@ class InterpreterTests {
 
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(2, participant.statementCounter)
@@ -274,7 +271,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -297,7 +294,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -320,7 +317,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -343,7 +340,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -366,7 +363,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         interpreter.execute(program)
 
         Assert.assertEquals(1, participant.statementCounter)
@@ -388,7 +385,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
 
         try {
             interpreter.execute(program)
@@ -413,7 +410,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         val errors = mutableListOf<SQLangError>()
         interpreter.execute(program, errors)
 
@@ -439,7 +436,7 @@ class InterpreterTests {
                 Assert.assertTrue("Wrong reference.", program.statements[0] === statement)
             }
         }
-        val interpreter = Interpreter(participant)
+        val interpreter = StatementInterpreter(participant)
         val errors = mutableListOf<SQLangError>()
         interpreter.execute(program, errors)
 

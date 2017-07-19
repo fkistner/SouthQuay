@@ -4,7 +4,12 @@ import java.awt.*
 import java.awt.event.*
 import javax.swing.*
 
+/** Creator of the menu bar of the script editor. */
 object Menu {
+    /**
+     * Creates a new menu bar with a file menu providing document interaction.
+     * @param menuListener Listener that responds to file menu actions
+     */
     fun create(menuListener: MenuListener? = null): JMenuBar {
         val menuShortcutKeyMask = Toolkit.getDefaultToolkit().menuShortcutKeyMask
         val menuBar = JMenuBar()

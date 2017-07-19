@@ -5,7 +5,6 @@ import com.fkistner.SouthQuay.grammar.SQLangLexer.*
 import com.fkistner.SouthQuay.parser.*
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.misc.*
-import org.antlr.v4.runtime.tree.TerminalNode
 import org.fife.ui.autocomplete.*
 import java.io.StringReader
 import javax.swing.text.JTextComponent
@@ -13,31 +12,30 @@ import kotlin.sequences.Sequence
 import kotlin.Pair
 
 
+/**
+ * Generates auto completion proposals based on parser state at the caret position and correctly parsed statements
+ * to be displayed in the UI by an [AutoCompletion] controller.
+ *
+ * Instances are not shared between editors.
+ */
 class CompletionProposalGenerator : DefaultCompletionProvider() {
+
     override fun getCompletionsImpl(comp: JTextComponent): MutableList<Completion>? {
         completions.clear()
 
-        val caretPosition = comp.caretPosition
-        var lastChar = caretPosition - 1
-        while (lastChar >= 0 && comp.document.getText(lastChar, 1)[0].isLetterOrDigit()) lastChar--
+        /** Back track if were are within something which looks like an identifier or literal to match completion logic
+         * @see [getAlreadyEnteredText]
+         * @see [isValidChar]
+         */
+        var lastChar = comp.caretPosition - 1
+        while (lastChar >= 0 && isValidChar(comp.document.getText(lastChar, 1)[0])) lastChar--
 
-        val preText = comp.document.getText(0, lastChar + 1)
+        // Assume beginning of text as caret position
+        val caretPosition = lastChar + 1
+        val preText = comp.document.getText(0, caretPosition)
 
         val charStream = CharStreams.fromReader(StringReader(preText))
-        val lexer = object: SQLangLexer(charStream) {
-            var eofToken: Token? = null
-
-            override fun nextToken(): Token? {
-                eofToken?.let { return eofToken }
-                var token = super.nextToken()
-                if (token?.type == EOF) {
-                    eofToken = token
-                    token = CommonToken(_tokenFactorySourcePair, -10, DEFAULT_TOKEN_CHANNEL, lastChar, lastChar)
-                    token.text = "CARET"
-                }
-                return token
-            }
-        }
+        val lexer = CaretAwareLexer(charStream, caretPosition)
 
         lexer.removeErrorListeners()
         val parser = SQLangParser(CommonTokenStream(lexer))
@@ -64,13 +62,55 @@ class CompletionProposalGenerator : DefaultCompletionProvider() {
         return super.getCompletionsImpl(comp)
     }
 
+    /**
+     * Special purpose lexer that inserts a special caret token to avoid matching EOF as valid token.
+     *
+     * Necessary to get parser information if [caretPosition] is a statement boundary.
+     * @param charStream Character stream of the program up until [caretPosition]
+     * @param caretPosition Position of the caret
+     */
+    class CaretAwareLexer(charStream: CodePointCharStream, val caretPosition: Int): SQLangLexer(charStream) {
+        /** Cache for EOF token while caret token is returned */
+        var eofToken: Token? = null
+
+        override fun nextToken(): Token? {
+            eofToken?.let { return eofToken }
+            var token = super.nextToken()
+            if (token?.type == EOF) {
+                eofToken = token
+                token = CommonToken(_tokenFactorySourcePair, -10, DEFAULT_TOKEN_CHANNEL, caretPosition, caretPosition)
+                token.text = "CARET"
+            }
+            return token
+        }
+    }
+
+    /**
+     * Creates a completion model object for a referencing a variable.
+     * @param completionProvider The completion provider this suggestion stems from
+     * @param declaration The node that declared the variable
+     * @return Completion for the variable
+     */
     fun variableCompletion(completionProvider: CompletionProvider, declaration: VarDeclaration) =
             BasicCompletion(completionProvider, declaration.identifier, "${declaration.type} variable")
 
+    /**
+     * Creates a completion model object for a invoking a function.
+     * @param completionProvider The completion provider this suggestion stems from
+     * @param signature The signature of the function
+     * @return Completion for the function
+     */
     fun functionCompletion(completionProvider: CompletionProvider, signature: FunctionSignature) =
             BasicCompletion(completionProvider, "${signature.identifier}(",
                     "${signature.identifier}(${signature.argumentNames.joinToString()}) function")
 
+    /**
+     * Determines which variables and functions can be referenced at the current position and creates corresponding completions.
+     * @param program The partial abstract syntax tree recovered from the source up to the [caretPosition]
+     * @param ruleContext Current rule context of the parser
+     * @param caretPosition Position of the user's caret
+     * @return Sequence of completions for valid identifiers at this point
+     */
     fun getIdentifierCompletion(program: Program, ruleContext: ParserRuleContext, caretPosition: Int): Sequence<BasicCompletion> {
         if (ruleContext is SQLangParser.VarContext) return emptySequence()
 
@@ -83,7 +123,15 @@ class CompletionProposalGenerator : DefaultCompletionProvider() {
         return (variableCompletions + functionCompletions).onEach { it.relevance = 1 }
     }
 
-    private fun getTokenCompletion(program: Program, ruleContext: ParserRuleContext,
+    /**
+     * Creates completions for the expected parser [token].
+     * @param program The partial abstract syntax tree recovered from the source up to the [caretPosition]
+     * @param ruleContext Current rule context of the parser
+     * @param caretPosition Position of the user's caret
+     * @param token Token expected to succeed the caret
+     * @return Sequence of completions for valid identifiers at this point
+     */
+    fun getTokenCompletion(program: Program, ruleContext: ParserRuleContext,
                                    caretPosition: Int, token: Int): Sequence<BasicCompletion> {
         when (token) {
             Identifier -> return getIdentifierCompletion(program, ruleContext, caretPosition)

@@ -13,15 +13,16 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.15"
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
         classpath "gradle.plugin.edu.sc.seis:macAppBundle:2.1.6"
         // classpath 'edu.sc.seis.gradle:launch4j:2.3.0'
     }
 }
 
-
 apply plugin: 'java'
 apply plugin: 'kotlin'
+apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'antlr'
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -64,6 +65,22 @@ generateGrammarSource {
     arguments += ["-visitor", "-no-listener", "-long-messages"]
 }
 compileKotlin.dependsOn generateGrammarSource
+
+
+
+dokka {
+    outputFormat = 'html' 
+    outputDirectory = javadoc.destinationDir
+    reportNotDocumented = true
+    jdkVersion = 8
+
+    linkMapping {
+        dir = "src/main/kotlin"
+        url = "https://github.com/fkistner/SouthQuay/blob/master/src/main/kotlin"
+        suffix = "#L"
+    }
+}
+
 
 
 mainClassName = 'com.fkistner.SouthQuay.EntrypointKt'

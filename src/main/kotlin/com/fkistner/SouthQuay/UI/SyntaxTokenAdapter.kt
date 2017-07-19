@@ -7,7 +7,8 @@ import org.fife.ui.rsyntaxtextarea.*
 import java.io.CharArrayReader
 import javax.swing.text.Segment
 
-object SyntaxTokenMaker: TokenMakerBase() {
+/** Provides tokenization for syntax highlighting in the code editor. */
+object SyntaxTokenAdapter : TokenMakerBase() {
     override fun getTokenList(text: Segment, initialTokenType: Int, startOffset: Int): Token {
         resetTokenList()
 

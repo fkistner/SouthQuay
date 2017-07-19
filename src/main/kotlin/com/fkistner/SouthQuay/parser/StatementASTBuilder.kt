@@ -2,6 +2,10 @@ package com.fkistner.SouthQuay.parser
 
 import com.fkistner.SouthQuay.grammar.*
 
+/**
+ * Translates statement parser rules to [Statement]s by visiting the parse tree.
+ * @param scope Current visibility scope
+ */
 class StatementASTBuilder(val scope: Scope): SQLangBaseVisitor<Statement>() {
 
     override fun visitPrint(ctx: SQLangParser.PrintContext) = PrintStatement(ctx.string.text.trim('"')).also { it.span = ctx.toSpan() }

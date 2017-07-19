@@ -1,7 +1,7 @@
 package com.fkistner.SouthQuay.document
 
 
-class CountingDocumentListener: DocumentModel.Listener {
+class CountingDocumentListener: DocumentModelListener {
     var newDoc = 0
     var infoChanged = 0
     var textChanged = 0

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.fkistner.SouthQuay.UI.EditorBase">
-  <grid id="c6e20" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <grid id="c6e20" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="800" height="800"/>
     </constraints>
@@ -88,7 +88,7 @@
                 </properties>
                 <border type="empty"/>
                 <children>
-                  <component id="4e73b" class="javax.swing.JTextPane" binding="outputTextArea" custom-create="true">
+                  <component id="4e73b" class="javax.swing.JTextPane" binding="outputTextPane" custom-create="true">
                     <constraints/>
                     <properties>
                       <background color="-1644826"/>
