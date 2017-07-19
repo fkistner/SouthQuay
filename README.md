@@ -3,7 +3,7 @@ South Quay
 
 Interactive Editor and Interpreter
 
-![Screenshot of version 0.8.0-alpha](screenshots/SouthQuay-0.8.0-alpha.png)
+![Screenshot of version 1.0.0-beta](screenshots/SouthQuay-1.0.0-beta.png)
 
 Arithmetics
 -----------
