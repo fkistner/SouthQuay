@@ -53,12 +53,12 @@
             <constraints/>
             <properties>
               <continuousLayout value="true"/>
-              <dividerLocation value="482"/>
+              <dividerLocation value="400"/>
               <resizeWeight value="1.0"/>
             </properties>
             <border type="empty"/>
             <children>
-              <scrollpane id="b2236">
+              <scrollpane id="b2236" class="com.fkistner.SouthQuay.UI.NonResizingScrollPane">
                 <constraints>
                   <splitpane position="left"/>
                 </constraints>
@@ -79,7 +79,7 @@
                   </component>
                 </children>
               </scrollpane>
-              <scrollpane id="1a122">
+              <scrollpane id="1a122" class="com.fkistner.SouthQuay.UI.NonResizingScrollPane">
                 <constraints>
                   <splitpane position="right"/>
                 </constraints>
