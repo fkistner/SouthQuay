@@ -279,13 +279,13 @@ class InterpreterTests {
 
     @Test
     fun reduceSequence() {
-        val (program, _) = ASTBuilder.parseText("out reduce({1, 100}, 5, a i -> a+i)")
+        val (program, _) = ASTBuilder.parseText("out reduce({1, 100}, 0, a i -> a+i)")
         program!!
 
         val participant = object : CountingParticipant() {
             override fun output(statement: Statement, string: String) {
                 Assert.assertEquals(1, statementCounter)
-                Assert.assertEquals("5055", string)
+                Assert.assertEquals("5050", string)
             }
 
             override fun statementExecuting(statement: Statement) {
@@ -302,13 +302,13 @@ class InterpreterTests {
 
     @Test
     fun reduceSequenceReal() {
-        val (program, _) = ASTBuilder.parseText("out reduce({1, 10}, 5.0, a i -> a*i)/1000")
+        val (program, _) = ASTBuilder.parseText("out reduce({1, 10}, 1.0, a i -> a*i)/1000")
         program!!
 
         val participant = object : CountingParticipant() {
             override fun output(statement: Statement, string: String) {
                 Assert.assertEquals(1, statementCounter)
-                Assert.assertEquals("18144.0", string)
+                Assert.assertEquals("3628.8", string)
             }
 
             override fun statementExecuting(statement: Statement) {

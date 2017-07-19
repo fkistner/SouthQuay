@@ -441,7 +441,7 @@ class ASTTests {
 
             ASTBuilder.parseStream(charStream, errors)
 
-            Assert.assertEquals(0, errors.count())
+            Assert.assertEquals(case, 0, errors.count())
         }
     }
 

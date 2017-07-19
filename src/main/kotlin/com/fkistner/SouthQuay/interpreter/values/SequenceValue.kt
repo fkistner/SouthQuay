@@ -65,10 +65,8 @@ sealed class SequenceValue<out T: Number> {
 class IntSequenceValue(override val stream: () -> IntStream): SequenceValue<Int>() {
     override fun map(mapper: (Int) -> Int)    = IntSequenceValue  { stream().parallel().map(mapper) }
     override fun map(mapper: (Int) -> Double) = RealSequenceValue { stream().parallel().mapToDouble(mapper) }
-    override fun reduce(neutral: Int, reducer: (Int, Int) -> Int)             = IntStream.concat(IntStream.of(neutral),
-            stream().parallel()).reduce(reducer).asInt
-    override fun reduce(neutral: Double, reducer: (Double, Double) -> Double) = DoubleStream.concat(DoubleStream.of(neutral),
-            stream().parallel().asDoubleStream()).reduce(reducer).asDouble
+    override fun reduce(neutral: Int, reducer: (Int, Int) -> Int)             = stream().parallel().reduce(neutral, reducer)
+    override fun reduce(neutral: Double, reducer: (Double, Double) -> Double) = stream().parallel().asDoubleStream().reduce(neutral, reducer)
 
     override fun asStringStream(): Stream<String> = stream().mapToObj(Int::toString)
 }
@@ -81,8 +79,7 @@ class RealSequenceValue(override val stream: () -> DoubleStream): SequenceValue<
     override fun map(mapper: (Double) -> Int)    = throw IllegalStateException()
     override fun map(mapper: (Double) -> Double) = RealSequenceValue { stream().parallel().map(mapper) }
     override fun reduce(neutral: Int, reducer: (Int, Int) -> Int)          = throw IllegalStateException()
-    override fun reduce(neutral: Double, reducer: (Double, Double) -> Double) = DoubleStream.concat(DoubleStream.of(neutral),
-            stream().parallel()).reduce(reducer).asDouble
+    override fun reduce(neutral: Double, reducer: (Double, Double) -> Double) = stream().parallel().reduce(neutral, reducer)
 
     override fun asStringStream(): Stream<String> = stream().mapToObj(Double::toString)
 }
