@@ -16,10 +16,7 @@ public class EditorBase {
     protected JButton evaluateButton;
     protected JButton abortButton;
     protected JLabel statusLabel;
-    protected Gutter gutter;
     protected ErrorStrip errorStrip;
-    private JScrollPane scrollPaneLeft;
-    private JScrollPane scrollPaneRight;
 
     /**
      * Creates some of the UI components using custom logic.
@@ -34,7 +31,7 @@ public class EditorBase {
 
         errorStrip = new ErrorStrip(syntaxTextArea);
 
-        gutter = new Gutter(syntaxTextArea);
+        Gutter gutter = new Gutter(syntaxTextArea);
         gutter.setLineNumberFont(font);
         gutter.setLineNumberColor(SyntaxColors.INSTANCE.getSecondaryColor());
         scrollPane = new JScrollPane();
@@ -84,23 +81,25 @@ public class EditorBase {
         splitPane1.setResizeWeight(1.0);
         scrollPane.setViewportView(splitPane1);
         splitPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
-        final NonResizingScrollPane nonResizingScrollPane1 = new NonResizingScrollPane();
-        nonResizingScrollPane1.setVerticalScrollBarPolicy(21);
-        splitPane1.setLeftComponent(nonResizingScrollPane1);
-        nonResizingScrollPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        scrollPane1.setPreferredSize(new Dimension(0, 0));
+        scrollPane1.setVerticalScrollBarPolicy(21);
+        splitPane1.setLeftComponent(scrollPane1);
+        scrollPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
         syntaxTextArea.setCurrentLineHighlightColor(new Color(-328966));
         syntaxTextArea.setPaintMatchedBracketPair(true);
         syntaxTextArea.setPaintTabLines(true);
         syntaxTextArea.setTabsEmulated(true);
         syntaxTextArea.setWhitespaceVisible(true);
-        nonResizingScrollPane1.setViewportView(syntaxTextArea);
-        final NonResizingScrollPane nonResizingScrollPane2 = new NonResizingScrollPane();
-        nonResizingScrollPane2.setVerticalScrollBarPolicy(21);
-        splitPane1.setRightComponent(nonResizingScrollPane2);
-        nonResizingScrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
+        scrollPane1.setViewportView(syntaxTextArea);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        scrollPane2.setPreferredSize(new Dimension(0, 0));
+        scrollPane2.setVerticalScrollBarPolicy(21);
+        splitPane1.setRightComponent(scrollPane2);
+        scrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
         outputTextPane.setBackground(new Color(-1644826));
         outputTextPane.setEditable(false);
-        nonResizingScrollPane2.setViewportView(outputTextPane);
+        scrollPane2.setViewportView(outputTextPane);
         errorStrip.setShowMarkAll(true);
         errorStrip.setShowMarkedOccurrences(true);
         rootPanel.add(errorStrip, BorderLayout.EAST);
