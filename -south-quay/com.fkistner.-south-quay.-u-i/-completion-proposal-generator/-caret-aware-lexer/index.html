@@ -9,7 +9,7 @@
 <br/>
 <h1>CaretAwareLexer</h1>
 <code><span class="keyword">class </span><span class="identifier">CaretAwareLexer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../../com.fkistner.-south-quay.grammar/-s-q-lang-lexer/index.html"><span class="identifier">SQLangLexer</span></a></code>
-<p>Special purpose lexer that inserts a special caret token to avoid matching EOF as valid token.</p>
+<p>Special purpose lexer that inserts a special caret token, which can be reacted to.</p>
 <p>Necessary to get parser information if <a href="caret-position.html">caretPosition</a> is a statement boundary.</p>
 <h3>Parameters</h3>
 <p><a name="charStream"></a>
@@ -25,7 +25,7 @@
 </td>
 <td>
 <code><span class="identifier">CaretAwareLexer</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator.CaretAwareLexer$<init>(org.antlr.v4.runtime.CodePointCharStream, kotlin.Int)/charStream">charStream</span><span class="symbol">:</span>&nbsp;<span class="identifier">CodePointCharStream</span><span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.UI.CompletionProposalGenerator.CaretAwareLexer$<init>(org.antlr.v4.runtime.CodePointCharStream, kotlin.Int)/caretPosition">caretPosition</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
-<p>Special purpose lexer that inserts a special caret token to avoid matching EOF as valid token.</p>
+<p>Special purpose lexer that inserts a special caret token, which can be reacted to.</p>
 </td>
 </tr>
 </tbody>
@@ -42,11 +42,11 @@
 </tr>
 <tr>
 <td>
-<p><a href="eof-token.html">eofToken</a></p>
+<p><a href="next-token.html">nextToken</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">eofToken</span><span class="symbol">: </span><span class="identifier">Token</span><span class="symbol">?</span></code>
-<p>Cache for EOF token while caret token is returned</p>
+<code><span class="keyword">var </span><span class="identifier">nextToken</span><span class="symbol">: </span><span class="identifier">Token</span><span class="symbol">?</span></code>
+<p>Cache next token while caret token is returned.</p>
 </td>
 </tr>
 </tbody>
