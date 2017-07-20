@@ -90,6 +90,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModelListener, MenuListen
                 false -> documentModel.close()
             }
         }
+        executionControl.abort()
         frame.isVisible = false
         frame.dispose()
         if (Window.getWindows().none { it.isVisible }) System.exit(0)

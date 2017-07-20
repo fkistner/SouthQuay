@@ -25,7 +25,7 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
     private val idle = IdleState()
 
     /** Current state. Initially idle. */
-    @Volatile private var state: State = idle
+    private var state: State = idle
 
     /** Signals to start the execution of the current script and stores new state. */
     override fun run()    { state = state.run() }
@@ -44,8 +44,10 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
         /** Future of the current execution. */
         val future = BackgroundExecutor(this).start(programText)
         init {
-            // Register finish stimuli upon completion.
-            future.thenRun { SwingUtilities.invokeLater(this@ExecutionControl::finish) }
+            // Register finish stimuli upon completion (not executed on cancel).
+            future.thenRun {
+                SwingUtilities.invokeLater(this@ExecutionControl::finish)
+            }
         }
 
         /** Signals if [run] stimuli were received during execution,
@@ -101,7 +103,7 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
         /** Checks whether this is still the current state.
          * @throws CancellationException Thrown if this state is stale
          */
-        fun checkState() { if (state != this) throw CancellationException() }
+        fun checkState() { if (future.isCancelled) throw CancellationException() }
 
         /**
          * Checks whether this is still the current state and invokes the [action] on the Swing UI thread.
@@ -229,7 +231,7 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
             }
         }
 
-        override fun abort()  = throw IllegalStateException()
+        override fun abort()  = this
         override fun finish() = this
 
         //endregion

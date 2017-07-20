@@ -10,15 +10,16 @@ import java.util.concurrent.*
  * @param participant Observer of the script execution
  */
 class BackgroundExecutor(val participant: ExecutionParticipant) {
-    val executorService = Executors.newSingleThreadExecutor()!!
-
     /**
      * Schedules the provided script for parsing and interpretation on a worker thread.
      * @param text Program text to be interpreted
      */
     fun start(text: String): CompletableFuture<Void> {
+        val pool = ForkJoinPool()
         val interpreter = StatementInterpreter(participant)
-        return CompletableFuture.runAsync(Runnable { execute(interpreter, text) }, executorService)
+        return CompletableFuture.runAsync(Runnable { execute(interpreter, text) }, pool).also {
+            it.whenComplete { _,_ -> pool.shutdownNow() }
+        }
     }
 
     /**
