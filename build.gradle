@@ -126,7 +126,7 @@ macAppBundle {
     dmgName = name + '-mac-' + version
 }
 
-task winExeBundle(type: edu.sc.seis.launch4j.tasks.Launch4jExternalTask) {
+createExe {
     productName = applicationName
     fileDescription = project.description
     version = semver.withClearedSuffix().getValue() + '.' + totalCommits
@@ -138,7 +138,7 @@ task winExeBundle(type: edu.sc.seis.launch4j.tasks.Launch4jExternalTask) {
     outfile = project.name + '.exe'
 }
 
-task createExeZip(dependsOn: ['winExeBundle'], type: Zip) {
+task createExeZip(dependsOn: ['createExe'], type: Zip) {
     appendix = 'win'
     destinationDir file(distsDir)
     from createExe.dest
