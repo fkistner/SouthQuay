@@ -52,7 +52,7 @@ class CompletionTests {
         textArea.caretPosition = 11
         val completions = completionProposalGenerator.getCompletions(textArea)
 
-        Assert.assertEquals(listOf("out", "print","var"),
+        Assert.assertEquals(listOf("*", "+", "-", "/", "^", "out", "print","var"),
                 completions.map { it.toString() })
     }
 
@@ -148,7 +148,7 @@ class CompletionTests {
         textArea.caretPosition = 7
         val completions = completionProposalGenerator.getCompletions(textArea)
 
-        Assert.assertEquals(listOf(","),
+        Assert.assertEquals(listOf("*", "+", ",", "-", "/", "^"),
                 completions.map { it.toString() })
     }
 
@@ -158,7 +158,7 @@ class CompletionTests {
         textArea.caretPosition = 10
         val completions = completionProposalGenerator.getCompletions(textArea)
 
-        Assert.assertEquals(listOf("}"),
+        Assert.assertEquals(listOf("*", "+", "-", "/", "^","}"),
                 completions.map { it.toString() })
     }
 
