@@ -1,12 +1,12 @@
 package com.fkistner.SouthQuay.UI
 
-import com.fkistner.SouthQuay.ApplicationName
+import com.fkistner.SouthQuay.*
 import com.fkistner.SouthQuay.document.*
 import org.fife.ui.autocomplete.AutoCompletion
-import java.awt.Window
+import java.awt.*
 import java.awt.event.*
 import java.net.URL
-import javax.swing.JFrame
+import javax.swing.*
 
 /**
  * Main editor view controller that manages editing and execution of a script document.
@@ -16,8 +16,12 @@ import javax.swing.JFrame
  * @param path Path to document that should be opened upon display
  */
 class Editor(path: URL? = null): EditorBase(), DocumentModelListener, MenuListener {
-    /** UI frame with menu bar provided by [Menu] */
-    val frame = JFrame(ApplicationName).also { it.jMenuBar = Menu.create(this) }
+    /** UI frame with menu bar provided by [Menu] and with app icon. */
+    val frame = JFrame(ApplicationName).also {
+        it.iconImages = listOf(ImageIcon(ApplicationIcon).image)
+        it.jMenuBar = Menu.create(this)
+    }
+
     /** File [Dialogs] controller.  */
     val dialog = Dialogs(frame)
 

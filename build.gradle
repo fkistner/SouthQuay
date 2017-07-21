@@ -119,6 +119,7 @@ shadowJar {
 
 macAppBundle {
     appName = applicationName
+    icon = 'icon/AppIcon.icns'
     bundleIdentifier = group + '.' + name
     mainClassName = project.mainClassName
     runtimeConfigurationName = 'shadow'
@@ -128,6 +129,7 @@ macAppBundle {
 
 createExe {
     productName = applicationName
+    icon = projectDir.toString() + '/icon/AppIcon.ico'
     fileDescription = project.description
     version = semver.withClearedSuffix().getValue() + '.' + totalCommits
     textVersion = project.version
