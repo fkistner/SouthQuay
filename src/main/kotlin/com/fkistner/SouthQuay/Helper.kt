@@ -1,5 +1,7 @@
 package com.fkistner.SouthQuay
 
+import java.io.*
+
 /**
  * Measures the performance of the given action with nano seconds precision and forwards its return value alongside.
  *
@@ -28,4 +30,14 @@ inline fun <T>measurePerformance(input: T, action: (T) -> Unit): Double {
     action(input)
     val elapsed = System.nanoTime() - start
     return elapsed / 1.0e9
+}
+
+/**
+ * Extracts the complete exception details.
+ * @return Stack trace as string
+ */
+fun Throwable.toFullString(): String {
+    val writer = StringWriter()
+    printStackTrace(PrintWriter(writer))
+    return writer.buffer.toString()
 }

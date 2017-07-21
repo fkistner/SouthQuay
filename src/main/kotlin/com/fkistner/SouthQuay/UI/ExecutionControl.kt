@@ -1,10 +1,10 @@
 package com.fkistner.SouthQuay.UI
 
 import com.fkistner.SouthQuay.document.text
-import com.fkistner.SouthQuay.interpreter.*
+import com.fkistner.SouthQuay.interpreter.ExecutionParticipant
 import com.fkistner.SouthQuay.parser.*
+import com.fkistner.SouthQuay.toFullString
 import java.awt.Color
-import java.io.*
 import java.util.*
 import java.util.concurrent.CancellationException
 import javax.swing.SwingUtilities
@@ -183,16 +183,6 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
             editor.parserAdapter.additionalErrors.addAll(errors)
             errors.forEach { addToOutput(it.span, "ERROR: ${it.message}", SyntaxColors.ErrorColor) }
             updateOutput()
-        }
-
-        /**
-         * Extracts the complete exception details.
-         * @return Stack trace as string
-         */
-        fun Throwable.toFullString(): String {
-            val writer = StringWriter()
-            printStackTrace(PrintWriter(writer))
-            return writer.buffer.toString()
         }
 
         override fun exception(throwable: Throwable) {

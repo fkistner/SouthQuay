@@ -427,7 +427,6 @@ class ASTTests {
 
             ASTBuilder.parseStream(charStream, errors)
 
-            println(errors)
             Assert.assertEquals(1, errors.count())
             Assert.assertTrue("Undefined function not detected.", errors[0].message!!.startsWith("Incompatible arguments $case for function"))
         }
