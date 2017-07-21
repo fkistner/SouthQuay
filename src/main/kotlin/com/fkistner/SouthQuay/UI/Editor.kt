@@ -5,6 +5,7 @@ import com.fkistner.SouthQuay.document.*
 import org.fife.ui.autocomplete.AutoCompletion
 import java.awt.*
 import java.awt.event.*
+import java.io.File
 import java.net.URL
 import javax.swing.*
 
@@ -123,6 +124,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModelListener, MenuListen
         var windowTitle = "$ApplicationName – ${documentModel.documentName}"
         if (documentModel.isDirty) windowTitle += "*"
         frame.title = windowTitle
+        frame.rootPane.putClientProperty("Window.documentFile",     documentModel.path?.path?.let(::File))
         frame.rootPane.putClientProperty("Window.documentModified", documentModel.isDirty)
     }
 
