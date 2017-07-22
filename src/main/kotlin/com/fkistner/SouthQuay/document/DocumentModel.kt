@@ -2,17 +2,15 @@ package com.fkistner.SouthQuay.document
 
 import com.fkistner.SouthQuay.FileType
 import org.fife.ui.rsyntaxtextarea.*
-import java.io.File
-import java.net.URL
-import java.nio.file.Paths
+import java.nio.file.*
 import javax.swing.event.*
 
 /**
  * Model that manages the document state, such as the untitled numbering and whether the document buffer is dirty.
- * @param path URL to initial file to load
+ * @param path Path to the initial file to load
  * @param documentListener Listener for document changes
  */
-class DocumentModel(var path: URL? = null, val documentListener: DocumentModelListener? = null) : DocumentListener {
+class DocumentModel(var path: Path? = null, val documentListener: DocumentModelListener? = null) : DocumentListener {
     companion object {
         /** Provider of read convenience methods. */
         private val editorKit = RSyntaxTextAreaEditorKit()
@@ -29,15 +27,10 @@ class DocumentModel(var path: URL? = null, val documentListener: DocumentModelLi
     var isDirty = false
 
     init {
-        documentName = path.let {
-            when (it) {
-                null -> getUntitledName()
-                else -> {
-                    read(it)
-                    it.fileName
-                }
-            }
-        }
+        documentName = path?.let {
+            read(it)
+            it.fileName.toString()
+        } ?: getUntitledName()
         initNewDocument()
     }
 
@@ -57,26 +50,28 @@ class DocumentModel(var path: URL? = null, val documentListener: DocumentModelLi
      * Reset state information after [open], [close], [save] operation.
      * @param file New file path
      */
-    private fun resetInfo(file: URL?) {
+    private fun resetInfo(file: Path?) {
         isDirty = false
         path = file
-        documentName = file?.fileName ?: getUntitledName()
+        documentName = file?.fileName?.toString() ?: getUntitledName()
     }
 
     /**
      * Read file into document.
      * @param file File to read
      */
-    private fun read(file: URL) = editorKit.read(file.openStream(), document, 0).also { isDirty = false }
+    private fun read(file: Path) = Files.newInputStream(file).use {
+        editorKit.read(it, document, 0).also { isDirty = false }
+    }
 
     /**
      * Adapts path to include [FileType] suffix, if not already present.
      * @param file Proposed file path
      * @return Accepted file path
      */
-    fun adaptPath(file: URL): URL = when {
-        file.path.endsWith(FileType) -> file
-        else -> Paths.get(file.path + FileType).toUri().toURL()
+    fun adaptPath(file: Path): Path = when {
+        file.endsWith(FileType) -> file
+        else -> file.resolveSibling(file.fileName.toString() + FileType)
     }
 
 
@@ -84,7 +79,7 @@ class DocumentModel(var path: URL? = null, val documentListener: DocumentModelLi
      * Creates a new document, optionally reading it from file.
      * @param file File path to read
      */
-    private fun newDocument(file: URL? = null) {
+    private fun newDocument(file: Path? = null) {
         document = createNewDocument()
         resetInfo(file)
         file?.let(this::read)
@@ -110,7 +105,7 @@ class DocumentModel(var path: URL? = null, val documentListener: DocumentModelLi
      * Opens the provided file and sets it as the new document.
      * @param file File path to read
      */
-    fun open(file: URL) = newDocument(file)
+    fun open(file: Path) = newDocument(file)
 
     /** Closes the current file and creates new empty document. */
     fun close() = newDocument()
@@ -119,9 +114,9 @@ class DocumentModel(var path: URL? = null, val documentListener: DocumentModelLi
      * Saves the current file under the provided file path.
      * @param file Save destination
      */
-    fun save(file: URL) {
-        File(file.toURI()).outputStream().bufferedWriter().use {
-            it.write(text)
+    fun save(file: Path) {
+        Files.newOutputStream(file).use {
+            editorKit.write(it, document, 0, document.length)
         }
         resetInfo(file)
         documentListener?.infoChanged(this)

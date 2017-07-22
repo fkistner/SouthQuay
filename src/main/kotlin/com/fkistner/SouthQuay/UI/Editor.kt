@@ -5,8 +5,7 @@ import com.fkistner.SouthQuay.document.*
 import org.fife.ui.autocomplete.AutoCompletion
 import java.awt.*
 import java.awt.event.*
-import java.io.File
-import java.net.URL
+import java.nio.file.Path
 import javax.swing.*
 
 /**
@@ -16,7 +15,7 @@ import javax.swing.*
  * Each editor window is managed by a unique instance.
  * @param path Path to document that should be opened upon display
  */
-class Editor(path: URL? = null): EditorBase(), DocumentModelListener, MenuListener {
+class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListener {
     /** UI frame with menu bar provided by [Menu] and with app icon. */
     val frame = JFrame(ApplicationName).also {
         it.iconImages = listOf(ImageIcon(ApplicationIcon).image)
@@ -72,18 +71,18 @@ class Editor(path: URL? = null): EditorBase(), DocumentModelListener, MenuListen
      * Saves file if file path was provided
      * @return `true` if the file was saved
      */
-    private fun save(file: URL?) = file?.let { documentModel.save(it) } != null
+    private fun save(file: Path?) = file?.let { documentModel.save(it) } != null
 
 
     //region Menu Listener
 
     override fun fileNew() { Editor() }
     override fun fileOpen() {
-        dialog.openFile()?.let { fromURL ->
+        dialog.openFile()?.let { fromPath ->
             if (documentModel.path == null && !documentModel.isDirty)
-                documentModel.open(fromURL)
+                documentModel.open(fromPath)
             else
-                Editor(fromURL)
+                Editor(fromPath)
         }
     }
 
@@ -124,7 +123,7 @@ class Editor(path: URL? = null): EditorBase(), DocumentModelListener, MenuListen
         var windowTitle = "$ApplicationName – ${documentModel.documentName}"
         if (documentModel.isDirty) windowTitle += "*"
         frame.title = windowTitle
-        frame.rootPane.putClientProperty("Window.documentFile",     documentModel.path?.path?.let(::File))
+        frame.rootPane.putClientProperty("Window.documentFile",     documentModel.path?.toFile())
         frame.rootPane.putClientProperty("Window.documentModified", documentModel.isDirty)
     }
 
