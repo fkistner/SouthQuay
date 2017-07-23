@@ -31,7 +31,7 @@ class DocumentModel(var path: Path? = null, val documentListener: DocumentModelL
             read(it)
             it.fileName.toString()
         } ?: getUntitledName()
-        initNewDocument()
+        document.addDocumentListener(this)
     }
 
     /**
@@ -74,7 +74,6 @@ class DocumentModel(var path: Path? = null, val documentListener: DocumentModelL
         else -> file.resolveSibling(file.fileName.toString() + FileType)
     }
 
-
     /**
      * Creates a new document, optionally reading it from file.
      * @param file File path to read
@@ -83,12 +82,6 @@ class DocumentModel(var path: Path? = null, val documentListener: DocumentModelL
         document = createNewDocument()
         resetInfo(file)
         file?.let(this::read)
-        initNewDocument()
-        file?.let { documentListener?.textChanged(this) }
-    }
-
-    /** Installs listener and signals [DocumentModel.Listener] */
-    private fun initNewDocument() {
         document.addDocumentListener(this)
         documentListener?.newDocument(this)
     }

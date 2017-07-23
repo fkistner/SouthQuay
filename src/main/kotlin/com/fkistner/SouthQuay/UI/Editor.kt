@@ -21,6 +21,13 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
     val frame = JFrame(ApplicationName).also {
         it.iconImages = listOf(ImageIcon(ApplicationIcon).image)
         it.jMenuBar = MenuFactory.create(this)
+        it.contentPane = rootPanel
+        it.pack()
+
+        it.defaultCloseOperation = JFrame.DO_NOTHING_ON_CLOSE
+        it.addWindowListener(object: WindowAdapter() {
+            override fun windowClosing(e: WindowEvent) = fileExit()
+        })
     }
 
     /** File [Dialogs] controller.  */
@@ -41,20 +48,17 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
         syntaxTextArea.syntaxScheme = SyntaxColors
         autoCompletion.autoCompleteSingleChoices = false
         outputTextPane.editorKit = OutputEditorKit
-
-        frame.addWindowListener(object: WindowAdapter() {
-            override fun windowClosing(e: WindowEvent) = fileExit()
-        })
-        frame.contentPane = rootPanel
-        frame.defaultCloseOperation = JFrame.DO_NOTHING_ON_CLOSE
-        frame.pack()
-        frame.isVisible = true
     }
 
     /** Document model, which maintains the buffer state. */
     val documentModel = DocumentModel(path, this)
     /** State machine, which manages the different UI states in regards to the script execution.  */
     val executionControl = ExecutionControl(this)
+
+    init {
+        newDocument(documentModel) // register document
+        frame.isVisible = true
+    }
 
     /**
      * Saves the file if a file path is available or falls back to [trySaveAs].
@@ -136,6 +140,7 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
         autoCompletion.isAutoActivationEnabled = true
 
         infoChanged(documentModel)
+        textChanged(documentModel)
     }
 
     override fun infoChanged(documentModel: DocumentModel) {

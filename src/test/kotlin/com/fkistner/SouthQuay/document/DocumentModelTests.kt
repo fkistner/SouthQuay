@@ -17,7 +17,7 @@ class DocumentModelTests {
     fun initial() {
         val listener = CountingDocumentListener()
         val documentModel = DocumentModel(documentListener = listener)
-        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.newDoc)
         Assert.assertEquals(0, listener.infoChanged)
         Assert.assertEquals(0, listener.textChanged)
         Assert.assertEquals(false, documentModel.isDirty)
@@ -34,9 +34,9 @@ class DocumentModelTests {
         val documentModel = DocumentModel(documentListener = listener)
         documentModel.open(path)
 
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(0, listener.infoChanged)
-        Assert.assertEquals(1, listener.textChanged)
+        Assert.assertEquals(0, listener.textChanged)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(path.toString(), documentModel.path?.toString())
         Assert.assertEquals(path.readText(), documentModel.document.getText(0, documentModel.document.length))
@@ -49,21 +49,28 @@ class DocumentModelTests {
 
         val listener = CountingDocumentListener()
         val documentModel = DocumentModel(documentListener = listener)
-        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.newDoc)
         Assert.assertEquals(0, listener.infoChanged)
 
         documentModel.open(path)
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(0, listener.infoChanged)
         Assert.assertEquals(false, documentModel.isDirty)
 
         documentModel.document.insertString(0, "Test", null)
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(1, listener.textChanged)
+        Assert.assertEquals(true, documentModel.isDirty)
+
+        documentModel.document.insertString(0, "Hello", null)
+        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(2, listener.textChanged)
         Assert.assertEquals(true, documentModel.isDirty)
 
         Assert.assertEquals(path.toString(), documentModel.path?.toString())
-        Assert.assertEquals(140, documentModel.document.length)
+        Assert.assertEquals(145, documentModel.document.length)
     }
 
     @Test
@@ -73,22 +80,31 @@ class DocumentModelTests {
 
         val listener = CountingDocumentListener()
         val documentModel = DocumentModel(documentListener = listener)
-        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.newDoc)
         Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(0, listener.textChanged)
         Assert.assertEquals(false, documentModel.isDirty)
 
         documentModel.open(path)
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(0, listener.textChanged)
         Assert.assertEquals(false, documentModel.isDirty)
 
         documentModel.document.remove(5, 10)
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(1, listener.textChanged)
+        Assert.assertEquals(true, documentModel.isDirty)
+
+        documentModel.document.remove(22, 4)
+        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(2, listener.textChanged)
         Assert.assertEquals(true, documentModel.isDirty)
 
         Assert.assertEquals(path.toString(), documentModel.path?.toString())
-        Assert.assertEquals(126, documentModel.document.length)
+        Assert.assertEquals(122, documentModel.document.length)
     }
 
     @Test
@@ -102,7 +118,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, "Test", null)
         documentModel.open(path)
 
-        Assert.assertEquals(3, listener.newDoc)
+        Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(path.toString(), documentModel.path?.toString())
         Assert.assertEquals(136, documentModel.document.length)
@@ -119,7 +135,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, "Test", null)
         documentModel.close()
 
-        Assert.assertEquals(3, listener.newDoc)
+        Assert.assertEquals(2, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(null, documentModel.path)
         Assert.assertEquals(0, documentModel.document.length)
@@ -139,7 +155,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, insertedString, null)
         documentModel.save(saveAsFile)
 
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(saveAsFile.toString(), documentModel.path?.toString())
         Assert.assertEquals(140, documentModel.document.length)
@@ -169,7 +185,7 @@ class DocumentModelTests {
         documentModel.document.insertString(0, insertedString, null)
         documentModel.save(tempFile)
 
-        Assert.assertEquals(2, listener.newDoc)
+        Assert.assertEquals(1, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(tempFile.toString(), documentModel.path?.toString())
         Assert.assertEquals(140, documentModel.document.length)
@@ -190,7 +206,7 @@ class DocumentModelTests {
         val listener = CountingDocumentListener()
         val documentModel = DocumentModel(path, listener)
 
-        Assert.assertEquals(1, listener.newDoc)
+        Assert.assertEquals(0, listener.newDoc)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(path.toString(), documentModel.path?.toString())
         Assert.assertEquals(path.readText(), documentModel.document.getText(0, documentModel.document.length))
@@ -237,6 +253,33 @@ class DocumentModelTests {
 
         val listener = CountingDocumentListener()
         val documentModel = DocumentModel(documentListener = listener)
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(0, listener.infoChanged)
+        Assert.assertEquals(0, listener.textChanged)
+
+        documentModel.document.insertString(0, "Hello", null)
+        Assert.assertEquals(true, documentModel.isDirty)
+        Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(1, listener.textChanged)
+
+        documentModel.document.insertString(5, " World", null)
+        Assert.assertEquals(true, documentModel.isDirty)
+        Assert.assertEquals(1, listener.infoChanged)
+        Assert.assertEquals(2, listener.textChanged)
+
+        documentModel.save(saveAsFile)
+        Assert.assertEquals(false, documentModel.isDirty)
+        Assert.assertEquals(2, listener.infoChanged)
+        Assert.assertEquals(2, listener.textChanged)
+    }
+
+    @Test
+    fun textChangedAfterOpen() {
+        val saveAsFile = Files.createTempFile("SQTest", ".sq")
+
+        val listener = CountingDocumentListener()
+        val documentModel = DocumentModel(documentListener = listener)
+        documentModel.open(sampleResource)
         Assert.assertEquals(false, documentModel.isDirty)
         Assert.assertEquals(0, listener.infoChanged)
         Assert.assertEquals(0, listener.textChanged)
