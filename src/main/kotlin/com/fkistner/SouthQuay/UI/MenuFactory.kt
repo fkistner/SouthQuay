@@ -1,11 +1,12 @@
 package com.fkistner.SouthQuay.UI
 
+import com.fkistner.SouthQuay.isMacOS
 import java.awt.*
-import java.awt.event.*
+import java.awt.event.KeyEvent
 import javax.swing.*
 
 /** Creator of the menu bar of the script editor. */
-object Menu {
+object MenuFactory {
     /**
      * Creates a new menu bar with a file menu providing document interaction.
      * @param menuListener Listener that responds to file menu actions
@@ -38,6 +39,13 @@ object Menu {
         val saveAsItem = fileMenu.add(JMenuItem("Save As…", KeyEvent.VK_A))
         saveAsItem.accelerator = KeyStroke.getKeyStroke(KeyEvent.VK_S, menuShortcutKeyMask or Event.ALT_MASK)
         saveAsItem.addActionListener { menuListener?.fileSaveAs() }
+
+        if (!isMacOS) {
+            fileMenu.addSeparator()
+
+            val exitItem = fileMenu.add(JMenuItem("Exit", KeyEvent.VK_X))
+            exitItem.addActionListener { menuListener?.fileExit() }
+        }
 
         return menuBar
     }

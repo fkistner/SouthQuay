@@ -41,3 +41,11 @@ fun Throwable.toFullString(): String {
     printStackTrace(PrintWriter(writer))
     return writer.buffer.toString()
 }
+
+/**
+ * Detects, whether the current OS is macOS for use in look and feel decisions.
+ *
+ * See Apple's
+ * [Technical Note TN2110: Identifying Java on OS X](https://developer.apple.com/library/content/technotes/tn2002/tn2110.html).
+ */
+val isMacOS: Boolean = System.getProperty("os.name").contains("OS X")

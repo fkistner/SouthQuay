@@ -3,10 +3,11 @@ package com.fkistner.SouthQuay.UI
 import com.fkistner.SouthQuay.*
 import com.fkistner.SouthQuay.document.*
 import org.fife.ui.autocomplete.AutoCompletion
-import java.awt.*
+import java.awt.Window
 import java.awt.event.*
 import java.nio.file.Path
 import javax.swing.*
+import kotlin.system.exitProcess
 
 /**
  * Main editor view controller that manages editing and execution of a script document.
@@ -16,10 +17,10 @@ import javax.swing.*
  * @param path Path to document that should be opened upon display
  */
 class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListener {
-    /** UI frame with menu bar provided by [Menu] and with app icon. */
+    /** UI frame with menu bar provided by [MenuFactory] and with app icon. */
     val frame = JFrame(ApplicationName).also {
         it.iconImages = listOf(ImageIcon(ApplicationIcon).image)
-        it.jMenuBar = Menu.create(this)
+        it.jMenuBar = MenuFactory.create(this)
     }
 
     /** File [Dialogs] controller.  */
@@ -42,7 +43,7 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
         outputTextPane.editorKit = OutputEditorKit
 
         frame.addWindowListener(object: WindowAdapter() {
-            override fun windowClosing(e: WindowEvent) = fileClose()
+            override fun windowClosing(e: WindowEvent) = fileExit()
         })
         frame.contentPane = rootPanel
         frame.defaultCloseOperation = JFrame.DO_NOTHING_ON_CLOSE
@@ -73,13 +74,33 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
      */
     private fun save(file: Path?) = file?.let { documentModel.save(it) } != null
 
+    /**
+     * Prepares the editor for closing and cleans up its resources, if no unsaved changes will be lost.
+     * If the document has unsaved changes, uses [trySave] to determine, whether the close operation should proceed.
+     * @return `true` if there were no unsaved changes, or unsaved changes were saved by the user
+     */
+    private fun canClose(): Boolean {
+        if (documentModel.isDirty) {
+            when (dialog.shouldSaveFile(documentModel.documentName)) {
+                true -> if (!trySave()) return false
+                null -> return false
+                false -> documentModel.close()
+            }
+        }
+        executionControl.abort()
+        return true
+    }
+
 
     //region Menu Listener
+
+    /** `true`, if other windows are visible on screen. */
+    val areOtherWindowsVisible = Window.getWindows().any { it.isVisible && it != frame }
 
     override fun fileNew() { Editor() }
     override fun fileOpen() {
         dialog.openFile()?.let { fromPath ->
-            if (documentModel.path == null && !documentModel.isDirty)
+            if (!isMacOS && documentModel.path == null && !documentModel.isDirty)
                 documentModel.open(fromPath)
             else
                 Editor(fromPath)
@@ -87,21 +108,19 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
     }
 
     override fun fileClose() {
-        if (documentModel.isDirty) {
-            when (dialog.shouldSaveFile(documentModel.documentName)) {
-                true -> if (!trySave()) return
-                null -> return
-                false -> documentModel.close()
-            }
-        }
-        executionControl.abort()
-        frame.isVisible = false
-        frame.dispose()
-        if (Window.getWindows().none { it.isVisible }) System.exit(0)
+        if (isMacOS || areOtherWindowsVisible) fileExit()
+        if (canClose()) documentModel.close()
     }
 
     override fun fileSave() { trySave() }
     override fun fileSaveAs() { trySaveAs() }
+
+    override fun fileExit() {
+        if (!canClose()) return
+        frame.isVisible = false
+        frame.dispose()
+        if (!areOtherWindowsVisible) exitProcess(0)
+    }
 
     //endregion
 

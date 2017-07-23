@@ -12,4 +12,6 @@ interface MenuListener {
     fun fileSave()   {}
     /** Saves the file open in an editor in a new location. */
     fun fileSaveAs() {}
+    /** Exits the application. Only visible on non-macOS platforms. */
+    fun fileExit() {}
 }
