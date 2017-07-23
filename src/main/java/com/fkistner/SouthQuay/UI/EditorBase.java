@@ -94,25 +94,23 @@ public class EditorBase {
         splitPane1.setResizeWeight(1.0);
         scrollPane.setViewportView(splitPane1);
         splitPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
-        final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setPreferredSize(new Dimension(0, 0));
-        scrollPane1.setVerticalScrollBarPolicy(21);
-        splitPane1.setLeftComponent(scrollPane1);
-        scrollPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
+        final FixedWidthScrollPane fixedWidthScrollPane1 = new FixedWidthScrollPane();
+        fixedWidthScrollPane1.setVerticalScrollBarPolicy(21);
+        splitPane1.setLeftComponent(fixedWidthScrollPane1);
+        fixedWidthScrollPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
         syntaxTextArea.setCurrentLineHighlightColor(new Color(-328966));
         syntaxTextArea.setPaintMatchedBracketPair(true);
         syntaxTextArea.setPaintTabLines(true);
         syntaxTextArea.setTabsEmulated(true);
         syntaxTextArea.setWhitespaceVisible(true);
-        scrollPane1.setViewportView(syntaxTextArea);
-        final JScrollPane scrollPane2 = new JScrollPane();
-        scrollPane2.setPreferredSize(new Dimension(0, 0));
-        scrollPane2.setVerticalScrollBarPolicy(21);
-        splitPane1.setRightComponent(scrollPane2);
-        scrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
+        fixedWidthScrollPane1.setViewportView(syntaxTextArea);
+        final FixedWidthScrollPane fixedWidthScrollPane2 = new FixedWidthScrollPane();
+        fixedWidthScrollPane2.setVerticalScrollBarPolicy(21);
+        splitPane1.setRightComponent(fixedWidthScrollPane2);
+        fixedWidthScrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null));
         outputTextPane.setBackground(new Color(-1644826));
         outputTextPane.setEditable(false);
-        scrollPane2.setViewportView(outputTextPane);
+        fixedWidthScrollPane2.setViewportView(outputTextPane);
     }
 
     /**

@@ -70,12 +70,11 @@
                 </properties>
                 <border type="empty"/>
                 <children>
-                  <scrollpane id="b2236">
+                  <scrollpane id="b2236" class="com.fkistner.SouthQuay.UI.FixedWidthScrollPane">
                     <constraints>
                       <splitpane position="left"/>
                     </constraints>
                     <properties>
-                      <preferredSize width="0" height="0"/>
                       <verticalScrollBarPolicy value="21"/>
                     </properties>
                     <border type="empty"/>
@@ -92,12 +91,11 @@
                       </component>
                     </children>
                   </scrollpane>
-                  <scrollpane id="1a122">
+                  <scrollpane id="1a122" class="com.fkistner.SouthQuay.UI.FixedWidthScrollPane">
                     <constraints>
                       <splitpane position="right"/>
                     </constraints>
                     <properties>
-                      <preferredSize width="0" height="0"/>
                       <verticalScrollBarPolicy value="21"/>
                     </properties>
                     <border type="empty"/>
