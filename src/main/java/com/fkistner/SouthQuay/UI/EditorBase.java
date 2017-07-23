@@ -1,8 +1,9 @@
 package com.fkistner.SouthQuay.UI;
 
 import org.fife.ui.rsyntaxtextarea.*;
-import org.fife.ui.rtextarea.*;
+import org.fife.ui.rtextarea.Gutter;
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 
 /**
@@ -25,6 +26,12 @@ public class EditorBase {
         syntaxTextArea = new RSyntaxTextArea();
         syntaxTextArea.setCodeFoldingEnabled(true);
         Font font = syntaxTextArea.getFont();
+
+        FontUIResource fontUIResource = (FontUIResource) UIManager.get("TextPane.font");
+        if (fontUIResource != null) { // Derive font size from default text pane font size to better support Windows DPI settings
+            font = font.deriveFont(font.getSize2D() / 13f * fontUIResource.getSize2D());
+            syntaxTextArea.setFont(font);
+        }
 
         outputTextPane = new JTextPane();
         outputTextPane.setFont(font);
