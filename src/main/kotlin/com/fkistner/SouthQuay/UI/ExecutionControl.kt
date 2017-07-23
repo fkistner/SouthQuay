@@ -41,10 +41,11 @@ class ExecutionControl(val editor: Editor): ExecutionState<Unit> {
      * @param programText Text of the script to execute
      */
     private inner class RunningState(programText: String): ExecutionControl.State, ExecutionParticipant {
-        /** Future of the current execution. */
-        val future = BackgroundExecutor(this).start(programText)
+        /** Future of the current execution. Initialization protected against racing pool thread by [lazy]. */
+        val future by lazy { BackgroundExecutor(this).start(programText) }
+
         init {
-            // Register finish stimuli upon completion (not executed on cancel).
+            // Start execution by evaluation of lazy and register finish stimuli upon completion (not executed on cancel).
             future.thenRun {
                 SwingUtilities.invokeLater(this@ExecutionControl::finish)
             }
