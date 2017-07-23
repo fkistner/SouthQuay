@@ -3,9 +3,9 @@ package com.fkistner.SouthQuay.UI
 import javax.swing.text.*
 
 /** Provides customization of the [Editor.outputTextPane]. */
-object OutputEditorKit : StyledEditorKit() {
+class OutputEditorKit : StyledEditorKit() {
     override fun clone() = this
-    override fun getViewFactory() = Factory
+    override fun getViewFactory() = _viewFactory
 
     /** Paragraph view that layouts text only in regards to the view's height. */
     class NonBreakingParagraphView(elem: Element): ParagraphView(elem) {
@@ -17,12 +17,15 @@ object OutputEditorKit : StyledEditorKit() {
      * View factory the provides the [NonBreakingParagraphView] as paragraph element
      * and delegates all other instantiations to the default factory.
      */
-    object Factory: ViewFactory {
-        val parent: ViewFactory = StyledEditorKit().viewFactory
+    private val _viewFactory: ViewFactory
 
-        override fun create(elem: Element): View = when (elem.name) {
-            AbstractDocument.ParagraphElementName -> NonBreakingParagraphView(elem)
-            else -> parent.create(elem)
+    init {
+        val parent = super.getViewFactory()
+        _viewFactory = ViewFactory { elem ->
+            when (elem.name) {
+                AbstractDocument.ParagraphElementName -> NonBreakingParagraphView(elem)
+                else -> parent.create(elem)
+            }
         }
     }
 }

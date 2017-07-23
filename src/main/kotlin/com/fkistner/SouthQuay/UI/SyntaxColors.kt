@@ -10,32 +10,38 @@ import java.awt.*
  *
  * The primary UI color is provided by the system as default.
  */
-object SyntaxColors: SyntaxScheme(true) {
-    /** Default text style. */
-    val defaultStyle = Style()
+class SyntaxColors: SyntaxScheme(true) {
+    companion object {
+        /** Default text style. */
+        val defaultStyle = Style()
 
-    /** Secondary UI color. */
-    val SecondaryColor: Color = Color.GRAY
+        /** Secondary UI color. */
+        @JvmStatic
+        val SecondaryColor: Color = Color.GRAY
 
-    /** Syntax highlight color for keywords. */
-    val KeywordColor    = Color(117,170,86) // green
-    /** Syntax highlight color for operators. */
-    val OperatorColor   = Color(190,114,57) // orange
-    /** Syntax highlight color for literals. */
-    val LiteralColor    = Color(59,167,229) // blue
-    /** Syntax highlight color for identifier. */
-    val IdentifierColor = Color(130,91,179) // purple
-    /** Syntax highlight color for errors. */
-    val ErrorColor      = Color(185,76,117) // red
+        /** Syntax highlight color for keywords. */
+        val KeywordColor    = Color(117,170,86) // green
+        /** Syntax highlight color for operators. */
+        val OperatorColor   = Color(190,114,57) // orange
+        /** Syntax highlight color for literals. */
+        val LiteralColor    = Color(59,167,229) // blue
+        /** Syntax highlight color for identifier. */
+        val IdentifierColor = Color(130,91,179) // purple
+        /** Syntax highlight color for errors. */
+        val ErrorColor      = Color(185,76,117) // red
 
-    private val KeywordStyle    = Style(KeywordColor)
-    private val OperatorStyle   = Style(OperatorColor)
-    private val LiteralStyle    = Style(LiteralColor)
-    private val IdentifierStyle = Style(IdentifierColor)
-    private val WhitespaceStyle = Style(SecondaryColor)
-    private val ErrorStyle      = Style(ErrorColor)
+        private val KeywordStyle    = Style(KeywordColor)
+        private val OperatorStyle   = Style(OperatorColor)
+        private val LiteralStyle    = Style(LiteralColor)
+        private val IdentifierStyle = Style(IdentifierColor)
+        private val WhitespaceStyle = Style(SecondaryColor)
+        private val ErrorStyle      = Style(ErrorColor)
+    }
 
-    init {
+    override fun getStyle(index: Int) = super.getStyle(index) ?: defaultStyle
+    override fun restoreDefaults(baseFont: Font?) {
+        super.restoreDefaults(baseFont)
+
         val styleArray = arrayOfNulls<Style>(VOCABULARY.maxTokenType + 1)
 
         for (t in arrayOf(PRINT, OUT, VAR))
@@ -54,6 +60,5 @@ object SyntaxColors: SyntaxScheme(true) {
         styles = styleArray
     }
 
-    override fun getStyle(index: Int) = super.getStyle(index) ?: defaultStyle
-    override fun restoreDefaults(baseFont: Font?) = super.restoreDefaults(baseFont)
+    override fun clone() = super.clone() as SyntaxColors
 }

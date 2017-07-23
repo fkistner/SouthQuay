@@ -8,7 +8,7 @@ import java.io.CharArrayReader
 import javax.swing.text.Segment
 
 /** Provides tokenization for syntax highlighting in the code editor. */
-object SyntaxTokenAdapter : TokenMakerBase() {
+class SyntaxTokenAdapter : TokenMakerBase() {
     override fun getTokenList(text: Segment, initialTokenType: Int, startOffset: Int): Token {
         resetTokenList()
 

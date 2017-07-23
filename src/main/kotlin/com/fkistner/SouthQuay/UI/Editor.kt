@@ -45,9 +45,9 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
         abortButton.addActionListener    { executionControl.abort() }
 
         syntaxTextArea.addParser(parserAdapter)
-        syntaxTextArea.syntaxScheme = SyntaxColors
+        syntaxTextArea.syntaxScheme = SyntaxColors()
         autoCompletion.autoCompleteSingleChoices = false
-        outputTextPane.editorKit = OutputEditorKit
+        outputTextPane.editorKit = OutputEditorKit()
     }
 
     /** Document model, which maintains the buffer state. */
@@ -133,7 +133,7 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
     override fun newDocument(documentModel: DocumentModel) {
         syntaxTextArea.document = documentModel.document
         syntaxTextArea.forceReparsing(parserAdapter)
-        documentModel.document.setSyntaxStyle(SyntaxTokenAdapter)
+        documentModel.document.setSyntaxStyle(SyntaxTokenAdapter())
 
         autoCompletion.uninstall()
         autoCompletion.install(syntaxTextArea)

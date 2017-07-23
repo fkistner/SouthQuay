@@ -40,7 +40,7 @@ public class EditorBase {
 
         Gutter gutter = new Gutter(syntaxTextArea);
         gutter.setLineNumberFont(font);
-        gutter.setLineNumberColor(SyntaxColors.INSTANCE.getSecondaryColor());
+        gutter.setLineNumberColor(SyntaxColors.getSecondaryColor());
         scrollPane = new JScrollPane();
         scrollPane.setRowHeaderView(gutter);
     }

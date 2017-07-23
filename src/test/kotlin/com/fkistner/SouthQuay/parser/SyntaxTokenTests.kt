@@ -19,7 +19,7 @@ class SyntaxTokenTests {
         val charArray = "var i = map({1, 4}, n -> 2 * n)".toCharArray()
         val text = Segment(charArray, 0, charArray.size)
 
-        var tokenList: Token? = SyntaxTokenAdapter.getTokenList(text, 0, 33)
+        var tokenList: Token? = SyntaxTokenAdapter().getTokenList(text, 0, 33)
         Assert.assertEquals(charArray, tokenList!!.textArray)
         Assert.assertEquals(0, tokenList.textOffset)
         Assert.assertEquals(3, tokenList.length())
@@ -46,7 +46,7 @@ class SyntaxTokenTests {
         System.arraycopy(srcArray, 0, charArray, 57, srcArray.size)
         val text = Segment(charArray, 57, srcArray.size)
 
-        var tokenList: Token? = SyntaxTokenAdapter.getTokenList(text, 0, 11)
+        var tokenList: Token? = SyntaxTokenAdapter().getTokenList(text, 0, 11)
         Assert.assertEquals(charArray, tokenList!!.textArray)
         Assert.assertEquals(57, tokenList.textOffset)
         Assert.assertEquals(3, tokenList.length())
