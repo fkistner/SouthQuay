@@ -64,14 +64,20 @@ public class EditorBase {
         rootPanel = new JPanel();
         rootPanel.setLayout(new BorderLayout(0, 0));
         rootPanel.setPreferredSize(new Dimension(800, 800));
+        errorStrip.setShowMarkAll(true);
+        errorStrip.setShowMarkedOccurrences(true);
+        rootPanel.add(errorStrip, BorderLayout.EAST);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
+        rootPanel.add(panel1, BorderLayout.CENTER);
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
-        rootPanel.add(toolBar1, BorderLayout.SOUTH);
+        panel1.add(toolBar1, BorderLayout.SOUTH);
         statusLabel = new JLabel();
         toolBar1.add(statusLabel);
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridBagLayout());
-        toolBar1.add(panel1);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridBagLayout());
+        toolBar1.add(panel2);
         evaluateButton = new JButton();
         evaluateButton.setText("▶");
         toolBar1.add(evaluateButton);
@@ -81,7 +87,7 @@ public class EditorBase {
         toolBar1.add(abortButton);
         scrollPane.setHorizontalScrollBarPolicy(31);
         scrollPane.setVerticalScrollBarPolicy(22);
-        rootPanel.add(scrollPane, BorderLayout.CENTER);
+        panel1.add(scrollPane, BorderLayout.CENTER);
         final JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setContinuousLayout(true);
         splitPane1.setDividerLocation(400);
@@ -107,9 +113,6 @@ public class EditorBase {
         outputTextPane.setBackground(new Color(-1644826));
         outputTextPane.setEditable(false);
         scrollPane2.setViewportView(outputTextPane);
-        errorStrip.setShowMarkAll(true);
-        errorStrip.setShowMarkedOccurrences(true);
-        rootPanel.add(errorStrip, BorderLayout.EAST);
     }
 
     /**

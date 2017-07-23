@@ -9,100 +9,6 @@
     </properties>
     <border type="none"/>
     <children>
-      <toolbar id="f4950">
-        <constraints border-constraint="South"/>
-        <properties>
-          <floatable value="false"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <component id="81ab8" class="javax.swing.JLabel" binding="statusLabel">
-            <constraints/>
-            <properties/>
-          </component>
-          <grid id="a16b5" layout-manager="GridBagLayout">
-            <constraints/>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-          <component id="87810" class="javax.swing.JButton" binding="evaluateButton">
-            <constraints/>
-            <properties>
-              <text value="▶"/>
-            </properties>
-          </component>
-          <component id="780d" class="javax.swing.JButton" binding="abortButton">
-            <constraints/>
-            <properties>
-              <text value="◼"/>
-              <visible value="false"/>
-            </properties>
-          </component>
-        </children>
-      </toolbar>
-      <scrollpane id="78125" binding="scrollPane" custom-create="true">
-        <constraints border-constraint="Center"/>
-        <properties>
-          <horizontalScrollBarPolicy value="31"/>
-          <verticalScrollBarPolicy value="22"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <splitpane id="660be">
-            <constraints/>
-            <properties>
-              <continuousLayout value="true"/>
-              <dividerLocation value="400"/>
-              <resizeWeight value="1.0"/>
-            </properties>
-            <border type="empty"/>
-            <children>
-              <scrollpane id="b2236">
-                <constraints>
-                  <splitpane position="left"/>
-                </constraints>
-                <properties>
-                  <preferredSize width="0" height="0"/>
-                  <verticalScrollBarPolicy value="21"/>
-                </properties>
-                <border type="empty"/>
-                <children>
-                  <component id="d2f26" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="syntaxTextArea" custom-create="true">
-                    <constraints/>
-                    <properties>
-                      <currentLineHighlightColor color="-328966"/>
-                      <paintMatchedBracketPair value="true"/>
-                      <paintTabLines value="true"/>
-                      <tabsEmulated value="true"/>
-                      <whitespaceVisible value="true"/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
-              <scrollpane id="1a122">
-                <constraints>
-                  <splitpane position="right"/>
-                </constraints>
-                <properties>
-                  <preferredSize width="0" height="0"/>
-                  <verticalScrollBarPolicy value="21"/>
-                </properties>
-                <border type="empty"/>
-                <children>
-                  <component id="4e73b" class="javax.swing.JTextPane" binding="outputTextPane" custom-create="true">
-                    <constraints/>
-                    <properties>
-                      <background color="-1644826"/>
-                      <editable value="false"/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
-            </children>
-          </splitpane>
-        </children>
-      </scrollpane>
       <component id="28a77" class="org.fife.ui.rsyntaxtextarea.ErrorStrip" binding="errorStrip" custom-create="true">
         <constraints border-constraint="East"/>
         <properties>
@@ -110,6 +16,107 @@
           <showMarkedOccurrences value="true"/>
         </properties>
       </component>
+      <grid id="758e" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <toolbar id="f4950">
+            <constraints border-constraint="South"/>
+            <properties>
+              <floatable value="false"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="81ab8" class="javax.swing.JLabel" binding="statusLabel">
+                <constraints/>
+                <properties/>
+              </component>
+              <grid id="a16b5" layout-manager="GridBagLayout">
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+              <component id="87810" class="javax.swing.JButton" binding="evaluateButton">
+                <constraints/>
+                <properties>
+                  <text value="▶"/>
+                </properties>
+              </component>
+              <component id="780d" class="javax.swing.JButton" binding="abortButton">
+                <constraints/>
+                <properties>
+                  <text value="◼"/>
+                  <visible value="false"/>
+                </properties>
+              </component>
+            </children>
+          </toolbar>
+          <scrollpane id="78125" binding="scrollPane" custom-create="true">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <horizontalScrollBarPolicy value="31"/>
+              <verticalScrollBarPolicy value="22"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <splitpane id="660be">
+                <constraints/>
+                <properties>
+                  <continuousLayout value="true"/>
+                  <dividerLocation value="400"/>
+                  <resizeWeight value="1.0"/>
+                </properties>
+                <border type="empty"/>
+                <children>
+                  <scrollpane id="b2236">
+                    <constraints>
+                      <splitpane position="left"/>
+                    </constraints>
+                    <properties>
+                      <preferredSize width="0" height="0"/>
+                      <verticalScrollBarPolicy value="21"/>
+                    </properties>
+                    <border type="empty"/>
+                    <children>
+                      <component id="d2f26" class="org.fife.ui.rsyntaxtextarea.RSyntaxTextArea" binding="syntaxTextArea" custom-create="true">
+                        <constraints/>
+                        <properties>
+                          <currentLineHighlightColor color="-328966"/>
+                          <paintMatchedBracketPair value="true"/>
+                          <paintTabLines value="true"/>
+                          <tabsEmulated value="true"/>
+                          <whitespaceVisible value="true"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                  <scrollpane id="1a122">
+                    <constraints>
+                      <splitpane position="right"/>
+                    </constraints>
+                    <properties>
+                      <preferredSize width="0" height="0"/>
+                      <verticalScrollBarPolicy value="21"/>
+                    </properties>
+                    <border type="empty"/>
+                    <children>
+                      <component id="4e73b" class="javax.swing.JTextPane" binding="outputTextPane" custom-create="true">
+                        <constraints/>
+                        <properties>
+                          <background color="-1644826"/>
+                          <editable value="false"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                </children>
+              </splitpane>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>
