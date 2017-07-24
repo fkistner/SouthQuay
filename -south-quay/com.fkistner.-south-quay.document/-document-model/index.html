@@ -12,7 +12,7 @@
 <p>Model that manages the document state, such as the untitled numbering and whether the document buffer is dirty.</p>
 <h3>Parameters</h3>
 <p><a name="path"></a>
-<code>path</code> - URL to initial file to load</p>
+<code>path</code> - Path to the initial file to load</p>
 <p><a name="documentListener"></a>
 <code>documentListener</code> - Listener for document changes</p>
 <h3>Constructors</h3>
@@ -23,7 +23,7 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">DocumentModel</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$<init>(java.net.URL, com.fkistner.SouthQuay.document.DocumentModelListener)/path">path</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$<init>(java.net.URL, com.fkistner.SouthQuay.document.DocumentModelListener)/documentListener">documentListener</span><span class="symbol">:</span>&nbsp;<a href="../-document-model-listener/index.html"><span class="identifier">DocumentModelListener</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<code><span class="identifier">DocumentModel</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$<init>(java.nio.file.Path, com.fkistner.SouthQuay.document.DocumentModelListener)/path">path</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html"><span class="identifier">Path</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$<init>(java.nio.file.Path, com.fkistner.SouthQuay.document.DocumentModelListener)/documentListener">documentListener</span><span class="symbol">:</span>&nbsp;<a href="../-document-model-listener/index.html"><span class="identifier">DocumentModelListener</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
 <p>Model that manages the document state, such as the untitled numbering and whether the document buffer is dirty.</p>
 </td>
 </tr>
@@ -71,7 +71,7 @@
 <p><a href="path.html">path</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">path</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">var </span><span class="identifier">path</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html"><span class="identifier">Path</span></a><span class="symbol">?</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -83,7 +83,7 @@
 <p><a href="adapt-path.html">adaptPath</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">adaptPath</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$adaptPath(java.net.URL)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">adaptPath</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$adaptPath(java.nio.file.Path)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html"><span class="identifier">Path</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html"><span class="identifier">Path</span></a></code>
 <p>Adapts path to include <a href="../../com.fkistner.-south-quay/-file-type.html">FileType</a> suffix, if not already present.</p>
 </td>
 </tr>
@@ -115,7 +115,7 @@
 <p><a href="open.html">open</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">open</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$open(java.net.URL)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">open</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$open(java.nio.file.Path)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html"><span class="identifier">Path</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Opens the provided file and sets it as the new document.</p>
 </td>
 </tr>
@@ -131,7 +131,7 @@
 <p><a href="save.html">save</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">save</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$save(java.net.URL)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html"><span class="identifier">URL</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">save</span><span class="symbol">(</span><span class="identifier" id="com.fkistner.SouthQuay.document.DocumentModel$save(java.nio.file.Path)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html"><span class="identifier">Path</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Saves the current file under the provided file path.</p>
 </td>
 </tr>

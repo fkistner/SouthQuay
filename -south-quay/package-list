@@ -1,6 +1,6 @@
 $dokka.format:html
 $dokka.linkExtension:html
-$dokka.location:com.fkistner.SouthQuay.document$fileName#java.net.URLcom.fkistner.-south-quay.document/java.net.-u-r-l/file-name.html
+$dokka.location:com.fkistner.SouthQuay$toFullString(kotlin.Throwable)com.fkistner.-south-quay/kotlin.-throwable/to-full-string.html
 $dokka.location:com.fkistner.SouthQuay.document$text#javax.swing.text.PlainDocumentcom.fkistner.-south-quay.document/javax.swing.text.-plain-document/text.html
 $dokka.location:com.fkistner.SouthQuay.interpreter.values$last#java.util.stream.BaseStream((com.fkistner.SouthQuay.interpreter.values.last.T, com.fkistner.SouthQuay.interpreter.values.last.S))com.fkistner.-south-quay.interpreter.values/java.util.stream.-base-stream/last.html
 $dokka.location:com.fkistner.SouthQuay.parser$toSpan(kotlin.Pair((org.antlr.v4.runtime.Token, )))com.fkistner.-south-quay.parser/kotlin.-pair/to-span.html
