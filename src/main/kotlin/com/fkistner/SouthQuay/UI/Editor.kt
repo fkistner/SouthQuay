@@ -99,7 +99,7 @@ class Editor(path: Path? = null): EditorBase(), DocumentModelListener, MenuListe
     //region Menu Listener
 
     /** `true`, if other windows are visible on screen. */
-    val areOtherWindowsVisible = Window.getWindows().any { it.isVisible && it != frame }
+    val areOtherWindowsVisible get() = Window.getWindows().any { it.isVisible && it != frame }
 
     override fun fileNew() { Editor() }
     override fun fileOpen() {
